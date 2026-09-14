@@ -41,11 +41,13 @@ export default function Navbar() {
               )}
             </svg>
           </button>
-
-          <span className="font-serif text-2xl tracking-tight text-[#1A1A1A]">
-            dolna
-            <span className="text-[#C1633C]">.</span>
-          </span>
+              
+              <Link href="/" className="text-lg font-bold tracking-[0.15em] text-[#1A1A1A] no-underline">
+                <span className="font-serif text-2xl tracking-tight text-[#1A1A1A]">
+                  dolna
+                  <span className="text-[#C1633C]">.</span>
+                </span>
+              </Link>
         </div>
 
         <ul className="hidden items-center gap-10 md:flex">
