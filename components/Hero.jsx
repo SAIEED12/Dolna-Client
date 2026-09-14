@@ -75,7 +75,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-[85vh] min-h-[560px] w-full overflow-hidden bg-[#1A1A1A]">
+    <section className="relative h-[85vh] min-h-140 w-full overflow-hidden bg-[#1A1A1A]">
       {slides.map((slide, i) => (
         <div
           key={i}
@@ -96,15 +96,15 @@ export default function Hero() {
           />
 
           {/* Overall readability scrim */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/30" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/55 to-black/30" />
 
           {/* Left-side scrim behind text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/20 to-transparent" />
 
           <div className="absolute inset-0 flex items-end md:items-center">
             <div className="mx-auto w-full max-w-6xl px-6 pb-24 md:pb-0">
               <div className="max-w-xl">
-                <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-[#E8A87C]">
+                <p className="mb-4 text-xs font-semibold text-[#E8A87C]">
                   {slide.eyebrow}
                 </p>
 
@@ -116,7 +116,7 @@ export default function Hero() {
                   {slide.subtext}
                 </p>
 
-                <button className="mt-8 rounded-full bg-[#C1633C] px-7 py-3 text-xs font-semibold tracking-[0.15em] text-[#F5F1E8] transition-colors hover:bg-[#a8532f]">
+                <button className="mt-8 rounded-full bg-[#C1633C] px-7 py-3 text-xs font-semibold text-[#F5F1E8] transition-colors hover:bg-[#a8532f] cursor-pointer">
                   {slide.cta}
                 </button>
               </div>
@@ -125,14 +125,14 @@ export default function Hero() {
         </div>
       ))}
 
-      {/* Prev / Next */}
+      {/* Prev-Next */}
       <button
         onClick={() => {
           prev();
           restartAutoplay();
         }}
-        aria-label="আগের স্লাইড"
-        className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#F5F1E8] backdrop-blur-sm transition-colors hover:bg-white/20 md:left-8"
+        aria-label="preivous slide"
+        className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#F5F1E8] backdrop-blur-sm transition-colors hover:bg-white/20 md:left-8 cursor-pointer"
       >
         <ChevronLeft size={20} />
       </button>
@@ -142,8 +142,8 @@ export default function Hero() {
           next();
           restartAutoplay();
         }}
-        aria-label="পরের স্লাইড"
-        className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#F5F1E8] backdrop-blur-sm transition-colors hover:bg-white/20 md:right-8"
+        aria-label="next slide"
+        className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-[#F5F1E8] backdrop-blur-sm transition-colors hover:bg-white/20 md:right-8 cursor-pointer"
       >
         <ChevronRight size={20} />
       </button>
@@ -157,8 +157,8 @@ export default function Hero() {
               goTo(i);
               restartAutoplay();
             }}
-            aria-label={`স্লাইড ${i + 1} এ যান`}
-            className="h-2 rounded-full transition-all duration-300"
+            aria-label={`next slide ${i + 1}`}
+            className="h-2 rounded-full transition-all duration-300 cursor-pointer"
             style={{
               width: i === active ? "28px" : "8px",
               backgroundColor:
