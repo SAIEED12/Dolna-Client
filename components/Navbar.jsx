@@ -51,8 +51,8 @@ export default function Navbar() {
         <ul className="hidden items-center gap-10 md:flex">
           <li>
             <Link
-              href="#"
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline"
+              href="/"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
             >
               HOME
             </Link>
@@ -60,7 +60,7 @@ export default function Navbar() {
           <li>
             <Link
               href="#"
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
             >
               ALL PRODUCTS
             </Link>
@@ -68,7 +68,7 @@ export default function Navbar() {
           <li>
             <Link
               href="#"
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
             >
               CATEGORIES
             </Link>
@@ -78,7 +78,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 md:flex">
           <Link
             href="#"
-            className="flex items-center gap-2 rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline"
+            className="flex items-center gap-2 rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:bg-[#1A1A1A] hover:text-[#F5F1E8]"
           >
             <ShoppingBag size={16} strokeWidth={1.75} />
             CART
