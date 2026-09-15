@@ -16,7 +16,7 @@ const slides = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1648365762084-f9ce021aada5?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1627503684494-8402671ee2ba?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     eyebrow: "প্রাকৃতিক উপকরণ",
     heading: "আরামের এক নতুন সংজ্ঞা।",
     subtext: "টেকসই কাঠ আর নরম বুননে তৈরি, দীর্ঘস্থায়ী সৌন্দর্যে ভরা।",
@@ -24,7 +24,7 @@ const slides = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1642013957722-1474e69f3893?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1717497043477-4880130dfb78?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     eyebrow: "কারিগরের হাতে গড়া",
     heading: "প্রতিটি দোলনা একটি গল্প বলে।",
     subtext: "স্থানীয় কারিগরদের যত্নে, একটি একটি করে তৈরি হয় প্রতিটি টুকরো।",
@@ -32,7 +32,7 @@ const slides = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1775403908946-8c8237001a65?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1569356623305-747f6a0b31fe?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     eyebrow: "সবুজের মাঝে শান্তি",
     heading: "যেখানে গল্প শুরু হয়।",
     subtext: "পরিবারের সাথে কাটানো মুহূর্তগুলোকে করে তুলুন আরও বিশেষ।",
