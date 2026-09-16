@@ -89,6 +89,16 @@ export default function Navbar() {
             </span>
           </Link>
         </div>
+
+        <Link
+          href="#"
+          className="flex items-center gap-1 rounded-full border border-[#1A1A1A] px-3 py-2 text-[#1A1A1A] no-underline hover:bg-[#1A1A1A] hover:text-[#F5F1E8] md:hidden"
+        >
+          <ShoppingBag size={18} strokeWidth={1.75} />
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1A1A1A] text-[11px] font-bold text-[#F5F1E8]">
+            {cartCount}
+          </span>
+        </Link>
       </header>
 
       {isMenuOpen && (
@@ -109,16 +119,9 @@ export default function Navbar() {
                 CATEGORIES
               </Link>
             </li>
-            <li className="mt-4 flex flex-col gap-2 border-t border-[#E4DDCF] pt-4">
-              <Link
-                href="#"
-                className="flex w-fit items-center gap-2 rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline"
-              >
-                <ShoppingBag size={16} strokeWidth={1.75} />
-                CART
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1A1A1A] text-[11px] font-bold text-[#F5F1E8]">
-                  {cartCount}
-                </span>
+            <li>
+              <Link href="/login" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+                LOGIN
               </Link>
             </li>
           </ul>
