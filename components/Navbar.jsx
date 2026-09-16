@@ -8,7 +8,7 @@ export default function Navbar() {
   const cartCount = 0;
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-[#E4DDCF] bg-[#F5F1E8]">
+    <nav className="sticky top-0 z-40 w-full border-b border-[#E4DDCF]/60 bg-[#F5F1E8]/70 backdrop-blur-md shadow-sm shadow-black/5">
       <header className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <button

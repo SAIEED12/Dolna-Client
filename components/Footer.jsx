@@ -44,13 +44,13 @@ const supportLinks = [
 function FooterColumn({ title, links }) {
   return (
     <div>
-      <h3 className="text-sm font-semibold text-[#2B1C14]">{title}</h3>
+      <h3 className="text-sm font-semibold text-[#F5F1E8]">{title}</h3>
       <ul className="mt-5 space-y-3">
         {links.map((link) => (
           <li key={link.label}>
             <a
               href={link.href}
-              className="text-sm font-semibold text-[#6B5D50] transition-colors hover:text-[#9C4E30]"
+              className="text-sm text-[#B8AC9E] transition-colors hover:text-[#E8A87C]"
             >
               {link.label}
             </a>
@@ -73,13 +73,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#F5F1E8] px-4 pb-8 pt-16 md:px-8 md:pt-24">
+    <footer className="w-full bg-[#141110] px-4 pb-8 pt-16 md:px-8 md:pt-24">
       <div className="mx-auto max-w-[1800px]">
         <div className="grid grid-cols-1 gap-14 md:grid-cols-[1.5fr_1fr_1fr_1.3fr] md:gap-8">
           {/* Brand */}
           <div className="max-w-sm">
-            <span className="font-serif text-3xl text-[#2B1C14]">dolna.</span>
-            <p className="mt-4 text-sm text-[#6B5D50] font-semibold">
+            <span className="font-serif text-3xl text-[#F5F1E8]">dolna.</span>
+            <p className="mt-4 text-base leading-relaxed text-[#B8AC9E]">
               যত্নে তৈরি দোলনা, যা ঘরের প্রতিটি মুহূর্তকে করে তোলে একটু বেশি
               শান্ত।
             </p>
@@ -88,21 +88,21 @@ export default function Footer() {
               <a
                 href="https://instagram.com"
                 aria-label="dolna on Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D8CBB4] text-[#2B1C14] transition-colors hover:border-[#9C4E30] hover:text-[#9C4E30]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]"
               >
                 <InstagramIcon size={16} />
               </a>
               <a
                 href="https://facebook.com"
                 aria-label="dolna on Facebook"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D8CBB4] text-[#2B1C14] transition-colors hover:border-[#9C4E30] hover:text-[#9C4E30]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]"
               >
                 <FacebookIcon size={16} />
               </a>
               <a
                 href="mailto:hello@dolna.com"
                 aria-label="Email dolna"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D8CBB4] text-[#2B1C14] transition-colors hover:border-[#9C4E30] hover:text-[#9C4E30]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]"
               >
                 <Mail size={16} />
               </a>
@@ -117,21 +117,21 @@ export default function Footer() {
             <FooterColumn title="Support" links={supportLinks} />
 
             <div className="mt-8">
-              <h3 className="text-sm font-semibold text-[#2B1C14]">
+              <h3 className="text-sm font-semibold text-[#F5F1E8]">
                 Stay in the loop
               </h3>
-              <p className="mt-2 text-sm text-[#6B5D50] font-semibold">
+              <p className="mt-2 text-sm text-[#B8AC9E]">
                 New pieces and journal notes, a few times a month.
               </p>
 
               {submitted ? (
-                <p className="mt-4 text-sm text-[#9C4E30]">
+                <p className="mt-4 text-sm text-[#E8A87C]">
                   Thanks — you&apos;re on the list.
                 </p>
               ) : (
                 <form
                   onSubmit={handleSubscribe}
-                  className="mt-4 flex overflow-hidden rounded-full border border-[#D8CBB4] bg-white pr-1"
+                  className="mt-4 flex overflow-hidden rounded-full border border-[#3A342E] bg-[#1E1A17] pr-1"
                 >
                   <input
                     type="email"
@@ -140,11 +140,11 @@ export default function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     aria-label="Email address"
-                    className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-[#2B1C14] placeholder:text-[#A69783] focus:outline-none"
+                    className="min-w-0 flex-1 bg-transparent px-5 py-2.5 text-sm text-[#F5F1E8] placeholder:text-[#7A6F63] focus:outline-none"
                   />
                   <button
                     type="submit"
-                    className="cursor-pointer rounded-full bg-[#2B1C14] px-5 py-2 text-sm font-semibold text-[#F5F1E8] transition-colors hover:bg-[#1A100A]"
+                    className="cursor-pointer rounded-full bg-[#E8A87C] px-5 py-2 text-sm font-semibold text-[#1E1A17] transition-colors hover:bg-[#f0bb98]"
                   >
                     Subscribe
                   </button>
@@ -154,22 +154,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 h-px w-full bg-[#E4D9C8]" />
+        <div className="mt-16 h-px w-full bg-[#2E2924]" />
 
         <div className="mt-6 flex flex-col-reverse items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="text-xs text-[#8A7C6E]">
+          <p className="text-xs text-[#7A6F63]">
             © {new Date().getFullYear()} dolna. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a
               href="/privacy"
-              className="text-xs text-[#8A7C6E] transition-colors hover:text-[#9C4E30]"
+              className="text-xs text-[#7A6F63] transition-colors hover:text-[#E8A87C]"
             >
               Privacy
             </a>
             <a
               href="/terms"
-              className="text-xs text-[#8A7C6E] transition-colors hover:text-[#9C4E30]"
+              className="text-xs text-[#7A6F63] transition-colors hover:text-[#E8A87C]"
             >
               Terms
             </a>
