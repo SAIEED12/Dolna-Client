@@ -80,12 +80,16 @@ export default function Hero() {
 
   return (
     <section className="w-full bg-[#F5F1E8] px-4 py-6 md:px-8 md:py-10">
-      <div className="mx-auto max-w-[1800px] overflow-hidden rounded-3xl">
+      <div className="mx-auto max-w-[1800px] overflow-hidden rounded-3xl shadow-xl shadow-black/10">
         <div className="flex flex-col md:h-[640px] md:flex-row">
           {/* Left content panel */}
-          <div className="order-2 flex w-full flex-col justify-between bg-[#C1633C] px-6 py-10 sm:px-10 md:order-1 md:w-[38%] md:px-14 md:py-16">
-            <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#F5F1E8]">
+          <div className="relative order-2 flex w-full flex-col justify-between overflow-hidden bg-linear-to-br from-[#9C4E30] via-[#8A4128] to-[#5F2C1B] px-6 py-10 sm:px-10 md:order-1 md:w-[38%] md:px-14 md:py-16">
+            {/* Depth accents */}
+            <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#E8A87C]/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-32 -left-16 h-64 w-64 rounded-full bg-black/20 blur-3xl" />
+
+            <div className="relative">
+              <p className="mb-4 text-xs font-semibold uppercase  text-[#E8A87C]">
                 {slide.eyebrow}
               </p>
 
@@ -93,23 +97,20 @@ export default function Hero() {
                 {slide.heading}
               </h1>
 
-              <p className="mt-5 max-w-md text-base leading-relaxed text-[#F5F1E8]/85 md:text-lg">
+              <p className="mt-5 max-w-md text-base leading-relaxed text-[#F5F1E8]/80 md:text-lg">
                 {slide.subtext}
               </p>
             </div>
 
-            <div className="mt-10 flex items-end justify-between gap-4 md:mt-0">
-              <button className="group inline-flex cursor-pointer items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#F5F1E8]">
-                <span className="border-b border-[#F5F1E8]/70 pb-1 transition-colors group-hover:border-[#F5F1E8]">
-                  {slide.cta}
+            <div className="relative mt-10 flex items-center justify-between gap-4 md:mt-0">
+              <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#F5F1E8] py-3 pl-6 pr-3 text-xs font-semibold uppercase text-[#5F2C1B] shadow-lg shadow-black/20 transition-all hover:shadow-xl hover:shadow-black/25">
+                {slide.cta}
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5F2C1B] text-[#F5F1E8] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5">
+                  <ArrowDownRight size={13} />
                 </span>
-                <ArrowDownRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"
-                />
               </button>
 
-              <span className="whitespace-nowrap text-xs font-medium text-[#F5F1E8]/70">
+              <span className="whitespace-nowrap text-xs font-medium tracking-wider text-[#F5F1E8]/60">
                 {pad(active + 1)} / {pad(slides.length)}
               </span>
             </div>
@@ -139,10 +140,10 @@ export default function Hero() {
             ))}
 
             {/* Bottom scrim for control legibility */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/30 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-black/35 to-transparent" />
 
             {/* Pagination dots */}
-            <div className="absolute bottom-6 left-6 z-10 flex items-center gap-2">
+            <div className="absolute bottom-7 left-6 z-10 flex items-center gap-2 rounded-full bg-black/20 px-4 py-2.5 backdrop-blur-md">
               {slides.map((_, i) => (
                 <button
                   key={i}
@@ -151,27 +152,27 @@ export default function Hero() {
                     restartAutoplay();
                   }}
                   aria-label={`go to slide ${i + 1}`}
-                  className="h-2 cursor-pointer rounded-full transition-all duration-300"
+                  className="h-1.5 cursor-pointer rounded-full transition-all duration-300"
                   style={{
-                    width: i === active ? "28px" : "8px",
+                    width: i === active ? "24px" : "6px",
                     backgroundColor:
-                      i === active ? "#F5F1E8" : "rgba(245,241,232,0.5)",
+                      i === active ? "#F5F1E8" : "rgba(245,241,232,0.45)",
                   }}
                 />
               ))}
             </div>
 
             {/* Prev / Next */}
-            <div className="absolute bottom-6 right-6 z-10 flex gap-3">
+            <div className="absolute bottom-7 right-6 z-10 flex gap-2">
               <button
                 onClick={() => {
                   prev();
                   restartAutoplay();
                 }}
                 aria-label="previous slide"
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md bg-[#F5F1E8] text-[#1A1A1A] transition-colors hover:bg-white"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/90 text-[#1A1A1A] shadow-md backdrop-blur-md transition-all hover:scale-105 hover:bg-white"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={19} />
               </button>
 
               <button
@@ -180,9 +181,9 @@ export default function Hero() {
                   restartAutoplay();
                 }}
                 aria-label="next slide"
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md bg-[#F5F1E8] text-[#1A1A1A] transition-colors hover:bg-white"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/90 text-[#1A1A1A] shadow-md backdrop-blur-md transition-all hover:scale-105 hover:bg-white"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={19} />
               </button>
             </div>
           </div>
