@@ -80,7 +80,7 @@ export default function Hero() {
 
   return (
     <section className="w-full bg-[#F5F1E8] px-4 py-6 md:px-8 md:py-10">
-      <div className="mx-auto max-w-[1800px] overflow-hidden rounded-3xl shadow-xl shadow-black/10">
+      <div className="mx-auto max-w-[1200px] overflow-hidden rounded-xs shadow-xl shadow-black/10">
         <div className="flex flex-col md:h-[640px] md:flex-row">
           {/* Left content panel */}
           <div className="relative order-2 flex w-full flex-col justify-between overflow-hidden bg-linear-to-br from-[#9C4E30] via-[#8A4128] to-[#5F2C1B] px-6 py-10 sm:px-10 md:order-1 md:w-[38%] md:px-14 md:py-16">
