@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,30 +11,43 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    if (!email.trim() || !password.trim()) {
-      setError("Please enter both your email and password.");
+  if (!email.trim() || !password.trim()) {
+    setError("Please enter both your email and password.");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const { data, error } = await authClient.signIn.email({
+      email,
+      password,
+      rememberMe: true,
+      callbackURL: "/",
+    });
+
+    if (error) {
+      if (error.status === 403) {
+        setError("Please verify your email address before logging in.");
+      } else {
+        setError("Wrong email or password. Please try again.");
+      }
       return;
     }
-
-    setLoading(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 800)); // placeholder
-      console.log("Submit login with:", { email, password });
-    } catch (err) {
-      setError(err?.message || "Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    setError(err?.message || "Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleSocialLogin = async (provider) => {
     setError("");
     try {
-      console.log("Social login with:", provider);
+
     } catch (err) {
       setError(err?.message || "Couldn't sign in. Please try again.");
     }
@@ -57,7 +71,7 @@ export default function LoginPage() {
 
         <div className="relative flex h-full flex-col items-center justify-center p-12">
           <blockquote className="max-w-md text-center">
-            <span className="mx-auto mt-10 mb-5 block h-px w-12 bg-[#E8956B]" />
+            <span className="mx-auto mb-5 block h-px w-12 bg-[#E8956B]" />
             <p className="font-serif text-3xl leading-snug text-white drop-shadow-md">
               ঘরকে চলতে দিন আপনার ছন্দে।
             </p>
