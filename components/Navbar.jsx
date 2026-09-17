@@ -2,11 +2,34 @@
 import { useState } from "react";
 import { Link, Button, Modal, Input, TextField, Label, Surface } from "@heroui/react";
 import { Mail, ShoppingBag, User } from "lucide-react";
+import { useSession, authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const cartCount = 0;
+  const {data: session} = useSession();
+  const user = session?.user;
+
+  const handleSignOut = async () => {
+    if (isSigningOut) return;
+    setIsSigningOut(true);
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            setIsMenuOpen(false);
+            router.push("/");
+            router.refresh();
+          },
+        },
+      });
+    } finally {
+      setIsSigningOut(false);
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-[#E4DDCF]/60 bg-[#F5F1E8]/70 backdrop-blur-md shadow-sm shadow-black/5">
@@ -57,20 +80,41 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 md:flex">
 
           {/* Login link*/}
-          <Link
-            href="/login"
-            className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
-          >
-            LOGIN
-          </Link>
+          {user ? (
+            <Link
+              href="/profile"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
+            >
+              WELCOME, {user.name}!
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
+            >
+              LOGIN
+            </Link>
+          )
 
-          {/* Sign Up link*/}
-          <Link
-            href="/signup"
-            className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#F5F1E8] no-underline hover:bg-[#C1633C]"
-          >
-            SIGN UP
-          </Link>
+        }
+          {/* Sign Up / Sign Out */}
+          {user ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+              className="cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#F5F1E8] no-underline hover:bg-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSigningOut ? "SIGNING OUT..." : "SIGN OUT"}
+            </button>
+          ) : (
+            <Link
+              href="/signup"
+              className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#F5F1E8] no-underline hover:bg-[#C1633C]"
+            >
+              SIGN UP
+            </Link>
+          )}
 
           <Link
             href="#"
@@ -115,17 +159,34 @@ export default function Navbar() {
             </li>
 
             <li className="mt-2 border-t border-[#E4DDCF] pt-3">
-              <Link href="/login" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
-                LOGIN
-              </Link>
+              {user ? (
+                <span className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A]">
+                  WELCOME, {user.name}!
+                </span>
+              ) : (
+                <Link href="/login" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+                  LOGIN
+                </Link>
+              )}
             </li>
             <li>
-              <Link
-                href="/signup"
-                className="block rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-[#F5F1E8] no-underline"
-              >
-                SIGN UP
-              </Link>
+              {user ? (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  disabled={isSigningOut}
+                  className="block w-full cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-[#F5F1E8] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSigningOut ? "SIGNING OUT..." : "SIGN OUT"}
+                </button>
+              ) : (
+                <Link
+                  href="/signup"
+                  className="block rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-[#F5F1E8] no-underline"
+                >
+                  SIGN UP
+                </Link>
+              )}
             </li>
           </ul>
         </div>
