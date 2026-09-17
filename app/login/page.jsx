@@ -21,11 +21,6 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      // TODO: replace with better-auth, e.g.
-      // const { error } = await authClient.signIn.email({ email, password });
-      // if (error) throw new Error(error.message);
-      // router.push("/account");
-
       await new Promise((resolve) => setTimeout(resolve, 800)); // placeholder
       console.log("Submit login with:", { email, password });
     } catch (err) {
@@ -46,28 +41,27 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen w-full bg-[#F5F1E8]">
-      {/* Left brand panel */}
+      {/* Left image panel */}
       <div className="relative hidden w-1/2 overflow-hidden lg:block">
         <Image
-          src="https://images.unsplash.com/photo-1692619223445-63d5d2c1ec18?auto=format&fit=crop&w=1800&q=90"
+          src="/login.png"
           alt="A handcrafted bamboo swing on a balcony"
           fill
           priority
           sizes="50vw"
-          className="object-cover"
+          className="object-cover object-top"
         />
-        <div className="absolute inset-0 bg-linear-to-br from-[#9C4E30]/85 via-[#8A4128]/80 to-[#5F2C1B]/90" />
 
-        <div className="relative flex h-full flex-col justify-between p-12">
-          <Link href="/" className="font-serif text-3xl text-[#F5F1E8]">
-            dolna.
-          </Link>
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60" />
 
-          <blockquote className="max-w-md">
-            <p className="font-serif text-3xl leading-snug text-[#F5F1E8]">
+        <div className="relative flex h-full flex-col items-center justify-center p-12">
+          <blockquote className="max-w-md text-center">
+            <span className="mx-auto mt-10 mb-5 block h-px w-12 bg-[#E8956B]" />
+            <p className="font-serif text-3xl leading-snug text-white drop-shadow-md">
               ঘরকে চলতে দিন আপনার ছন্দে।
             </p>
-            <p className="mt-4 text-sm text-[#F5F1E8]/70">
+            <p className="mt-4 text-sm leading-relaxed text-white/85 drop-shadow-sm">
               হাতে তৈরি দোলনা, যা থামা, খেলা আর প্রিয়জনের জন্য জায়গা করে দেয়।
             </p>
           </blockquote>
@@ -77,18 +71,11 @@ export default function LoginPage() {
       {/* Right form panel */}
       <div className="flex w-full flex-col justify-center px-6 py-16 sm:px-10 lg:w-1/2 lg:px-20">
         <div className="mx-auto w-full max-w-sm">
-          <Link
-            href="/"
-            className="font-serif text-2xl text-[#2B1C14] lg:hidden"
-          >
-            dolna.
-          </Link>
-
           <h1 className="mt-8 font-serif text-3xl text-[#2B1C14] lg:mt-0">
-            Welcome back
+            Welcome back!
           </h1>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
             <div>
               <label
                 htmlFor="email"
@@ -166,7 +153,7 @@ export default function LoginPage() {
             <div className="h-px flex-1 bg-[#E4D9C8]" />
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
               onClick={() => handleSocialLogin("google")}
