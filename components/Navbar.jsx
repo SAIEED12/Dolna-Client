@@ -160,9 +160,10 @@ export default function Navbar() {
 
             <li className="mt-2 border-t border-[#E4DDCF] pt-3">
               {user ? (
-                <span className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A]">
+                <Link href="/profile"
+                 className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A]">
                   WELCOME, {user.name}!
-                </span>
+                </Link>
               ) : (
                 <Link href="/login" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
                   LOGIN

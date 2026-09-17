@@ -50,7 +50,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full bg-[#F5F1E8]">
+    <div className="flex w-full flex-col bg-[#F5F1E8] lg:min-h-screen lg:flex-row">
       {/* Left image panel */}
       <div className="relative hidden w-1/2 overflow-hidden lg:block">
         <Image
@@ -79,7 +79,7 @@ const Signup = () => {
       </div>
 
       {/* Right form panel */}
-      <div className="flex w-full flex-col justify-center px-6 py-16 sm:px-10 lg:w-1/2 lg:px-20">
+      <div className="flex w-full flex-col justify-start px-6 py-10 sm:px-10 lg:w-1/2 lg:justify-center lg:px-20 lg:py-16">
         <div className="mx-auto w-full max-w-sm">
           <h1 className="mt-8 font-serif text-3xl text-[#2B1C14] lg:mt-0">
             Create your account
