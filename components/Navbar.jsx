@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, Button, Modal, Input, TextField, Label, Surface } from "@heroui/react";
 import { Mail, ShoppingBag, User } from "lucide-react";
 import { useSession, authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter();
@@ -12,6 +12,11 @@ export default function Navbar() {
   const cartCount = 0;
   const {data: session} = useSession();
   const user = session?.user;
+
+  const pathname = usePathname();
+  if(pathname.includes("dashboard")) {
+    return null;
+  }
 
   const handleSignOut = async () => {
     if (isSigningOut) return;

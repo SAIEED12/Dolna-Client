@@ -2,6 +2,8 @@
 
 import React from "react";
 import { Mail, Phone } from "lucide-react";
+import { usePathname } from "next/navigation";
+
 
 function InstagramIcon({ size = 24, ...props }) {
   return (
@@ -60,7 +62,7 @@ function FooterColumn({ title, links }) {
             <a
               href={link.href}
               className="text-sm text-[#B8AC9E] transition-colors hover:text-[#E8A87C]"
-            >
+              >
               {link.label}
             </a>
           </li>
@@ -71,6 +73,12 @@ function FooterColumn({ title, links }) {
 }
 
 export default function Footer() {
+
+  const pathname = usePathname();
+  if(pathname.includes("dashboard")) {
+    return null;
+  }
+  
   return (
     <footer className="w-full bg-[#141110] px-4 pb-8 pt-16 md:px-8 md:pt-24">
       <div className="mx-auto max-w-[1800px]">
