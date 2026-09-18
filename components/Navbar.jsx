@@ -4,6 +4,7 @@ import { Link, Button, Modal, Input, TextField, Label, Surface } from "@heroui/r
 import { Mail, ShoppingBag, User } from "lucide-react";
 import { useSession, authClient } from "@/lib/auth-client";
 import { usePathname, useRouter } from "next/navigation";
+import { getDashboardPathByRole } from "@/lib/dashboard-nav";
 
 export default function Navbar() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function Navbar() {
   const cartCount = 0;
   const {data: session} = useSession();
   const user = session?.user;
+  const dashboardHref = getDashboardPathByRole(user?.role);
 
   const pathname = usePathname();
   if(pathname.includes("dashboard")) {
@@ -80,6 +82,13 @@ export default function Navbar() {
               CATEGORIES
             </Link>
           </li>
+          {user && (
+            <li>
+              <Link href={dashboardHref} className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
+                DASHBOARD
+              </Link>
+            </li>
+          )}
         </ul>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -87,7 +96,7 @@ export default function Navbar() {
           {/* Login link*/}
           {user ? (
             <Link
-              href="/profile"
+              href={dashboardHref}
               className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
             >
               WELCOME, {user.name}!
@@ -162,10 +171,17 @@ export default function Navbar() {
                 CATEGORIES
               </Link>
             </li>
+            {user && (
+              <li>
+                <Link href={dashboardHref} className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+                  DASHBOARD
+                </Link>
+              </li>
+            )}
 
             <li className="mt-2 border-t border-[#E4DDCF] pt-3">
               {user ? (
-                <Link href="/profile"
+                <Link href={dashboardHref}
                  className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A]">
                   WELCOME, {user.name}!
                 </Link>

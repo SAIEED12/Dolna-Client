@@ -32,8 +32,7 @@ const Signup = () => {
         name: userData.username,
         email: userData.email,
         password: userData.password,
-        role: "customer",
-        callbackURL: "/",
+        callbackURL: "/dashboard",
       });
 
       if (error) {
@@ -41,7 +40,7 @@ const Signup = () => {
         return;
       }
 
-      router.push("/");
+      router.push("/dashboard");
     } catch (err) {
       setError("Something went wrong. Please try again.");
     } finally {

@@ -26,7 +26,7 @@ const handleSubmit = async (e) => {
       email,
       password,
       rememberMe: true,
-      callbackURL: "/",
+      callbackURL: "/dashboard",
     });
 
     if (error) {

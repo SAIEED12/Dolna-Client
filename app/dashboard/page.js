@@ -1,11 +1,16 @@
-import React from 'react';
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { getDashboardPathByRole } from "@/lib/dashboard-nav";
 
-const DashboardHome = () => {
-    return (
-        <div>
-            Dashboard Home
-        </div>
-    );
-};
+export default async function DashboardRedirect() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-export default DashboardHome;
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  redirect(getDashboardPathByRole(session.user.role));
+}
