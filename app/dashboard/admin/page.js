@@ -71,7 +71,7 @@ export default function AdminDashboardHome() {
             Here&apos;s what&apos;s happening today.
           </h2>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 md:hidden">
           <Link
             href="/dashboard/admin/products"
             className="rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] no-underline transition-colors hover:bg-[#1A1A1A] hover:text-[#F5F1E8]"
