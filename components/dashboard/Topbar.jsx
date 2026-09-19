@@ -68,7 +68,7 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
           <ChevronRight size={12} />
           <span className="font-medium text-[#1A1A1A]">{title}</span>
         </nav>
-        <h1 className="truncate font-serif text-xl text-[#1A1A1A] md:text-2xl">
+        <h1 className="truncate font-serif text-xl text-[#1A1A1A] md:hidden">
           {title}
         </h1>
       </div>
