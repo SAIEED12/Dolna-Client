@@ -3,7 +3,7 @@ import { ProductTable } from "@/components/dashboard/ProductTable";
 const SERVER_URL = process.env.SERVER_URL;
 
 const AdminProductsPage = async () => {
-  const res = await fetch(`${process.env.SERVER_URL}/products`);
+  const res = await fetch(`${SERVER_URL}/products`);
   const products = await res.json();
   return (
     <div>

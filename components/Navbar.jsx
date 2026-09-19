@@ -73,7 +73,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
+            <Link href="/products" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
               ALL PRODUCTS
             </Link>
           </li>
