@@ -6,20 +6,9 @@ const ProductTabs = ({ tabs = [] }) => {
   const [active, setActive] = useState(0);
   const tabRefs = useRef([]);
 
-  if (tabs.length === 0) return null;
-
-  const handleKeyDown = (e) => {
-    let next = null;
-    if (e.key === "ArrowRight") next = (active + 1) % tabs.length;
-    if (e.key === "ArrowLeft") next = (active - 1 + tabs.length) % tabs.length;
-    if (e.key === "Home") next = 0;
-    if (e.key === "End") next = tabs.length - 1;
-    if (next === null) return;
-
-    e.preventDefault();
-    setActive(next);
-    tabRefs.current[next]?.focus();
-  };
+  if (tabs.length === 0) {
+    return null;
+  }
 
   return (
     <section className="mt-14">
@@ -27,7 +16,6 @@ const ProductTabs = ({ tabs = [] }) => {
         <div
           role="tablist"
           aria-label="Product information"
-          onKeyDown={handleKeyDown}
           className="-mb-px flex gap-6 overflow-x-auto overflow-y-hidden sm:gap-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
         {tabs.map(({ title }, i) => (
@@ -41,7 +29,7 @@ const ProductTabs = ({ tabs = [] }) => {
             aria-controls={`product-panel-${i}`}
             tabIndex={i === active ? 0 : -1}
             onClick={() => setActive(i)}
-            className={`whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#C1633C] ${
+            className={`cursor-pointer whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#C1633C] ${
               i === active
                 ? "border-[#C1633C] text-[#2B1C14]"
                 : "border-transparent text-[#6B5A4E] hover:text-[#2B1C14]"
@@ -58,7 +46,7 @@ const ProductTabs = ({ tabs = [] }) => {
         id={`product-panel-${active}`}
         aria-labelledby={`product-tab-${active}`}
         tabIndex={0}
-        className="min-h-[6rem] max-w-2xl pt-6 leading-relaxed text-[#6B5A4E] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C1633C]"
+        className="min-h-24 font-semibold max-w-2xl pt-6 leading-relaxed text-[#6B5A4E] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C1633C]"
       >
         {tabs[active].content}
       </div>

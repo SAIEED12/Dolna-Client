@@ -60,17 +60,29 @@ const ProductsDetailsPage = async ({ params }) => {
           }
         : { label: "In stock", className: "bg-green-100 text-green-800" };
 
-  // Static placeholders until you store real ratings
-  const rating = Number(product.rating) || 4.8;
-  const reviewCount = Number(product.reviewCount) || 24;
-
   const categoryLabel = product.category
     ? product.category.replace("-", " ")
     : null;
 
-  const tabs = [
-    { title: "Description", content: product.description }].filter((tab) => tab.content,
-  );
+const materials = Array.isArray(product.materials)
+  ? product.materials.filter(Boolean)
+  : product.materials;
+
+const tabs = [
+  { title: "Description", content: product.description },
+  {
+    title: "Materials",
+    content: Array.isArray(materials)
+      ? materials.length > 0 && (
+          <ul className="list-disc space-y-1.5 pl-5">
+            {materials.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        )
+      : materials,
+  },
+].filter((tab) => tab.content);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -189,10 +201,10 @@ const ProductsDetailsPage = async ({ params }) => {
         </div>
       </div>
 
-      {/* ---------- Details / Shipping / Care tabs (full width) ---------- */}
+      {/* Details / Shipping / Care tabs */}
       <ProductTabs tabs={tabs} />
 
-      {/* ---------- Related products (full width) ---------- */}
+      {/* Related products */}
       <RelatedProducts products={related} />
     </main>
   );

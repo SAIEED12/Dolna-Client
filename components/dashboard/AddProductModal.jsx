@@ -188,22 +188,13 @@ export function AddProductModal() {
 
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="product-category">Category</Label>
-                  <select
-                    id="product-category"
-                    name="category"
-                    required
-                    defaultValue=""
-                    className="block w-full cursor-pointer rounded-xl border border-[#D8CBB4] bg-white/60 px-3 py-3.5 text-base text-[#2B1C14] transition-colors invalid:text-[#9A8F85] focus:border-[#C1633C] focus:outline-none focus:ring-2 focus:ring-[#C1633C]/20 [&>option]:text-[#2B1C14]"
-                  >
-                    <option value="" disabled>
-                      Select a category
-                    </option>
-                    <option value="baskets">Baskets</option>
-                    <option value="home-decor">Home Decor</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="bags">Bags</option>
-                    <option value="accessories">Accessories</option>
-                  </select>
+                  <TextField>
+                    <Input
+                      placeholder="e.g. Baskets, Home Decor, Hanging Swing Chairs etc."
+                      className={inputClassName}
+                      isRequired
+                    />
+                  </TextField>
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

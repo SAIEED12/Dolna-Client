@@ -18,13 +18,7 @@ function InstagramIcon({ size = 24, ...props }) {
     >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
-      <circle
-        cx="17.2"
-        cy="6.8"
-        r="1"
-        fill="currentColor"
-        stroke="none"
-      />
+      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -81,6 +75,9 @@ const supportLinks = [
   { label: "FAQs", href: "/faq" },
 ];
 
+const socialLinkClass =
+  "flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]";
+
 function FooterColumn({ title, links }) {
   return (
     <div className="text-center md:text-left">
@@ -110,24 +107,28 @@ export default function Footer() {
   }
 
   return (
-    <footer className="w-full bg-[#141110] px-4 pb-8 pt-16 md:px-8 md:pt-24">
-      <div className="mx-auto max-w-[1800px]">
-        <div className="grid grid-cols-1 gap-14 md:grid-cols-[1.5fr_1fr_1fr_1.3fr] md:gap-8">
-          
+    <footer className="w-full bg-[#141110] px-4 pb-8 pt-14 sm:px-6 md:pt-20 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.5fr_1fr_1fr_1.3fr] md:gap-10 lg:gap-12">
           {/* Brand */}
-          <div className="max-w-sm mx-auto text-center md:mx-0 md:text-left">
-            <Image src="/logo.png" alt="BelaView Logo" width={150} height={100}></Image>
+          <div className="mx-auto max-w-sm text-center md:mx-0 md:text-left">
+            <Image
+              src="/logo.png"
+              alt="BelaView logo"
+              width={80}
+              height={80}
+              className="mx-auto mb-5 h-20 w-20 object-contain md:mx-0"
+            />
 
-            <p className="mt-4 text-base leading-relaxed text-[#B8AC9E]">
-              যত্নে তৈরি দোলনা, যা ঘরের প্রতিটি মুহূর্তকে করে তোলে একটু বেশি
-              শান্ত।
+            <p className="text-lg font-semibold leading-7 text-[#B8AC9E]">
+             All The Swings Of Your Choice
             </p>
 
             <div className="mt-6 flex items-center justify-center gap-3 md:justify-start">
               <a
                 href="https://instagram.com"
-                aria-label="dolna on Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]"
+                aria-label="BelaView on Instagram"
+                className={socialLinkClass}
               >
                 <InstagramIcon size={16} />
               </a>
@@ -135,7 +136,7 @@ export default function Footer() {
               <a
                 href="https://www.facebook.com/belaviewbd"
                 aria-label="BelaView on Facebook"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]"
+                className={socialLinkClass}
               >
                 <FacebookIcon size={16} />
               </a>
@@ -143,7 +144,7 @@ export default function Footer() {
               <a
                 href="https://wa.me/+8801965599181"
                 aria-label="Chat on WhatsApp"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]"
+                className={socialLinkClass}
               >
                 <WhatsAppIcon size={16} />
               </a>
@@ -193,7 +194,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="mt-16 h-px w-full bg-[#2E2924]" />
+        <div className="mt-14 h-px w-full bg-[#2E2924]" />
 
         {/* Bottom */}
         <div className="mt-6 flex flex-col-reverse items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
