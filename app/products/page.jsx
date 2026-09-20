@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const SERVER_URL = process.env.SERVER_URL;
 
@@ -38,16 +39,23 @@ const AllProductsPage = async () => {
               </div>
 
               <div className="flex flex-1 flex-col gap-2 p-4">
-                <h2 className="text-lg font-semibold text-[#2B1C14]">{product.name}</h2>
-                <p className="line-clamp-2 text-sm text-[#6B5A4E]">{product.description}</p>
+                <h2 className="text-lg font-semibold text-[#2B1C14]">
+                  {product.name}
+                </h2>
+                <p className="line-clamp-2 text-sm text-[#6B5A4E]">
+                  {product.description}
+                </p>
 
-                <div className="mt-auto flex items-center justify-between pt-3">
+                <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
                   <span className="text-base font-semibold text-[#C1633C]">
                     ৳{Number(product.price).toLocaleString()}
                   </span>
-                  <span className="text-xs text-[#6B5A4E]">
-                    {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
-                  </span>
+                  <Link
+                    href={`/products/${product._id}`}
+                    className="block w-full rounded-full bg-[#1A1A1A] px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-[#F5F1E8] transition-colors hover:bg-[#C1633C] sm:w-auto sm:py-2"
+                  >
+                    View Details
+                  </Link>
                 </div>
               </div>
             </article>
