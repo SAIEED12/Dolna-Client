@@ -5,6 +5,7 @@ import { Mail, ShoppingBag, User } from "lucide-react";
 import { useSession, authClient } from "@/lib/auth-client";
 import { usePathname, useRouter } from "next/navigation";
 import { getDashboardPathByRole } from "@/lib/dashboard-nav";
+import Image from "next/image";
 
 export default function Navbar() {
   const router = useRouter();
@@ -59,10 +60,7 @@ export default function Navbar() {
           </button>
 
           <Link href="/" className="text-lg font-bold tracking-[0.15em] text-[#1A1A1A] no-underline">
-            <span className="font-serif text-2xl tracking-tight text-[#1A1A1A]">
-              dolna
-              <span className="text-[#C1633C]">.</span>
-            </span>
+            <Image src="/logo.png" alt="BelaView Logo" width={70} height={70}></Image>
           </Link>
         </div>
 

@@ -38,25 +38,34 @@ const AllProductsPage = async () => {
                 )}
               </div>
 
-              <div className="flex flex-1 flex-col gap-2 p-4">
+              <div className="flex flex-1 flex-col gap-2 p-8">
                 <h2 className="text-lg font-semibold text-[#2B1C14]">
                   {product.name}
                 </h2>
-                <p className="line-clamp-2 text-sm text-[#6B5A4E]">
-                  {product.description}
+                <p className="text-sm text-[#6B5A4E]">
+                  {/* {product.category && (
+                    <span className="mr-1.5 text-xs font-semibold uppercase ">
+                      CATEGORY: {product.category.replace("-", " ")}
+                    </span>
+                  )} */}
+                  {product.stock && (
+                    <span className=" text-xs font-semibold uppercase ">
+                      STOCK: {Number(product.stock).toLocaleString()}
+                    </span>
+                  )}
                 </p>
 
                 <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-base font-semibold text-[#C1633C]">
+                  <span className="text-2xl font-semibold text-[#C1633C]">
                     ৳{Number(product.price).toLocaleString()}
                   </span>
+                </div>
                   <Link
                     href={`/products/${product._id}`}
-                    className="block w-full rounded-full bg-[#1A1A1A] px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-[#F5F1E8] transition-colors hover:bg-[#C1633C] sm:w-auto sm:py-2"
+                    className="block w-full rounded-full bg-[#a04924] px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-[#F5F1E8] transition-colors hover:bg-[#582e1c] sm:w-auto sm:py-2"
                   >
                     View Details
                   </Link>
-                </div>
               </div>
             </article>
           ))}
