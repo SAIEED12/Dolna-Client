@@ -45,16 +45,19 @@ const ProductsDetailsPage = async ({ params }) => {
   ).filter(Boolean);
 
   const price = Number(product.price);
-//   const compareAt = Number(product.compareAtPrice);
-//   const onSale = compareAt > price;
-//   const discount = onSale ? Math.round((1 - price / compareAt) * 100) : 0;
+  //   const compareAt = Number(product.compareAtPrice);
+  //   const onSale = compareAt > price;
+  //   const discount = onSale ? Math.round((1 - price / compareAt) * 100) : 0;
 
   const stock = Number(product.stock) || 0;
   const stockBadge =
     stock === 0
       ? { label: "Out of stock", className: "bg-red-100 text-red-700" }
       : stock <= 5
-        ? { label: `Only ${stock} left`, className: "bg-amber-100 text-amber-800" }
+        ? {
+            label: `Only ${stock} left`,
+            className: "bg-amber-100 text-amber-800",
+          }
         : { label: "In stock", className: "bg-green-100 text-green-800" };
 
   // Static placeholders until you store real ratings
@@ -66,24 +69,8 @@ const ProductsDetailsPage = async ({ params }) => {
     : null;
 
   const tabs = [
-    {
-      title: "Details",
-      content:
-        product.description,
-    },
-    {
-      title: "Shipping",
-      content:
-        product.shipping ||
-        "We deliver across Bangladesh. Delivery time and charges are confirmed at checkout.",
-    },
-    {
-      title: "Care",
-      content:
-        product.care ||
-        "Wipe clean with a soft, dry cloth. Keep away from moisture and prolonged direct sunlight.",
-    },
-  ];
+    { title: "Description", content: product.description }].filter((tab) => tab.content,
+  );
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -100,7 +87,6 @@ const ProductsDetailsPage = async ({ params }) => {
           <ProductGallery
             images={images}
             name={product.name}
-            category={product.category}
           />
         </div>
 
@@ -121,6 +107,18 @@ const ProductsDetailsPage = async ({ params }) => {
 
           <h1 className="font-serif text-4xl leading-tight text-[#2B1C14] sm:text-5xl">
             {product.name}
+          </h1>
+
+          <h1 className="font-serif leading-tight text-[#6B5A4E] sm:text-sm">
+            CATEGORY: {product.category && (
+              <span className=" font-semibold uppercase text-[#6B5A4E]">
+                {product.category.replace("-", " ")}
+              </span>
+            )}
+          </h1>
+
+          <h1 className="text-4xl font-semibold text-[#C1633C]">
+            ৳{price.toLocaleString()}
           </h1>
 
           {/* <div className="flex items-center gap-2">

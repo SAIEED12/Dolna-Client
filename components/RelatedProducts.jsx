@@ -27,20 +27,23 @@ const RelatedProducts = ({ products = [] }) => {
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               )}
-              {product.category && (
-                <span className="absolute left-3 top-3 rounded-full bg-[#1A1A1A] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F5F1E8]">
-                  {product.category.replace("-", " ")}
-                </span>
-              )}
             </div>
 
             <div className="flex flex-1 flex-col gap-2 p-4">
               <h3 className="text-lg font-semibold text-[#2B1C14]">
                 {product.name}
               </h3>
-              <p className="line-clamp-2 text-sm text-[#6B5A4E]">
-                {product.description}
+              <p className="line-clamp-2 text-xs font-semibold text-[#6B5A4E]">
+                CATEGORY:{" "}
+                {product.category && (
+                  <span className="mr-1.5 text-xs font-semibold uppercase ">
+                    {product.category.replace("-", " ")}
+                  </span>
+                )}
               </p>
+                <p className="text-xs font-semibold text-[#6B5A4E]">
+                  STOCK: {Number(product.stock).toLocaleString()}
+                </p>
 
               <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
                 <span className="text-base font-semibold text-[#C1633C]">

@@ -33,7 +33,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Share sheet dismissed or clipboard unavailable: nothing to do
+      
     }
   };
 
