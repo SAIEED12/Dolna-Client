@@ -9,69 +9,143 @@ import {
   TextField,
 } from "@heroui/react";
 import { addProduct } from "@/lib/actions/products";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { imageUpload } from "@/lib/imageUpload";
+
+const MAX_IMAGES = 4;
 
 const inputClassName =
   "w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] outline-none focus:border-[#9C4E30] focus:ring-2 focus:ring-[#9C4E30]/20";
 const labelClassName = "text-sm font-medium text-[#2B1C14]";
 
+const fileKey = (f) => `${f.name}-${f.size}-${f.lastModified}`;
+
 export function AddProductModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [files, setFiles] = useState([]); // File[] (max 4)
+  const [previews, setPreviews] = useState([]); // object URLs, same order as files
 
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    if (preview) URL.revokeObjectURL(preview);
-    setPreview(file ? URL.createObjectURL(file) : null);
+  const inputRef = useRef(null);
+  const previewsRef = useRef([]);
+
+  useEffect(() => {
+    previewsRef.current = previews;
+  }, [previews]);
+  useEffect(() => {
+    return () => previewsRef.current.forEach((url) => URL.revokeObjectURL(url));
+  }, []);
+
+  const syncInput = (list) => {
+    const input = inputRef.current;
+    if (!input) return;
+    const dt = new DataTransfer();
+    list.forEach((f) => dt.items.add(f));
+    input.files = dt.files;
   };
 
-  const handleRemovePreview = (e) => {
-    e.preventDefault();
-    const input = document.getElementById("product-image");
-    if (input) input.value = "";
-    if (preview) URL.revokeObjectURL(preview);
-    setPreview(null);
+  const applyFiles = (nextFiles) => {
+    previews.forEach((url) => URL.revokeObjectURL(url));
+    setFiles(nextFiles);
+    setPreviews(nextFiles.map((f) => URL.createObjectURL(f)));
+    syncInput(nextFiles);
+  };
+
+  const resetImages = () => {
+    previews.forEach((url) => URL.revokeObjectURL(url));
+    setFiles([]);
+    setPreviews([]);
+    syncInput([]);
+  };
+
+  const handleImageChange = (e) => {
+    const picked = Array.from(e.target.files ?? []);
+    if (picked.length === 0) {
+      syncInput(files);
+      return;
+    }
+
+    const existing = new Set(files.map(fileKey));
+    const fresh = picked.filter((f) => !existing.has(fileKey(f)));
+    const merged = [...files, ...fresh];
+
+    setError(
+      merged.length > MAX_IMAGES
+        ? `You can upload a maximum of ${MAX_IMAGES} images. Extra files were ignored.`
+        : null,
+    );
+    applyFiles(merged.slice(0, MAX_IMAGES));
+  };
+
+  const handleRemoveImage = (index) => {
+    setError(null);
+    applyFiles(files.filter((_, i) => i !== index));
   };
 
   const handleOpenChange = (open) => {
     setIsOpen(open);
-    if (!open) setError(null);
+    if (!open) {
+      setError(null);
+      resetImages();
+    }
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
+    const form = e.currentTarget;
+    const formdata = new FormData(form);
+    const data = Object.fromEntries(formdata.entries());
+
+    const imageFiles = formdata
+      .getAll("images")
+      .filter((f) => f instanceof File && f.size > 0);
+
+    if (imageFiles.length < 1) {
+      setError("Select at least 1 image.");
+      return;
+    }
+    if (imageFiles.length > MAX_IMAGES) {
+      setError(`You can upload a maximum of ${MAX_IMAGES} images.`);
+      return;
+    }
+
     setIsPending(true);
     try {
-      const form = e.currentTarget;
-      const formdata = new FormData(form);
-      const data = Object.fromEntries(formdata.entries());
-      console.log("Form data:", data);
-
-      const imageFile = data.image;
-      const hasImage = imageFile instanceof File && imageFile.size > 0;
-
-      let imageUrl = "";
-      if (hasImage) {
-        const uploaded = await imageUpload(imageFile);
-        imageUrl = uploaded?.url ?? "";
+      
+      let urls;
+      try {
+        const uploaded = await Promise.all(
+          imageFiles.map((file) => imageUpload(file)),
+        );
+        urls = uploaded.map((u) => u?.url ?? "");
+        if (urls.some((url) => !url)) throw new Error("Missing image URL");
+      } catch (err) {
+        console.error("Image upload failed:", err);
+        setError("Image upload failed. Please try again.");
+        return;
       }
 
-      await addProduct({ ...data, image: imageUrl });
+      
+      try {
+        await addProduct({ ...data, image: urls[0], images: urls });
+      } catch (err) {
+        console.error("Add product failed:", err);
+        setError("Couldn't save the product. Please try again.");
+        return;
+      }
 
       form.reset();
-      if (preview) URL.revokeObjectURL(preview);
-      setPreview(null);
+      resetImages();
       setIsOpen(false);
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
     } finally {
       setIsPending(false);
     }
   };
+
+  const isFull = previews.length >= MAX_IMAGES;
 
   return (
     <Modal>
@@ -141,35 +215,62 @@ export function AddProductModal() {
                 </TextField>
 
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="product-image" className={labelClassName}>
-                    Image
-                  </Label>
+                  <div className="flex items-baseline justify-between">
+                    <Label htmlFor="product-image" className={labelClassName}>
+                      Images
+                    </Label>
+                    <span className="text-xs text-[#7A6F63]">
+                      Up to {MAX_IMAGES} · {previews.length}/{MAX_IMAGES}{" "}
+                      selected
+                    </span>
+                  </div>
+                  
                   <input
+                    ref={inputRef}
                     id="product-image"
-                    name="image"
+                    name="images"
                     type="file"
                     accept="image/*"
+                    multiple
                     required
+                    tabIndex={isFull ? -1 : 0}
+                    aria-disabled={isFull}
                     onChange={handleImageChange}
-                    className="block w-full cursor-pointer rounded-xl border border-dashed border-[#D8CBB4] bg-white/60 p-2 text-sm text-[#2B1C14] file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#1A1A1A] file:px-4 file:py-2 file:text-xs file:font-semibold file:tracking-[0.1em] file:text-[#F5F1E8] file:transition-colors hover:file:bg-[#C1633C]"
+                    className={`block w-full cursor-pointer rounded-xl border border-dashed border-[#D8CBB4] bg-white/60 p-2 text-sm text-[#2B1C14] file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#1A1A1A] file:px-4 file:py-2 file:text-xs file:font-semibold file:tracking-[0.1em] file:text-[#F5F1E8] file:transition-colors hover:file:bg-[#C1633C] ${
+                      isFull ? "pointer-events-none opacity-60" : ""
+                    }`}
                   />
-                  {preview && (
-                    <div className="mt-2 rounded-xl border border-[#E4DDCF] bg-white p-2">
-                      <div className="relative">
-                        <img
-                          src={preview}
-                          alt="Product preview"
-                          className="h-32 w-full rounded-lg object-cover"
-                        />
-                        <button
-                          type="button"
-                          onClick={handleRemovePreview}
-                          aria-label="Remove image"
-                          className="absolute top-2 right-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-[#C1633C]"
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
+                  <p className="text-xs text-[#A69783]">
+                    {isFull
+                      ? "Maximum reached. Remove an image to add another."
+                      : "The first image is used as the cover."}
+                  </p>
+
+                  {previews.length > 0 && (
+                    <div className="mt-2 grid grid-cols-2 gap-2 rounded-xl border border-[#E4DDCF] bg-white p-2">
+                      {previews.map((src, index) => (
+                        <div key={src} className="relative">
+                          <img
+                            src={src}
+                            alt={`Product preview ${index + 1}`}
+                            className="h-28 w-full rounded-lg object-cover"
+                          />
+                          {index === 0 && (
+                            <span className="absolute top-2 left-2 rounded-full bg-[#C1633C] px-2 py-0.5 text-[10px] font-semibold tracking-[0.1em] text-white uppercase">
+                              Cover
+                            </span>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(index)}
+                            disabled={isPending}
+                            aria-label={`Remove image ${index + 1}`}
+                            className="absolute top-2 right-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -177,23 +278,24 @@ export function AddProductModal() {
                 <TextField
                   className="flex w-full flex-col gap-1.5"
                   name="materials"
+                  isRequired
                 >
                   <Label className={labelClassName}>Materials</Label>
                   <Input
                     placeholder="e.g. Jute, Cotton, Bamboo (comma separated)"
                     className={inputClassName}
-                    isRequired
                   />
                 </TextField>
 
                 <div className="flex flex-col gap-2">
                   <TextField className="flex w-full flex-col gap-1.5"
-                  name="category" isRequired>
+                  name="category"
+                  isRequired>
                   <Label className={labelClassName}>Category</Label>
                     <Input
                       placeholder="e.g. Baskets, Home Decor, Hanging Swing Chairs etc."
                       className={inputClassName}
-                      isRequired
+                      
                     />
                   </TextField>
                 </div>
@@ -240,7 +342,7 @@ export function AddProductModal() {
 
             <Modal.Footer className="border-t border-[#E4DDCF]/70 bg-[#EFE7D8]/50 px-6 py-4">
               <Button
-                onPress={() => setIsOpen(false)}
+                onPress={() => handleOpenChange(false)}
                 isDisabled={isPending}
                 className="cursor-pointer rounded-full border border-[#D8CBB4] bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#2B1C14] transition-colors hover:border-[#C1633C] hover:bg-[#C1633C]/10 hover:text-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
               >

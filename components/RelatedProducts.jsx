@@ -40,10 +40,7 @@ const RelatedProducts = ({ products = [] }) => {
                     {product.category.replace("-", " ")}
                   </span>
                 )}
-              </p>
-                <p className="text-xs font-semibold text-[#6B5A4E]">
-                  STOCK: {Number(product.stock).toLocaleString()}
-                </p>
+              </p> 
 
               <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
                 <span className="text-base font-semibold text-[#C1633C]">
