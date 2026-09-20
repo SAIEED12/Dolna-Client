@@ -43,14 +43,9 @@ const AllProductsPage = async () => {
                   {product.name}
                 </h2>
                 <p className="text-sm text-[#6B5A4E]">
-                  {/* {product.category && (
+                  {product.category && (
                     <span className="mr-1.5 text-xs font-semibold uppercase ">
                       CATEGORY: {product.category.replace("-", " ")}
-                    </span>
-                  )} */}
-                  {product.stock && (
-                    <span className=" text-xs font-semibold uppercase ">
-                      STOCK: {Number(product.stock).toLocaleString()}
                     </span>
                   )}
                 </p>

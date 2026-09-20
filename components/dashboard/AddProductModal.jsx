@@ -187,8 +187,9 @@ export function AddProductModal() {
                 </TextField>
 
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="product-category">Category</Label>
-                  <TextField>
+                  <TextField className="flex w-full flex-col gap-1.5"
+                  name="category" isRequired>
+                  <Label className={labelClassName}>Category</Label>
                     <Input
                       placeholder="e.g. Baskets, Home Decor, Hanging Swing Chairs etc."
                       className={inputClassName}

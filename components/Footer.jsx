@@ -120,7 +120,7 @@ export default function Footer() {
               className="mx-auto mb-5 h-20 w-20 object-contain md:mx-0"
             />
 
-            <p className="text-lg font-semibold leading-7 text-[#B8AC9E]">
+            <p className="text-md font-serif text-[#B8AC9E]">
              All The Swings Of Your Choice
             </p>
 

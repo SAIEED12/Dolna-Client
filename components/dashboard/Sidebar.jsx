@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Store, LogOut } from "lucide-react";
 import { useState } from "react";
 import { authClient, useSession } from "@/lib/auth-client";
+import Image from "next/image";
 
 function isActive(pathname, href, exact) {
   if (exact) return pathname === href;
@@ -46,15 +47,13 @@ export default function Sidebar({
       {/* Brand */}
       <div className="flex h-16 shrink-0 items-center border-b border-[#E4DDCF]/70 px-5">
         <Link href={basePath} onClick={onNavigate} className="no-underline">
-          <span className="font-serif text-2xl tracking-tight text-[#1A1A1A]">
-            dolna<span className="text-[#C1633C]">.</span>
-          </span>
-          {badge && (
-            <span className="ml-2 rounded-full bg-[#1A1A1A] px-2 py-0.5 align-middle text-[10px] font-semibold tracking-[0.15em] text-[#F5F1E8]">
-              {badge}
-            </span>
-          )}
+          <Image src="/logo.png" alt="Logo" width={40} height={40} />
         </Link>
+        {badge && (
+          <span className="ml-2 rounded-full bg-[#C1633C] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F5F1E8]">
+            {badge}
+          </span>
+        )}
       </div>
 
       {/* Nav */}
@@ -98,11 +97,11 @@ export default function Sidebar({
       {/* Footer */}
       <div className="shrink-0 border-t border-[#E4DDCF]/70 p-3">
         <Link
-          href="/"
+          href="/products"
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] no-underline transition-colors hover:bg-[#E4DDCF]/60"
         >
           <Store size={18} strokeWidth={1.75} className="text-[#7A6F63]" />
-          View store
+          View Products
         </Link>
         <div className="mt-1 flex items-center gap-3 rounded-xl bg-[#EFE7D8] px-3 py-2.5">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1A1A1A] text-sm font-bold text-[#F5F1E8]">
