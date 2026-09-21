@@ -9,18 +9,18 @@ const AllProductsPage = async () => {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="mb-8 font-serif text-3xl text-[#2B1C14]">All Products</h1>
+      <h1 className="mb-8 font-serif text-3xl text-[#1A1A1A]">All Products</h1>
 
       {products.length === 0 ? (
-        <p className="text-[#6B5A4E]">No products found.</p>
+        <p className="text-[#525252]">No products found.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
             <article
               key={String(product._id)}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#D8CBB4] bg-white/60 transition-shadow hover:shadow-lg"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white transition-shadow hover:shadow-lg"
             >
-              <div className="relative aspect-square w-full overflow-hidden bg-[#EDE4D3]">
+              <div className="relative aspect-square w-full overflow-hidden bg-[#F5F5F5]">
                 {product.image && (
                   <Image
                     src={product.image}
@@ -35,10 +35,10 @@ const AllProductsPage = async () => {
               </div>
 
               <div className="flex flex-1 flex-col gap-2 p-8">
-                <h2 className="text-lg font-semibold text-[#2B1C14]">
+                <h2 className="text-lg font-semibold text-[#1A1A1A]">
                   {product.name}
                 </h2>
-                <p className="text-sm text-[#6B5A4E]">
+                <p className="text-sm text-[#525252]">
                   {product.category && (
                     <span className="mr-1.5 text-xs font-semibold uppercase ">
                       CATEGORY: {product.category.replace("-", " ")}
@@ -47,13 +47,13 @@ const AllProductsPage = async () => {
                 </p>
 
                 <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-2xl font-semibold text-[#C1633C]">
+                  <span className="text-2xl font-semibold text-brand">
                     ৳{Number(product.price).toLocaleString()}
                   </span>
                 </div>
                   <Link
                     href={`/products/${product._id}`}
-                    className="block w-full rounded-full bg-[#a04924] px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-[#F5F1E8] transition-colors hover:bg-[#582e1c] sm:w-auto sm:py-2"
+                    className="block w-full rounded-full bg-brand px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-brand-dark sm:w-auto sm:py-2"
                   >
                     View Details
                   </Link>

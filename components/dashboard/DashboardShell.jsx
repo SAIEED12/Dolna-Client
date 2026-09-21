@@ -26,9 +26,9 @@ export default function DashboardShell({
   const sidebarProps = { navSections, badge, basePath };
 
   return (
-    <div className="flex min-h-screen bg-[#FAF7F1] text-[#1A1A1A]">
+    <div className="flex min-h-screen bg-[#FAFAFA] text-[#1A1A1A]">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-[#E4DDCF]/70 lg:block">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-[#E5E5E5] lg:block">
         <Sidebar {...sidebarProps} />
       </aside>
 
@@ -46,7 +46,7 @@ export default function DashboardShell({
           }`}
         />
         <aside
-          className={`absolute top-0 left-0 h-full w-72 max-w-[85vw] border-r border-[#E4DDCF]/70 shadow-2xl transition-transform duration-300 ${
+          className={`absolute top-0 left-0 h-full w-72 max-w-[85vw] border-r border-[#E5E5E5] bg-white shadow-2xl transition-transform duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

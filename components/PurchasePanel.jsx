@@ -38,14 +38,14 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
   };
 
   const iconButton =
-    "inline-flex h-10 w-10 items-center justify-center text-[#2B1C14] transition-colors hover:text-[#C1633C] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-[#2B1C14] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C1633C]";
+    "inline-flex h-10 w-10 items-center justify-center text-[#1A1A1A] transition-colors hover:text-brand disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-[#1A1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
 
   return (
     <div className="flex flex-col gap-5">
       {/* Quantity + live subtotal */}
       <div className="flex items-center justify-between gap-4">
         <div
-          className="inline-flex items-center rounded-full border border-[#D8CBB4] bg-white/60"
+          className="inline-flex items-center rounded-full border border-[#E5E5E5] bg-white"
           role="group"
           aria-label="Quantity"
         >
@@ -59,7 +59,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
             <Minus className="h-4 w-4" />
           </button>
           <span
-            className="w-10 text-center text-sm font-semibold tabular-nums text-[#2B1C14]"
+            className="w-10 text-center text-sm font-semibold tabular-nums text-[#1A1A1A]"
             aria-live="polite"
           >
             {qty}
@@ -75,9 +75,9 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
           </button>
         </div>
 
-        <p className="text-sm text-[#6B5A4E]">
+        <p className="text-sm text-[#525252]">
           Subtotal{" "}
-          <span className="text-lg font-semibold tabular-nums text-[#2B1C14]">
+          <span className="text-lg font-semibold tabular-nums text-[#1A1A1A]">
             ৳{(Number(price) * qty).toLocaleString()}
           </span>
         </p>
@@ -89,7 +89,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
           type="button"
           onClick={handleAddToCart}
           disabled={!inStock}
-          className="block w-full cursor-pointer flex-1 rounded-full border border-[#1A1A1A] px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-[#F5F1E8] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-[#1A1A1A]"
+          className="block w-full cursor-pointer flex-1 rounded-full border border-[#1A1A1A] px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-[#1A1A1A]"
         >
           Add to Cart
         </button>
@@ -97,23 +97,23 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
           type="button"
           onClick={handleBuyNow}
           disabled={!inStock}
-          className="block w-full flex-1 cursor-pointer rounded-full bg-[#1A1A1A] px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.08em] text-[#F5F1E8] transition-colors hover:bg-[#C1633C] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#1A1A1A]"
+          className="block w-full flex-1 cursor-pointer rounded-full bg-brand px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand"
         >
           Buy Now
         </button>
       </div>
 
       {/* Secondary actions */}
-      <div className="flex items-center gap-5 text-sm text-[#6B5A4E]">
+      <div className="flex items-center gap-5 text-sm text-[#525252]">
         <button
           type="button"
           onClick={() => setWished((w) => !w)}
           aria-pressed={wished}
-          className="inline-flex cursor-pointer items-center gap-2 transition-colors hover:text-[#C1633C] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C1633C]"
+          className="inline-flex cursor-pointer items-center gap-2 transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           <Heart
             className={`h-5 w-5${
-              wished ? "fill-[#C1633C] text-[#C1633C]" : ""
+              wished ? "fill-brand text-brand" : ""
             }`}
           />
           {wished ? "Saved to wishlist" : "Save to wishlist"}
@@ -122,7 +122,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
         <button
           type="button"
           onClick={handleShare}
-          className="inline-flex items-center cursor-pointer gap-2 transition-colors hover:text-[#C1633C] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C1633C]"
+          className="inline-flex items-center cursor-pointer gap-2 transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           <Share2 className="h-5 w-5" />
           Share

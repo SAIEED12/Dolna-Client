@@ -42,7 +42,7 @@ export default function CustomerDashboardHome() {
       {/* Page heading */}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold tracking-[0.15em] text-[#C1633C] uppercase">
+          <p className="text-xs font-semibold tracking-[0.15em] text-brand uppercase">
             My account
           </p>
           <h2 className="mt-1 font-serif text-2xl text-[#1A1A1A] md:text-3xl">
@@ -52,13 +52,13 @@ export default function CustomerDashboardHome() {
         <div className="flex gap-2">
           <Link
             href="/"
-            className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#F5F1E8] no-underline transition-colors hover:bg-[#C1633C]"
+            className="rounded-full bg-brand px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white no-underline transition-colors hover:bg-brand-dark"
           >
             SHOP NOW
           </Link>
           <Link
             href="/dashboard/customer/orders"
-            className="rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] no-underline transition-colors hover:bg-[#1A1A1A] hover:text-[#F5F1E8]"
+            className="rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] no-underline transition-colors hover:bg-[#1A1A1A] hover:text-white"
           >
             TRACK ORDER
           </Link>
@@ -75,15 +75,15 @@ export default function CustomerDashboardHome() {
           return (
             <div
               key={stat.label}
-              className="rounded-2xl border border-[#E4DDCF]/70 bg-[#F5F1E8] p-5 shadow-sm shadow-black/5"
+              className="rounded-2xl border border-[#E5E5E5] bg-white p-5 shadow-sm shadow-black/5"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1A1A1A] text-[#F5F1E8]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white">
                 <Icon size={18} strokeWidth={1.75} />
               </span>
               <p className="mt-4 font-serif text-3xl text-[#1A1A1A]">
                 {stat.value}
               </p>
-              <p className="mt-1 text-sm text-[#7A6F63]">
+              <p className="mt-1 text-sm text-[#525252]">
                 {stat.label} · {stat.note}
               </p>
             </div>
@@ -94,15 +94,15 @@ export default function CustomerDashboardHome() {
       {/* My recent orders — full width */}
       <section
         aria-label="My recent orders"
-        className="w-full overflow-hidden rounded-2xl border border-[#E4DDCF]/70 bg-[#F5F1E8] shadow-sm shadow-black/5"
+        className="w-full overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white shadow-sm shadow-black/5"
       >
-        <div className="flex items-center justify-between border-b border-[#E4DDCF]/70 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-[#E5E5E5] px-5 py-4">
           <h3 className="font-serif text-lg text-[#1A1A1A]">
             My recent orders
           </h3>
           <Link
             href="/dashboard/customer/orders"
-            className="text-xs font-semibold tracking-[0.12em] text-[#C1633C] no-underline hover:underline"
+            className="text-xs font-semibold tracking-[0.12em] text-brand no-underline hover:underline"
           >
             VIEW ALL
           </Link>
@@ -110,7 +110,7 @@ export default function CustomerDashboardHome() {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[560px] text-left text-sm">
             <thead>
-              <tr className="text-xs tracking-[0.1em] text-[#7A6F63] uppercase">
+              <tr className="text-xs tracking-[0.1em] text-[#8A8A8A] uppercase">
                 <th className="px-5 py-3 font-semibold">Order</th>
                 <th className="px-5 py-3 font-semibold">Date</th>
                 <th className="px-5 py-3 font-semibold">Total</th>
@@ -121,12 +121,12 @@ export default function CustomerDashboardHome() {
               {myOrders.map((order) => (
                 <tr
                   key={order.id}
-                  className="border-t border-[#E4DDCF]/60 transition-colors hover:bg-white/50"
+                  className="border-t border-[#E5E5E5] transition-colors hover:bg-[#FAFAFA]"
                 >
                   <td className="px-5 py-3 font-semibold text-[#1A1A1A]">
                     {order.id}
                   </td>
-                  <td className="px-5 py-3 text-[#7A6F63]">{order.date}</td>
+                  <td className="px-5 py-3 text-[#525252]">{order.date}</td>
                   <td className="px-5 py-3 font-medium text-[#1A1A1A]">
                     {order.total}
                   </td>

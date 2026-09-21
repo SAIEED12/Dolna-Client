@@ -48,12 +48,12 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-[#E4DDCF]/70 bg-[#F5F1E8]/85 px-4 backdrop-blur-md md:px-8">
+    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-3 border-b border-[#E5E5E5] bg-white/85 px-4 backdrop-blur-md md:px-8">
       <button
         type="button"
         onClick={onMenuClick}
         aria-label="Open menu"
-        className="cursor-pointer rounded-full p-2 text-[#1A1A1A] transition-colors hover:bg-[#E4DDCF]/60 lg:hidden"
+        className="cursor-pointer rounded-full p-2 text-[#1A1A1A] transition-colors hover:bg-[#F5F5F5] lg:hidden"
       >
         <Menu size={20} />
       </button>
@@ -62,7 +62,7 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
       <div className="min-w-0 flex-1">
         <nav
           aria-label="Breadcrumb"
-          className="hidden items-center gap-1 text-xs text-[#7A6F63] sm:flex"
+          className="hidden items-center gap-1 text-xs text-[#8A8A8A] sm:flex"
         >
           <span>Dashboard</span>
           <ChevronRight size={12} />
@@ -75,12 +75,12 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
 
       {/* Search */}
       <div className="hidden items-center md:flex">
-        <label className="flex items-center gap-2 rounded-full border border-[#E4DDCF] bg-white/60 px-4 py-2 text-sm text-[#7A6F63] focus-within:border-[#C1633C]">
+        <label className="flex items-center gap-2 rounded-full border border-[#E5E5E5] bg-white px-4 py-2 text-sm text-[#8A8A8A] focus-within:border-brand">
           <Search size={15} />
           <input
             type="search"
             placeholder="Search orders, products…"
-            className="w-44 bg-transparent text-[#1A1A1A] outline-none placeholder:text-[#7A6F63] lg:w-56"
+            className="w-44 bg-transparent text-[#1A1A1A] outline-none placeholder:text-[#8A8A8A] lg:w-56"
           />
         </label>
       </div>
@@ -89,10 +89,10 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
       <button
         type="button"
         aria-label="Notifications"
-        className="relative cursor-pointer rounded-full border border-[#E4DDCF] p-2.5 text-[#1A1A1A] transition-colors hover:bg-[#E4DDCF]/60"
+        className="relative cursor-pointer rounded-full border border-[#E5E5E5] p-2.5 text-[#1A1A1A] transition-colors hover:bg-[#F5F5F5]"
       >
         <Bell size={17} strokeWidth={1.75} />
-        <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#C1633C] ring-2 ring-[#F5F1E8]" />
+        <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-brand ring-2 ring-white" />
       </button>
 
       {/* User menu */}
@@ -102,20 +102,20 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="User menu"
           aria-expanded={menuOpen}
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-[#E4DDCF] py-1 pr-1 pl-1 transition-colors hover:bg-[#E4DDCF]/60"
+          className="flex cursor-pointer items-center gap-2 rounded-full border border-[#E5E5E5] py-1 pr-1 pl-1 transition-colors hover:bg-[#F5F5F5]"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1A1A1A] text-xs font-bold text-[#F5F1E8]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1A1A1A] text-xs font-bold text-white">
             {initial}
           </span>
         </button>
 
         {menuOpen && (
-          <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-[#E4DDCF] bg-white shadow-xl shadow-black/10">
-            <div className="border-b border-[#E4DDCF]/70 px-4 py-3">
+          <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white shadow-xl shadow-black/10">
+            <div className="border-b border-[#E5E5E5] px-4 py-3">
               <p className="truncate text-sm font-semibold text-[#1A1A1A]">
                 {user?.name ?? "Account"}
               </p>
-              <p className="truncate text-xs text-[#7A6F63]">
+              <p className="truncate text-xs text-[#8A8A8A]">
                 {user?.email ?? ""}
               </p>
             </div>
@@ -123,14 +123,14 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
               <Link
                 href={`${basePath}/settings`}
                 onClick={() => setMenuOpen(false)}
-                className="block rounded-xl px-3 py-2 text-sm text-[#1A1A1A] no-underline hover:bg-[#F5F1E8]"
+                className="block rounded-xl px-3 py-2 text-sm text-[#1A1A1A] no-underline hover:bg-[#F5F5F5]"
               >
                 Profile settings
               </Link>
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="block w-full cursor-pointer rounded-xl px-3 py-2 text-left text-sm font-medium text-[#C1633C] hover:bg-[#F5F1E8]"
+                className="block w-full cursor-pointer rounded-xl px-3 py-2 text-left text-sm font-medium text-brand hover:bg-brand-soft"
               >
                 Sign out
               </button>

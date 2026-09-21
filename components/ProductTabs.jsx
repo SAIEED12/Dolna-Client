@@ -12,7 +12,7 @@ const ProductTabs = ({ tabs = [] }) => {
 
   return (
     <section className="mt-14">
-      <div className="border-b border-[#D8CBB4]">
+      <div className="border-b border-[#E5E5E5]">
         <div
           role="tablist"
           aria-label="Product information"
@@ -29,10 +29,10 @@ const ProductTabs = ({ tabs = [] }) => {
             aria-controls={`product-panel-${i}`}
             tabIndex={i === active ? 0 : -1}
             onClick={() => setActive(i)}
-            className={`cursor-pointer whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#C1633C] ${
+            className={`cursor-pointer whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand ${
               i === active
-                ? "border-[#C1633C] text-[#2B1C14]"
-                : "border-transparent text-[#6B5A4E] hover:text-[#2B1C14]"
+                ? "border-brand text-[#1A1A1A]"
+                : "border-transparent text-[#525252] hover:text-[#1A1A1A]"
             }`}
           >
             {title}
@@ -46,7 +46,7 @@ const ProductTabs = ({ tabs = [] }) => {
         id={`product-panel-${active}`}
         aria-labelledby={`product-tab-${active}`}
         tabIndex={0}
-        className="min-h-24 font-semibold max-w-2xl pt-6 leading-relaxed text-[#6B5A4E] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C1633C]"
+        className="min-h-24 font-semibold max-w-2xl pt-6 leading-relaxed text-[#525252] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
       >
         {tabs[active].content}
       </div>

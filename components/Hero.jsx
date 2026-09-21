@@ -79,38 +79,38 @@ export default function Hero() {
   const slide = slides[active];
 
   return (
-    <section className="w-full bg-[#F5F1E8] px-4 py-6 md:px-8 md:py-10">
+    <section className="w-full bg-white px-4 py-6 md:px-8 md:py-10">
       <div className="mx-auto max-w-[1200px] overflow-hidden rounded-xs shadow-xl shadow-black/10">
         <div className="flex flex-col md:h-[640px] md:flex-row">
           {/* Left content panel */}
-          <div className="relative order-2 flex w-full flex-col justify-between overflow-hidden bg-linear-to-br from-[#9C4E30] via-[#8A4128] to-[#5F2C1B] px-6 py-10 sm:px-10 md:order-1 md:w-[38%] md:px-14 md:py-16">
+          <div className="relative order-2 flex w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-mid via-brand to-brand-dark px-6 py-10 sm:px-10 md:order-1 md:w-[38%] md:px-14 md:py-16">
             {/* Depth accents */}
-            <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#E8A87C]/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-brand-rose/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-32 -left-16 h-64 w-64 rounded-full bg-black/20 blur-3xl" />
 
             <div className="relative">
-              <p className="mb-4 text-xs font-semibold uppercase  text-[#E8A87C]">
+              <p className="mb-4 text-xs font-semibold uppercase  text-brand-blush">
                 {slide.eyebrow}
               </p>
 
-              <h1 className="font-serif text-4xl leading-tight text-[#F5F1E8] md:text-6xl">
+              <h1 className="font-serif text-4xl leading-tight text-white md:text-6xl">
                 {slide.heading}
               </h1>
 
-              <p className="mt-5 max-w-md text-base leading-relaxed text-[#F5F1E8]/80 md:text-lg">
+              <p className="mt-5 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
                 {slide.subtext}
               </p>
             </div>
 
             <div className="relative mt-10 flex items-center justify-between gap-4 md:mt-0">
-              <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#F5F1E8] py-3 pl-6 pr-3 text-xs font-semibold uppercase text-[#5F2C1B] shadow-lg shadow-black/20 transition-all hover:shadow-xl hover:shadow-black/25">
+              <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-white py-3 pl-6 pr-3 text-xs font-semibold uppercase text-brand-dark shadow-lg shadow-black/20 transition-all hover:shadow-xl hover:shadow-black/25">
                 {slide.cta}
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5F2C1B] text-[#F5F1E8] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-white transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5">
                   <ArrowDownRight size={13} />
                 </span>
               </button>
 
-              <span className="whitespace-nowrap text-xs font-medium tracking-wider text-[#F5F1E8]/60">
+              <span className="whitespace-nowrap text-xs font-medium tracking-wider text-white/60">
                 {pad(active + 1)} / {pad(slides.length)}
               </span>
             </div>
@@ -156,7 +156,7 @@ export default function Hero() {
                   style={{
                     width: i === active ? "24px" : "6px",
                     backgroundColor:
-                      i === active ? "#F5F1E8" : "rgba(245,241,232,0.45)",
+                      i === active ? "#FFFFFF" : "rgba(255,255,255,0.45)",
                   }}
                 />
               ))}

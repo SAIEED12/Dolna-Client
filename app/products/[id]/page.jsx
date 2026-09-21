@@ -88,7 +88,7 @@ const tabs = [
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <Link
         href="/products"
-        className="mb-6 inline-block text-sm text-[#6B5A4E] transition-colors hover:text-[#C1633C]"
+        className="mb-6 inline-block text-sm text-[#525252] transition-colors hover:text-brand"
       >
         ← Back to all products
       </Link>
@@ -106,7 +106,7 @@ const tabs = [
         <div className="flex flex-col gap-6 lg:sticky lg:top-24">
           <div className="flex flex-wrap items-center gap-2">
             {categoryLabel && (
-              <span className="rounded-full bg-[#1A1A1A] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F5F1E8]">
+              <span className="rounded-full bg-brand px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
                 {categoryLabel}
               </span>
             )}
@@ -117,25 +117,25 @@ const tabs = [
             </span>
           </div>
 
-          <h1 className="font-serif text-4xl leading-tight text-[#2B1C14] sm:text-5xl">
+          <h1 className="font-serif text-4xl leading-tight text-[#1A1A1A] sm:text-5xl">
             {product.name}
           </h1>
 
-          <h1 className="font-serif leading-tight text-[#6B5A4E] sm:text-sm">
+          <h1 className="font-serif leading-tight text-[#525252] sm:text-sm">
             CATEGORY: {product.category && (
-              <span className=" font-semibold uppercase text-[#6B5A4E]">
+              <span className=" font-semibold uppercase text-[#525252]">
                 {product.category.replace("-", " ")}
               </span>
             )}
           </h1>
 
-          <h1 className="text-4xl font-semibold text-[#C1633C]">
+          <h1 className="text-4xl font-semibold text-brand">
             ৳{price.toLocaleString()}
           </h1>
 
           {/* <div className="flex items-center gap-2">
             <div
-              className="flex text-[#C1633C]"
+              className="flex text-brand"
               role="img"
               aria-label={`Rated ${rating.toFixed(1)} out of 5`}
             >
@@ -148,31 +148,31 @@ const tabs = [
                 />
               ))}
             </div>
-            <span className="text-sm font-medium text-[#2B1C14]">
+            <span className="text-sm font-medium text-[#1A1A1A]">
               {rating.toFixed(1)}
             </span>
-            <span className="text-sm text-[#6B5A4E]">
+            <span className="text-sm text-[#525252]">
               ({reviewCount} reviews)
             </span>
           </div> */}
 
           {/* <div className="flex flex-wrap items-baseline gap-3">
-            <span className="text-4xl font-semibold text-[#C1633C]">
+            <span className="text-4xl font-semibold text-brand">
               ৳{price.toLocaleString()}
             </span>
             {onSale && (
               <>
-                <span className="text-lg text-[#6B5A4E] line-through">
+                <span className="text-lg text-[#525252] line-through">
                   ৳{compareAt.toLocaleString()}
                 </span>
-                <span className="rounded-full bg-[#C1633C]/10 px-2.5 py-0.5 text-xs font-semibold text-[#C1633C]">
+                <span className="rounded-full bg-brand/10 px-2.5 py-0.5 text-xs font-semibold text-brand">
                   {discount}% off
                 </span>
               </>
             )}
           </div> */}
 
-          {/* <p className="leading-relaxed text-[#6B5A4E]">{product.description}</p> */}
+          {/* <p className="leading-relaxed text-[#525252]">{product.description}</p> */}
 
           <PurchasePanel
             productId={String(product._id)}
@@ -182,19 +182,19 @@ const tabs = [
           />
 
           {/* Trust row */}
-          <ul className="grid grid-cols-3 gap-3 border-t border-[#D8CBB4] pt-6">
+          <ul className="grid grid-cols-3 gap-3 border-t border-[#E5E5E5] pt-6">
             {TRUST_ITEMS.map(({ icon: Icon, title, note }) => (
               <li
                 key={title}
                 className="flex flex-col items-center gap-1.5 text-center"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#EDE4D3] text-[#2B1C14]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-soft text-brand">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <span className="text-xs font-semibold text-[#2B1C14]">
+                <span className="text-xs font-semibold text-[#1A1A1A]">
                   {title}
                 </span>
-                <span className="text-xs text-[#6B5A4E]">{note}</span>
+                <span className="text-xs text-[#525252]">{note}</span>
               </li>
             ))}
           </ul>

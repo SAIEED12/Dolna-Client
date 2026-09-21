@@ -54,7 +54,7 @@ const handleSubmit = async (e) => {
   };
 
   return (
-    <div className="flex w-full flex-col bg-[#F5F1E8] lg:min-h-screen lg:flex-row">
+    <div className="flex w-full flex-col bg-white lg:min-h-screen lg:flex-row">
       {/* Left image panel */}
       <div className="relative hidden w-1/2 overflow-hidden lg:block">
         <Image
@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
 
         <div className="relative flex h-full flex-col items-center justify-center p-12">
           <blockquote className="max-w-md text-center">
-            <span className="mx-auto mb-5 block h-px w-12 bg-[#E8956B]" />
+            <span className="mx-auto mb-5 block h-px w-12 bg-brand-rose" />
             <p className="font-serif text-3xl leading-snug text-white drop-shadow-md">
               ঘরকে চলতে দিন আপনার ছন্দে।
             </p>
@@ -85,7 +85,7 @@ const handleSubmit = async (e) => {
       {/* Right form panel */}
       <div className="flex w-full flex-col justify-start px-6 py-12 sm:px-10 lg:w-1/2 lg:px-20">
         <div className="mx-auto w-full max-w-sm">
-          <h1 className="mt-8 font-serif text-3xl text-[#2B1C14] lg:mt-0">
+          <h1 className="mt-8 font-serif text-3xl text-[#1A1A1A] lg:mt-0">
             Welcome back!
           </h1>
 
@@ -93,7 +93,7 @@ const handleSubmit = async (e) => {
             <div>
               <label
                 htmlFor="email"
-                className="mb-1.5 block text-sm font-medium text-[#2B1C14]"
+                className="mb-1.5 block text-sm font-medium text-[#1A1A1A]"
               >
                 Email
               </label>
@@ -104,7 +104,7 @@ const handleSubmit = async (e) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] focus:border-[#9C4E30] focus:outline-none focus:ring-2 focus:ring-[#9C4E30]/20"
+                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
               />
             </div>
 
@@ -112,13 +112,13 @@ const handleSubmit = async (e) => {
               <div className="mb-1.5 flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-[#2B1C14]"
+                  className="block text-sm font-medium text-[#1A1A1A]"
                 >
                   Password
                 </label>
                 <Link
                   href="/forgot-password"
-                  className="text-xs font-medium text-[#9C4E30] hover:underline"
+                  className="text-xs font-medium text-brand hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -130,12 +130,12 @@ const handleSubmit = async (e) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] focus:border-[#9C4E30] focus:outline-none focus:ring-2 focus:ring-[#9C4E30]/20"
+                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
               />
             </div>
 
             {error && (
-              <p className="text-sm text-[#B3261E]" role="alert">
+              <p className="text-sm text-brand" role="alert">
                 {error}
               </p>
             )}
@@ -143,35 +143,35 @@ const handleSubmit = async (e) => {
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 cursor-pointer rounded-full bg-[#2B1C14] py-3 text-sm font-semibold text-[#F5F1E8] transition-colors hover:bg-[#1A100A] disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 cursor-pointer rounded-full bg-brand py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? "Logging in…" : "Log in"}
             </button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-[#6B5D50]">
+          <p className="mt-8 text-center text-sm text-[#525252]">
             Don&apos;t have an account?{" "}
             <Link
               href="/signup"
-              className="font-medium text-[#9C4E30] hover:underline"
+              className="font-medium text-brand hover:underline"
             >
               Sign up
             </Link>
           </p>
 
           <div className="my-8 flex items-center gap-4">
-            <div className="h-px flex-1 bg-[#E4D9C8]" />
-            <span className="text-xs uppercase tracking-widest text-[#A69783]">
+            <div className="h-px flex-1 bg-[#E5E5E5]" />
+            <span className="text-xs uppercase tracking-widest text-[#8A8A8A]">
               or
             </span>
-            <div className="h-px flex-1 bg-[#E4D9C8]" />
+            <div className="h-px flex-1 bg-[#E5E5E5]" />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
               onClick={() => handleSocialLogin("google")}
-              className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-[#D8CBB4] bg-white py-2.5 text-sm font-medium text-[#2B1C14] transition-colors hover:bg-[#1A100A] hover:text-[#F5F1E8]"
+              className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-[#E5E5E5] bg-white py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>

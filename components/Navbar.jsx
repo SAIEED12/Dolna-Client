@@ -1,17 +1,18 @@
 'use client'
 import { useState } from "react";
-import { Link, Button, Modal, Input, TextField, Label, Surface } from "@heroui/react";
-import { Mail, ShoppingBag, User } from "lucide-react";
+import { Link } from "@heroui/react";
 import { useSession, authClient } from "@/lib/auth-client";
 import { usePathname, useRouter } from "next/navigation";
 import { getDashboardPathByRole } from "@/lib/dashboard-nav";
 import Image from "next/image";
+import { CartDrawer } from "./cart/Drawer";
 
 export default function Navbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const cartCount = 0;
+  const cartItems = [];
   const {data: session} = useSession();
   const user = session?.user;
   const dashboardHref = getDashboardPathByRole(user?.role);
@@ -40,7 +41,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-[#E4DDCF]/60 bg-[#F5F1E8]/70 backdrop-blur-md shadow-sm shadow-black/5">
+    <nav className="sticky top-0 z-40 w-full border-b border-[#E5E5E5] bg-white/85 backdrop-blur-md shadow-sm shadow-black/5">
       <header className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <button
@@ -60,29 +61,29 @@ export default function Navbar() {
           </button>
 
           <Link href="/" className="text-lg font-bold tracking-[0.15em] text-[#1A1A1A] no-underline">
-            <Image src="/logo.png" alt="BelaView Logo" width={70} height={70}></Image>
+            <Image src="/logo.png" alt="BelaView Logo" width={70} height={70} className="rounded-full bg-white object-contain"></Image>
           </Link>
         </div>
 
         <ul className="hidden items-center gap-10 md:flex">
           <li>
-            <Link href="/" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
+            <Link href="/" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
               HOME
             </Link>
           </li>
           <li>
-            <Link href="/products" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
+            <Link href="/products" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
               ALL PRODUCTS
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
+            <Link href="#" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
               CATEGORIES
             </Link>
           </li>
           {user && (
             <li>
-              <Link href={dashboardHref} className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]">
+              <Link href={dashboardHref} className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
                 DASHBOARD
               </Link>
             </li>
@@ -95,14 +96,14 @@ export default function Navbar() {
           {user ? (
             <Link
               href={dashboardHref}
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand"
             >
               WELCOME, {user.name}!
             </Link>
           ) : (
             <Link
               href="/login"
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-[#C1633C]"
+              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand"
             >
               LOGIN
             </Link>
@@ -115,44 +116,31 @@ export default function Navbar() {
               type="button"
               onClick={handleSignOut}
               disabled={isSigningOut}
-              className="cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#F5F1E8] no-underline hover:bg-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
+              className="cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-white no-underline hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSigningOut ? "SIGNING OUT..." : "SIGN OUT"}
             </button>
           ) : (
             <Link
               href="/signup"
-              className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#F5F1E8] no-underline hover:bg-[#C1633C]"
+              className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-white no-underline hover:bg-brand"
             >
               SIGN UP
             </Link>
           )}
 
-          <Link
-            href="#"
-            className="flex items-center gap-2 rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:bg-[#1A1A1A] hover:text-[#F5F1E8]"
-          >
-            <ShoppingBag size={16} strokeWidth={1.75} />
-            CART
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1A1A1A] text-[11px] font-bold text-[#F5F1E8]">
-              {cartCount}
-            </span>
-          </Link>
+        {/* Cart Drawer */}
+        <CartDrawer cartCount={cartCount} items={cartItems} />
+        
         </div>
 
-        <Link
-          href="#"
-          className="flex items-center gap-1 rounded-full border border-[#1A1A1A] px-3 py-2 text-[#1A1A1A] no-underline hover:bg-[#1A1A1A] hover:text-[#F5F1E8] md:hidden"
-        >
-          <ShoppingBag size={18} strokeWidth={1.75} />
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1A1A1A] text-[11px] font-bold text-[#F5F1E8]">
-            {cartCount}
-          </span>
-        </Link>
+        <div className="md:hidden">
+          <CartDrawer cartCount={cartCount} items={cartItems} compact />
+        </div>
       </header>
 
       {isMenuOpen && (
-        <div className="border-t border-[#E4DDCF] md:hidden">
+        <div className="border-t border-[#E5E5E5] md:hidden">
           <ul className="flex flex-col gap-2 p-4">
             <li>
               <Link href="/" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
@@ -177,7 +165,7 @@ export default function Navbar() {
               </li>
             )}
 
-            <li className="mt-2 border-t border-[#E4DDCF] pt-3">
+            <li className="mt-2 border-t border-[#E5E5E5] pt-3">
               {user ? (
                 <Link href={dashboardHref}
                  className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A]">
@@ -195,14 +183,14 @@ export default function Navbar() {
                   type="button"
                   onClick={handleSignOut}
                   disabled={isSigningOut}
-                  className="block w-full cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-[#F5F1E8] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="block w-full cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-white hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSigningOut ? "SIGNING OUT..." : "SIGN OUT"}
                 </button>
               ) : (
                 <Link
                   href="/signup"
-                  className="block rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-[#F5F1E8] no-underline"
+                  className="block rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-white no-underline hover:bg-brand"
                 >
                   SIGN UP
                 </Link>

@@ -36,14 +36,14 @@ const ProductGallery = ({ images = [], name, category }) => {
   };
 
   const categoryBadge = categoryLabel && (
-    <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full bg-[#1A1A1A] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F5F1E8]">
+    <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full bg-[#1A1A1A] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
       {categoryLabel}
     </span>
   );
 
   if (shown.length === 0) {
     return (
-      <div className="relative aspect-[4/5] w-full rounded-[24px] border border-[#D8CBB4] bg-[#EDE4D3]">
+      <div className="relative aspect-[4/5] w-full rounded-[24px] border border-[#E5E5E5] bg-[#F5F5F5]">
         {categoryBadge}
       </div>
     );
@@ -56,7 +56,7 @@ const ProductGallery = ({ images = [], name, category }) => {
         <div
           ref={sliderRef}
           onScroll={handleScroll}
-          className="flex snap-x snap-mandatory overflow-x-auto rounded-[24px] border border-[#D8CBB4] bg-[#EDE4D3] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory overflow-x-auto rounded-[24px] border border-[#E5E5E5] bg-[#F5F5F5] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {shown.map((src, i) => (
             <div
@@ -104,7 +104,7 @@ const ProductGallery = ({ images = [], name, category }) => {
         style={{ maxWidth: "min(100%, calc((100vh - 16rem) * 0.8))" }}
       >
         <div
-          className="relative aspect-[4/5] w-full cursor-zoom-in overflow-hidden rounded-[24px] border border-[#D8CBB4] bg-[#EDE4D3]"
+          className="relative aspect-[4/5] w-full cursor-zoom-in overflow-hidden rounded-[24px] border border-[#E5E5E5] bg-[#F5F5F5]"
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setZoom((z) => ({ ...z, on: false }))}
         >
@@ -134,9 +134,9 @@ const ProductGallery = ({ images = [], name, category }) => {
                 onClick={() => setActive(i)}
                 aria-label={`Show image ${i + 1}`}
                 aria-current={i === active}
-                className={`relative aspect-square overflow-hidden rounded-2xl bg-[#EDE4D3] transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C1633C] ${
+                className={`relative aspect-square overflow-hidden rounded-2xl bg-[#F5F5F5] transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
                   i === active
-                    ? "ring-2 ring-[#C1633C]"
+                    ? "ring-2 ring-brand"
                     : "opacity-70 hover:opacity-100"
                 }`}
               >

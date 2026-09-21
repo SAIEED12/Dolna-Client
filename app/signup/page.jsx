@@ -49,7 +49,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex w-full flex-col bg-[#F5F1E8] lg:min-h-screen lg:flex-row">
+    <div className="flex w-full flex-col bg-white lg:min-h-screen lg:flex-row">
       {/* Left image panel */}
       <div className="relative hidden w-1/2 overflow-hidden lg:block">
         <Image
@@ -66,7 +66,7 @@ const Signup = () => {
 
         <div className="relative flex h-full flex-col items-center justify-center p-12">
           <blockquote className="max-w-md text-center">
-            <span className="mx-auto mb-5 block h-px w-12 bg-[#E8956B]" />
+            <span className="mx-auto mb-5 block h-px w-12 bg-brand-rose" />
             <p className="font-serif text-3xl leading-snug text-white drop-shadow-md">
               হাতের ছোঁয়ায় তৈরি, ভালোবাসায় গড়া।
             </p>
@@ -80,10 +80,10 @@ const Signup = () => {
       {/* Right form panel */}
       <div className="flex w-full flex-col justify-start px-6 py-10 sm:px-10 lg:w-1/2 lg:justify-center lg:px-20 lg:py-16">
         <div className="mx-auto w-full max-w-sm">
-          <h1 className="mt-8 font-serif text-3xl text-[#2B1C14] lg:mt-0">
+          <h1 className="mt-8 font-serif text-3xl text-[#1A1A1A] lg:mt-0">
             Create your account
           </h1>
-          <p className="mt-2 text-sm font-semibold text-[#6B5D50]">
+          <p className="mt-2 text-sm font-semibold text-[#525252]">
             Join Dolna and start creating a home that moves to your rhythm.
           </p>
 
@@ -93,14 +93,14 @@ const Signup = () => {
               name="username"
               className="flex flex-col gap-1.5"
             >
-              <Label className="text-sm font-medium text-[#2B1C14]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Username
               </Label>
               <Input
                 placeholder="Enter your username"
-                className="w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] outline-none focus:border-[#9C4E30] focus:ring-2 focus:ring-[#9C4E30]/20"
+                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
-              <FieldError className="text-xs text-[#B3261E]" />
+              <FieldError className="text-xs text-brand" />
             </TextField>
 
             <TextField
@@ -115,14 +115,14 @@ const Signup = () => {
                 return null;
               }}
             >
-              <Label className="text-sm font-medium text-[#2B1C14]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Email
               </Label>
               <Input
                 placeholder="john@example.com"
-                className="w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] outline-none focus:border-[#9C4E30] focus:ring-2 focus:ring-[#9C4E30]/20"
+                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
-              <FieldError className="text-xs text-[#B3261E]" />
+              <FieldError className="text-xs text-brand" />
             </TextField>
 
             <TextField
@@ -144,21 +144,21 @@ const Signup = () => {
                 return null;
               }}
             >
-              <Label className="text-sm font-medium text-[#2B1C14]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Password
               </Label>
               <Input
                 placeholder="Enter your password"
-                className="w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] outline-none focus:border-[#9C4E30] focus:ring-2 focus:ring-[#9C4E30]/20"
+                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
-              <Description className="text-xs text-[#A69783]">
+              <Description className="text-xs text-[#8A8A8A]">
                 Must be at least 8 characters with 1 uppercase and 1 number
               </Description>
-              <FieldError className="text-xs text-[#B3261E]" />
+              <FieldError className="text-xs text-brand" />
             </TextField>
 
             {error && (
-              <p className="text-sm text-[#B3261E]" role="alert">
+              <p className="text-sm text-brand" role="alert">
                 {error}
               </p>
             )}
@@ -166,18 +166,18 @@ const Signup = () => {
             <Button
               type="submit"
               isDisabled={loading}
-              className="mt-2 flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#2B1C14] py-3 text-sm font-semibold text-[#F5F1E8] transition-colors hover:bg-[#1A100A] disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 flex cursor-pointer items-center justify-center gap-2 rounded-full bg-brand py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
               <Check size={16} />
               {loading ? "Creating account…" : "Create account"}
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-[#6B5D50]">
+          <p className="mt-8 text-center text-sm text-[#525252]">
             Already have an account?{" "}
             <Link
               href="/login"
-              className="font-medium text-[#9C4E30] hover:underline"
+              className="font-medium text-brand hover:underline"
             >
               Log in
             </Link>

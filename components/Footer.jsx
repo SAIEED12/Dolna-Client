@@ -76,19 +76,19 @@ const supportLinks = [
 ];
 
 const socialLinkClass =
-  "flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-[#F5F1E8] transition-colors hover:border-[#E8A87C] hover:text-[#E8A87C]";
+  "flex h-9 w-9 items-center justify-center rounded-full border border-[#3A342E] text-white transition-colors hover:border-brand-rose hover:text-brand-rose";
 
 function FooterColumn({ title, links }) {
   return (
     <div className="text-center md:text-left">
-      <h3 className="text-sm font-semibold text-[#F5F1E8]">{title}</h3>
+      <h3 className="text-sm font-semibold text-white">{title}</h3>
 
       <ul className="mt-5 space-y-3">
         {links.map((link) => (
           <li key={link.label}>
             <a
               href={link.href}
-              className="text-sm text-[#B8AC9E] transition-colors hover:text-[#E8A87C]"
+              className="text-sm text-[#A8A8A8] transition-colors hover:text-brand-rose"
             >
               {link.label}
             </a>
@@ -107,7 +107,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="w-full bg-[#141110] px-4 pb-8 pt-14 sm:px-6 md:pt-20 lg:px-8">
+    <footer className="w-full bg-[#14090C] px-4 pb-8 pt-14 sm:px-6 md:pt-20 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.5fr_1fr_1fr_1.3fr] md:gap-10 lg:gap-12">
           {/* Brand */}
@@ -117,10 +117,10 @@ export default function Footer() {
               alt="BelaView logo"
               width={80}
               height={80}
-              className="mx-auto mb-5 h-20 w-20 object-contain md:mx-0"
+              className="mx-auto mb-5 h-20 w-20 rounded-full bg-white object-contain md:mx-0"
             />
 
-            <p className="text-md font-serif text-[#B8AC9E]">
+            <p className="text-md font-serif text-[#D4D4D4]">
              All The Swings Of Your Choice
             </p>
 
@@ -162,28 +162,28 @@ export default function Footer() {
             <FooterColumn title="Support" links={supportLinks} />
 
             <div className="mt-8">
-              <h3 className="text-sm font-semibold text-[#F5F1E8]">
+              <h3 className="text-sm font-semibold text-white">
                 Get in touch
               </h3>
 
               <ul className="mt-4 space-y-3">
-                <li className="flex items-center justify-center gap-3 text-sm text-[#B8AC9E] md:justify-start">
+                <li className="flex items-center justify-center gap-3 text-sm text-[#A8A8A8] md:justify-start">
                   <Mail size={15} />
 
                   <a
                     href="mailto:belaviewbd@gmail.com"
-                    className="transition-colors hover:text-[#E8A87C]"
+                    className="transition-colors hover:text-brand-rose"
                   >
                     belaviewbd@gmail.com
                   </a>
                 </li>
 
-                <li className="flex items-center justify-center gap-3 text-sm text-[#B8AC9E] md:justify-start">
+                <li className="flex items-center justify-center gap-3 text-sm text-[#A8A8A8] md:justify-start">
                   <Phone size={15} />
 
                   <a
                     href="tel:+8801965599181"
-                    className="transition-colors hover:text-[#E8A87C]"
+                    className="transition-colors hover:text-brand-rose"
                   >
                     +880 1965599181
                   </a>
@@ -194,25 +194,25 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="mt-14 h-px w-full bg-[#2E2924]" />
+        <div className="mt-14 h-px w-full bg-[#2A2A2A]" />
 
         {/* Bottom */}
         <div className="mt-6 flex flex-col-reverse items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
-          <p className="text-xs text-[#7A6F63]">
+          <p className="text-xs text-[#8A8A8A]">
             © {new Date().getFullYear()} BelaView. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">
             <a
               href="/privacy"
-              className="text-xs text-[#7A6F63] transition-colors hover:text-[#E8A87C]"
+              className="text-xs text-[#8A8A8A] transition-colors hover:text-brand-rose"
             >
               Privacy
             </a>
 
             <a
               href="/terms"
-              className="text-xs text-[#7A6F63] transition-colors hover:text-[#E8A87C]"
+              className="text-xs text-[#8A8A8A] transition-colors hover:text-brand-rose"
             >
               Terms
             </a>

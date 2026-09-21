@@ -15,8 +15,8 @@ import { imageUpload } from "@/lib/imageUpload";
 const MAX_IMAGES = 4;
 
 const inputClassName =
-  "w-full rounded-xl border border-[#D8CBB4] bg-white px-4 py-3 text-sm text-[#2B1C14] placeholder:text-[#A69783] outline-none focus:border-[#9C4E30] focus:ring-2 focus:ring-[#9C4E30]/20";
-const labelClassName = "text-sm font-medium text-[#2B1C14]";
+  "w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20";
+const labelClassName = "text-sm font-medium text-[#1A1A1A]";
 
 const fileKey = (f) => `${f.name}-${f.size}-${f.lastModified}`;
 
@@ -151,7 +151,7 @@ export function AddProductModal() {
     <Modal>
       <Button
         onPress={() => setIsOpen(true)}
-        className="flex cursor-pointer items-center gap-2 rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#F5F1E8] transition-colors hover:bg-[#C1633C]"
+        className="flex cursor-pointer items-center gap-2 rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white transition-colors hover:bg-brand"
       >
         <Plus size={15} strokeWidth={2} />
         ADD PRODUCT
@@ -163,27 +163,27 @@ export function AddProductModal() {
         className="bg-black/40 backdrop-blur-sm"
       >
         <Modal.Container placement="auto">
-          <Modal.Dialog className="max-h-[90vh] overflow-y-auto rounded-2xl border border-[#E4DDCF]/70 bg-[#F5F1E8] shadow-xl shadow-black/10 sm:max-w-lg">
-            <Modal.CloseTrigger className="rounded-full text-[#7A6F63] transition-colors hover:bg-[#E4DDCF]/60 hover:text-[#1A1A1A]" />
+          <Modal.Dialog className="max-h-[90vh] overflow-y-auto rounded-2xl border border-[#E5E5E5] bg-white shadow-xl shadow-black/10 sm:max-w-lg">
+            <Modal.CloseTrigger className="rounded-full text-[#8A8A8A] transition-colors hover:bg-[#F5F5F5] hover:text-[#1A1A1A]" />
 
-            <Modal.Header className="border-b border-[#E4DDCF]/70 px-6 py-5">
-              <p className="text-[11px] font-semibold tracking-[0.15em] text-[#C1633C] uppercase">
+            <Modal.Header className="border-b border-[#E5E5E5] px-6 py-5">
+              <p className="text-[11px] font-semibold tracking-[0.15em] text-brand uppercase">
                 New listing
               </p>
               <div className="mt-2 flex items-center gap-3">
-                <Modal.Icon className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1A1A1A] text-[#E8A87C]">
+                <Modal.Icon className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white">
                   <Package className="size-5" strokeWidth={1.75} />
                 </Modal.Icon>
                 <Modal.Heading className="font-serif text-2xl text-[#1A1A1A]">
                   Add a product
                 </Modal.Heading>
               </div>
-              <p className="mt-2 text-sm leading-5 text-[#7A6F63]">
+              <p className="mt-2 text-sm leading-5 text-[#525252]">
                 Enter the product details below to add it to your catalog.
               </p>
             </Modal.Header>
 
-            <Modal.Body className="bg-[#F5F1E8] px-6 py-5">
+            <Modal.Body className="bg-white px-6 py-5">
               <form
                 id="add-product-form"
                 onSubmit={onSubmit}
@@ -219,7 +219,7 @@ export function AddProductModal() {
                     <Label htmlFor="product-image" className={labelClassName}>
                       Images
                     </Label>
-                    <span className="text-xs text-[#7A6F63]">
+                    <span className="text-xs text-[#8A8A8A]">
                       Up to {MAX_IMAGES} · {previews.length}/{MAX_IMAGES}{" "}
                       selected
                     </span>
@@ -236,18 +236,18 @@ export function AddProductModal() {
                     tabIndex={isFull ? -1 : 0}
                     aria-disabled={isFull}
                     onChange={handleImageChange}
-                    className={`block w-full cursor-pointer rounded-xl border border-dashed border-[#D8CBB4] bg-white/60 p-2 text-sm text-[#2B1C14] file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#1A1A1A] file:px-4 file:py-2 file:text-xs file:font-semibold file:tracking-[0.1em] file:text-[#F5F1E8] file:transition-colors hover:file:bg-[#C1633C] ${
+                    className={`block w-full cursor-pointer rounded-xl border border-dashed border-[#E5E5E5] bg-white p-2 text-sm text-[#1A1A1A] file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#1A1A1A] file:px-4 file:py-2 file:text-xs file:font-semibold file:tracking-[0.1em] file:text-white file:transition-colors hover:file:bg-brand ${
                       isFull ? "pointer-events-none opacity-60" : ""
                     }`}
                   />
-                  <p className="text-xs text-[#A69783]">
+                  <p className="text-xs text-[#8A8A8A]">
                     {isFull
                       ? "Maximum reached. Remove an image to add another."
                       : "The first image is used as the cover."}
                   </p>
 
                   {previews.length > 0 && (
-                    <div className="mt-2 grid grid-cols-2 gap-2 rounded-xl border border-[#E4DDCF] bg-white p-2">
+                    <div className="mt-2 grid grid-cols-2 gap-2 rounded-xl border border-[#E5E5E5] bg-white p-2">
                       {previews.map((src, index) => (
                         <div key={src} className="relative">
                           <img
@@ -256,7 +256,7 @@ export function AddProductModal() {
                             className="h-28 w-full rounded-lg object-cover"
                           />
                           {index === 0 && (
-                            <span className="absolute top-2 left-2 rounded-full bg-[#C1633C] px-2 py-0.5 text-[10px] font-semibold tracking-[0.1em] text-white uppercase">
+                            <span className="absolute top-2 left-2 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold tracking-[0.1em] text-white uppercase">
                               Cover
                             </span>
                           )}
@@ -265,7 +265,7 @@ export function AddProductModal() {
                             onClick={() => handleRemoveImage(index)}
                             disabled={isPending}
                             aria-label={`Remove image ${index + 1}`}
-                            className="absolute top-2 right-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="absolute top-2 right-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             <X size={14} />
                           </button>
@@ -333,18 +333,18 @@ export function AddProductModal() {
                 </div>
 
                 {error && (
-                  <p className="text-sm text-[#B3261E]" role="alert">
+                  <p className="text-sm text-brand" role="alert">
                     {error}
                   </p>
                 )}
               </form>
             </Modal.Body>
 
-            <Modal.Footer className="border-t border-[#E4DDCF]/70 bg-[#EFE7D8]/50 px-6 py-4">
+            <Modal.Footer className="border-t border-[#E5E5E5] bg-[#FAFAFA] px-6 py-4">
               <Button
                 onPress={() => handleOpenChange(false)}
                 isDisabled={isPending}
-                className="cursor-pointer rounded-full border border-[#D8CBB4] bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#2B1C14] transition-colors hover:border-[#C1633C] hover:bg-[#C1633C]/10 hover:text-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
+                className="cursor-pointer rounded-full border border-[#E5E5E5] bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] transition-colors hover:border-brand hover:bg-brand-soft hover:text-brand disabled:cursor-not-allowed disabled:opacity-60"
               >
                 CANCEL
               </Button>
@@ -352,7 +352,7 @@ export function AddProductModal() {
                 type="submit"
                 form="add-product-form"
                 isPending={isPending}
-                className="cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#F5F1E8] transition-colors hover:bg-[#C1633C] disabled:cursor-not-allowed disabled:opacity-60"
+                className="cursor-pointer rounded-full bg-brand px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isPending ? "ADDING…" : "ADD PRODUCT"}
               </Button>

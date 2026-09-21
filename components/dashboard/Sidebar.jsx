@@ -43,14 +43,14 @@ export default function Sidebar({
   };
 
   return (
-    <div className="flex h-full flex-col bg-[#F5F1E8]">
+    <div className="flex h-full flex-col bg-white">
       {/* Brand */}
-      <div className="flex h-16 shrink-0 items-center border-b border-[#E4DDCF]/70 px-5">
+      <div className="flex h-16 shrink-0 items-center border-b border-[#E5E5E5] px-5">
         <Link href={basePath} onClick={onNavigate} className="no-underline">
-          <Image src="/logo.png" alt="Logo" width={40} height={40} />
+          <Image src="/logo.png" alt="Logo" width={40} height={40} className="rounded-full bg-white object-contain" />
         </Link>
         {badge && (
-          <span className="ml-2 rounded-full bg-[#C1633C] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F5F1E8]">
+          <span className="ml-2 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
             {badge}
           </span>
         )}
@@ -60,7 +60,7 @@ export default function Sidebar({
       <nav className="flex-1 overflow-y-auto px-3 py-5" aria-label="Dashboard">
         {navSections.map((section) => (
           <div key={section.title} className="mb-6 last:mb-0">
-            <p className="px-3 pb-2 text-[11px] font-semibold tracking-[0.15em] text-[#7A6F63] uppercase">
+            <p className="px-3 pb-2 text-[11px] font-semibold tracking-[0.15em] text-[#8A8A8A] uppercase">
               {section.title}
             </p>
             <ul className="space-y-1">
@@ -75,14 +75,14 @@ export default function Sidebar({
                       aria-current={active ? "page" : undefined}
                       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium no-underline transition-colors ${
                         active
-                          ? "bg-[#1A1A1A] text-[#F5F1E8]"
-                          : "text-[#1A1A1A] hover:bg-[#E4DDCF]/60"
+                          ? "bg-[#1A1A1A] text-white"
+                          : "text-[#1A1A1A] hover:bg-[#F5F5F5]"
                       }`}
                     >
                       <Icon
                         size={18}
                         strokeWidth={1.75}
-                        className={active ? "text-[#E8A87C]" : "text-[#7A6F63]"}
+                        className={active ? "text-brand-rose" : "text-[#8A8A8A]"}
                       />
                       {item.label}
                     </Link>
@@ -95,23 +95,23 @@ export default function Sidebar({
       </nav>
 
       {/* Footer */}
-      <div className="shrink-0 border-t border-[#E4DDCF]/70 p-3">
+      <div className="shrink-0 border-t border-[#E5E5E5] p-3">
         <Link
           href="/products"
-          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] no-underline transition-colors hover:bg-[#E4DDCF]/60"
+          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] no-underline transition-colors hover:bg-[#F5F5F5]"
         >
-          <Store size={18} strokeWidth={1.75} className="text-[#7A6F63]" />
+          <Store size={18} strokeWidth={1.75} className="text-[#8A8A8A]" />
           View Products
         </Link>
-        <div className="mt-1 flex items-center gap-3 rounded-xl bg-[#EFE7D8] px-3 py-2.5">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1A1A1A] text-sm font-bold text-[#F5F1E8]">
+        <div className="mt-1 flex items-center gap-3 rounded-xl bg-[#F5F5F5] px-3 py-2.5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
             {initial}
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold text-[#1A1A1A]">
               {user?.name ?? "Account"}
             </p>
-            <p className="truncate text-xs text-[#7A6F63]">
+            <p className="truncate text-xs text-[#8A8A8A]">
               {user?.email ?? ""}
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function Sidebar({
             disabled={isSigningOut}
             title="Sign out"
             aria-label="Sign out"
-            className="cursor-pointer rounded-full p-2 text-[#7A6F63] transition-colors hover:bg-[#E4DDCF] hover:text-[#C1633C] disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-full p-2 text-[#8A8A8A] transition-colors hover:bg-brand-soft hover:text-brand disabled:cursor-not-allowed disabled:opacity-50"
           >
             <LogOut size={16} />
           </button>
