@@ -16,10 +16,10 @@ export function CartDrawer({ cartCount = 0, items = [], compact = false }) {
         <Button
           variant="ghost"
           aria-label={`Open cart, ${cartCount} items`}
-          className="flex h-auto min-w-0 items-center gap-1 rounded-full border border-[#1A1A1A] px-3 py-2 text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white"
+          className="flex h-auto min-w-0 items-center gap-1 rounded-full border border-ink px-3 py-2 text-ink hover:bg-ink hover:text-white"
         >
           <ShoppingBag size={18} strokeWidth={1.75} />
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-[11px] font-bold text-white">
             {cartCount}
           </span>
         </Button>
@@ -30,7 +30,7 @@ export function CartDrawer({ cartCount = 0, items = [], compact = false }) {
         >
           <ShoppingBag size={16} strokeWidth={1.75} />
           CART
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-[11px] font-bold text-white">
             {cartCount}
           </span>
         </Button>

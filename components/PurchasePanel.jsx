@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Heart, Minus, Plus, Share2 } from "lucide-react";
+import { saveBuyNow } from "@/lib/buy-now";
 
 const PurchasePanel = ({ productId, name, price, stock }) => {
+  const router = useRouter();
   const inStock = stock > 0;
   const maxQty = Math.max(stock, 1);
 
   const [qty, setQty] = useState(1);
   const [wished, setWished] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isBuying, setIsBuying] = useState(false);
 
   const decrease = () => setQty((q) => Math.max(1, q - 1));
   const increase = () => setQty((q) => Math.min(maxQty, q + 1));
@@ -19,7 +23,18 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
   };
 
   const handleBuyNow = () => {
-    // TODO: add to cart, then navigate to checkout, e.g. router.push("/checkout")
+    if (!inStock || isBuying) return;
+    setIsBuying(true);
+    try {
+      const safeQty = Math.min(Math.max(1, qty), maxQty);
+      saveBuyNow({ productId, name, price: Number(price), qty: safeQty });
+      router.push(
+        `/checkout?mode=buy-now&productId=${encodeURIComponent(productId)}&qty=${safeQty}`
+      );
+    } finally {
+      // router.push navigates away; reset only if navigation is blocked
+      setTimeout(() => setIsBuying((v) => (v ? false : v)), 2000);
+    }
   };
 
   const handleShare = async () => {
@@ -96,10 +111,10 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
         <button
           type="button"
           onClick={handleBuyNow}
-          disabled={!inStock}
+          disabled={!inStock || isBuying}
           className="block w-full flex-1 cursor-pointer rounded-full bg-brand px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand"
         >
-          Buy Now
+          {isBuying ? "Processing…" : "Buy Now"}
         </button>
       </div>
 
