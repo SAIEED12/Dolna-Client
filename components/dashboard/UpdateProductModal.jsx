@@ -1,25 +1,30 @@
 "use client";
-import { Package, Plus } from "lucide-react";
+import { Package } from "lucide-react";
 import { Button, Modal } from "@heroui/react";
-import { addProduct } from "@/lib/actions/products";
+import { updateProduct } from "@/lib/actions/products";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { imageUpload } from "@/lib/imageUpload";
 import { MAX_IMAGES, ProductForm } from "./ProductForm";
 
-export function AddProductModal() {
+export function UpdateProductModal({ product, isOpen, onOpenChange }) {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
-  const [formKey, setFormKey] = useState(0);
+
+  if (!product) return null;
+
+  const existingImages =
+    Array.isArray(product.images) && product.images.length > 0
+      ? product.images.filter(Boolean)
+      : product.image
+        ? [product.image]
+        : [];
 
   const handleOpenChange = (open) => {
-    setIsOpen(open);
-    if (!open) {
-      setError(null);
-      // Remount ProductForm to clear picked files/previews.
-      setFormKey((k) => k + 1);
+    if (!isPending) {
+      if (!open) setError(null);
+      onOpenChange(open);
     }
   };
 
@@ -29,48 +34,61 @@ export function AddProductModal() {
 
     const form = e.currentTarget;
     const formdata = new FormData(form);
-    const { keptImages, ...data } = Object.fromEntries(formdata.entries());
+    const entries = Object.fromEntries(formdata.entries());
+    const { keptImages: keptRaw, ...data } = entries;
+
+    let kept = [];
+    try {
+      kept = JSON.parse(keptRaw ?? "[]");
+    } catch {
+      kept = [];
+    }
 
     const imageFiles = formdata
       .getAll("images")
       .filter((f) => f instanceof File && f.size > 0);
 
-    if (imageFiles.length < 1) {
+    if (kept.length + imageFiles.length < 1) {
       setError("Select at least 1 image.");
       return;
     }
-    if (imageFiles.length > MAX_IMAGES) {
+    if (kept.length + imageFiles.length > MAX_IMAGES) {
       setError(`You can upload a maximum of ${MAX_IMAGES} images.`);
       return;
     }
 
     setIsPending(true);
     try {
-      let urls;
+      let urls = [];
+      if (imageFiles.length > 0) {
+        try {
+          const uploaded = await Promise.all(
+            imageFiles.map((file) => imageUpload(file)),
+          );
+          urls = uploaded.map((u) => u?.url ?? "");
+          if (urls.some((url) => !url)) throw new Error("Missing image URL");
+        } catch (err) {
+          console.error("Image upload failed:", err);
+          setError("Image upload failed. Please try again.");
+          return;
+        }
+      }
+
+      const finalImages = [...kept, ...urls];
       try {
-        const uploaded = await Promise.all(
-          imageFiles.map((file) => imageUpload(file)),
-        );
-        urls = uploaded.map((u) => u?.url ?? "");
-        if (urls.some((url) => !url)) throw new Error("Missing image URL");
+        await updateProduct(String(product._id), {
+          ...data,
+          image: finalImages[0],
+          images: finalImages,
+        });
       } catch (err) {
-        console.error("Image upload failed:", err);
-        setError("Image upload failed. Please try again.");
+        console.error("Update product failed:", err);
+        setError("Couldn't update the product. Please try again.");
         return;
       }
 
-      try {
-        await addProduct({ ...data, image: urls[0], images: urls });
-      } catch (err) {
-        console.error("Add product failed:", err);
-        setError("Couldn't save the product. Please try again.");
-        return;
-      }
-
-              form.reset();
-              setIsOpen(false);
-              setFormKey((k) => k + 1);
-              router.refresh();
+      onOpenChange(false);
+      router.refresh();
     } finally {
       setIsPending(false);
     }
@@ -78,14 +96,6 @@ export function AddProductModal() {
 
   return (
     <Modal>
-      <Button
-        onPress={() => setIsOpen(true)}
-        className="flex cursor-pointer items-center gap-2 rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white transition-colors hover:bg-brand"
-      >
-        <Plus size={15} strokeWidth={2} />
-        ADD PRODUCT
-      </Button>
-
       <Modal.Backdrop
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
@@ -97,26 +107,29 @@ export function AddProductModal() {
 
             <Modal.Header className="border-b border-[#E5E5E5] px-6 py-5">
               <p className="text-[11px] font-semibold tracking-[0.15em] text-brand uppercase">
-                New listing
+                Update listing
               </p>
               <div className="mt-2 flex items-center gap-3">
                 <Modal.Icon className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white">
                   <Package className="size-5" strokeWidth={1.75} />
                 </Modal.Icon>
                 <Modal.Heading className="font-serif text-2xl text-[#1A1A1A]">
-                  Add a product
+                  Update product
                 </Modal.Heading>
               </div>
               <p className="mt-2 text-sm leading-5 text-[#525252]">
-                Enter the product details below to add it to your catalog.
+                Edit the details below to update this product.
               </p>
             </Modal.Header>
 
             <Modal.Body className="bg-white px-6 py-5">
               <ProductForm
-                key={formKey}
-                formId="add-product-form"
-                imagesRequired
+                key={String(product._id)}
+                formId="update-product-form"
+                imageInputId="update-product-image"
+                initialValues={product}
+                existingImages={existingImages}
+                imagesRequired={false}
                 isPending={isPending}
                 error={error}
                 onSubmit={onSubmit}
@@ -133,11 +146,11 @@ export function AddProductModal() {
               </Button>
               <Button
                 type="submit"
-                form="add-product-form"
+                form="update-product-form"
                 isPending={isPending}
                 className="cursor-pointer rounded-full bg-brand px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {isPending ? "ADDING…" : "ADD PRODUCT"}
+                {isPending ? "SAVING…" : "SAVE CHANGES"}
               </Button>
             </Modal.Footer>
           </Modal.Dialog>
