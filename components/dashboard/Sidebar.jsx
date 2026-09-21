@@ -82,7 +82,7 @@ export default function Sidebar({
                       <Icon
                         size={18}
                         strokeWidth={1.75}
-                        className={active ? "text-brand-rose" : "text-[#8A8A8A]"}
+                        className={active ? "text-brand" : "text-fog"}
                       />
                       {item.label}
                     </Link>

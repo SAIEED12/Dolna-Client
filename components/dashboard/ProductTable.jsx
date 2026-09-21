@@ -18,7 +18,7 @@ export function ProductTable({ products }) {
     <>
       <Table>
         <Table.ScrollContainer>
-          <Table.Content aria-label="Products" className="min-w-[760px]">
+          <Table.Content aria-label="Products" className="min-w-190">
             <Table.Header>
               <Table.Column isRowHeader>Image</Table.Column>
               <Table.Column>Name</Table.Column>
@@ -41,11 +41,11 @@ export function ProductTable({ products }) {
                         className="h-10 w-10 rounded-md object-cover"
                       />
                     </Table.Cell>
-                    <Table.Cell>{product.name}</Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell className="font-bold">{product.name}</Table.Cell>
+                    <Table.Cell className="font-semibold">
                       ৳{Number(product.price).toLocaleString()}
                     </Table.Cell>
-                    <Table.Cell>{product.stock}</Table.Cell>
+                    <Table.Cell className={`font-semibold ${product.stock <= 3 ? 'text-red-500' : 'text-green-500'}`}>{product.stock}</Table.Cell>
                     <Table.Cell>
                       <div className="flex items-center gap-1">
                         <Link
