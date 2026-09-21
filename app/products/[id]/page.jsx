@@ -105,11 +105,11 @@ const tabs = [
         {/*  Info (right, sticky)  */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-24">
           <div className="flex flex-wrap items-center gap-2">
-            {categoryLabel && (
+            {/* {categoryLabel && (
               <span className="rounded-full bg-brand px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
                 {categoryLabel}
               </span>
-            )}
+            )} */}
             <span
               className={`rounded-full px-3 py-1 text-xs font-medium ${stockBadge.className}`}
             >

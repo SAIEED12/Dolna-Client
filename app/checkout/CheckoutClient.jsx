@@ -39,7 +39,7 @@ export default function CheckoutClient() {
   const [submitError, setSubmitError] = useState("");
   const [order, setOrder] = useState(null);
 
-  // Re-validate live product (price/stock) server-side; never trust client price
+
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -69,7 +69,6 @@ export default function CheckoutClient() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paramProductId]);
 
   const stock = Number(product?.stock) || 0;
