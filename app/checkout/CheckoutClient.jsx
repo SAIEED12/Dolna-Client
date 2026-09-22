@@ -245,18 +245,18 @@ export default function CheckoutClient() {
             <p className="mt-3 text-sm text-red-700">{productError}</p>
           ) : null}
 
-          <dl className="mt-5 space-y-2 border-t border-[#E5E5E5] pt-4 text-sm">
+          <dl className="mt-5 space-y-2 border-t border-line pt-4 text-sm">
             <div className="flex items-baseline justify-between gap-4">
-              <dt className="text-[#525252]">Subtotal</dt>
-              <dd className="text-right font-semibold break-words tabular-nums">৳{subtotal.toLocaleString()}</dd>
+              <dt className="text-smoke">Subtotal</dt>
+              <dd className="text-right font-semibold wrap-break-word tabular-nums">৳{subtotal.toLocaleString()}</dd>
             </div>
             <div className="flex items-baseline justify-between gap-4">
-              <dt className="text-[#525252]">Delivery</dt>
-              <dd className="text-right font-semibold break-words tabular-nums">৳{DELIVERY_CHARGE.toLocaleString()}</dd>
+              <dt className="text-smoke">Delivery</dt>
+              <dd className="text-right font-semibold wrap-break-word tabular-nums">৳{DELIVERY_CHARGE.toLocaleString()}</dd>
             </div>
-            <div className="flex items-baseline justify-between gap-4 border-t border-[#E5E5E5] pt-2 text-base sm:text-lg">
+            <div className="flex items-baseline justify-between gap-4 border-t border-line pt-2 text-base sm:text-lg">
               <dt className="font-semibold">Total (COD)</dt>
-              <dd className="text-right font-semibold break-words tabular-nums text-brand">
+              <dd className="text-right font-semibold wrap-break-word tabular-nums text-brand">
                 ৳{total.toLocaleString()}
               </dd>
             </div>
@@ -264,13 +264,13 @@ export default function CheckoutClient() {
         </section>
 
         {/* Shipping + payment form */}
-        <section className="rounded-2xl border border-[#E5E5E5] bg-white p-4 sm:p-5 lg:p-6">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-[#1A1A1A]">
+        <section className="rounded-2xl border border-line bg-white p-4 sm:p-5 lg:p-6">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-ink">
             Delivery details
           </h2>
           <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-4" noValidate>
             <div>
-              <label htmlFor="co-name" className="mb-1.5 block text-sm font-medium text-[#1A1A1A]">
+              <label htmlFor="co-name" className="mb-1.5 block text-sm font-medium text-ink">
                 Full name
               </label>
               <input
@@ -305,7 +305,7 @@ export default function CheckoutClient() {
             </div>
 
             <div>
-              <label htmlFor="co-address" className="mb-1.5 block text-sm font-medium text-[#1A1A1A]">
+              <label htmlFor="co-address" className="mb-1.5 block text-sm font-medium text-ink">
                 Address
               </label>
               <textarea
@@ -323,7 +323,7 @@ export default function CheckoutClient() {
             </div>
 
             <div>
-              <label htmlFor="co-city" className="mb-1.5 block text-sm font-medium text-[#1A1A1A]">
+              <label htmlFor="co-city" className="mb-1.5 block text-sm font-medium text-ink">
                 City / district
               </label>
               <input
@@ -340,8 +340,8 @@ export default function CheckoutClient() {
             </div>
 
             <div>
-              <label htmlFor="co-notes" className="mb-1.5 block text-sm font-medium text-[#1A1A1A]">
-                Note <span className="font-normal text-[#8A8A8A]">(optional)</span>
+              <label htmlFor="co-notes" className="mb-1.5 block text-sm font-medium text-ink">
+                Note <span className="font-normal text-fog">(optional)</span>
               </label>
               <textarea
                 id="co-notes"

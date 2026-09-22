@@ -64,7 +64,7 @@ const Signup = () => {
         />
 
         <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/50 to-black/60" />
 
         <div className="relative flex h-full flex-col items-center justify-center p-12">
           <blockquote className="max-w-md text-center">
@@ -82,10 +82,10 @@ const Signup = () => {
       {/* Right form panel */}
       <div className="flex w-full flex-col justify-start px-6 py-10 sm:px-10 lg:w-1/2 lg:justify-center lg:px-20 lg:py-16">
         <div className="mx-auto w-full max-w-sm">
-          <h1 className="mt-8 font-serif text-3xl text-[#1A1A1A] lg:mt-0">
+          <h1 className="mt-8 font-serif text-3xl text-ink lg:mt-0">
             Create your account
           </h1>
-          <p className="mt-2 text-sm font-semibold text-[#525252]">
+          <p className="mt-2 text-sm font-semibold text-smoke">
             Join BelaView and start creating a home that moves to your rhythm.
           </p>
 
@@ -95,12 +95,12 @@ const Signup = () => {
               name="username"
               className="flex flex-col gap-1.5"
             >
-              <Label className="text-sm font-medium text-[#1A1A1A]">
+              <Label className="text-sm font-medium text-ink">
                 Username
               </Label>
               <Input
                 placeholder="Enter your username"
-                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+                className="w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               <FieldError className="text-xs text-brand" />
             </TextField>
@@ -117,23 +117,23 @@ const Signup = () => {
                 return null;
               }}
             >
-              <Label className="text-sm font-medium text-[#1A1A1A]">
+              <Label className="text-sm font-medium text-ink">
                 Email
               </Label>
               <Input
                 placeholder="Enter your email"
-                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+                className="w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               <FieldError className="text-xs text-brand" />
             </TextField>
 
             <TextField isRequired name="phone" type="tel" className="flex flex-col gap-1.5">
-              <Label className="text-sm font-medium text-[#1A1A1A]">
+              <Label className="text-sm font-medium text-ink">
                 Phone Number
               </Label>
               <Input
                 placeholder="Enter your phone number"
-                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+                className="w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               <FieldError className="text-xs text-brand" />
             </TextField>
@@ -187,7 +187,7 @@ const Signup = () => {
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-[#525252]">
+          <p className="mt-8 text-center text-sm text-smoke">
             Already have an account?{" "}
             <Link
               href="/login"
