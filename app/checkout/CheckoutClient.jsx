@@ -277,7 +277,7 @@ export default function CheckoutClient() {
                 id="co-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Arif Rahman"
+                placeholder="Enter your full name"
                 autoComplete="name"
                 className={inputClass}
               />
@@ -288,13 +288,13 @@ export default function CheckoutClient() {
 
             <div>
               <label htmlFor="co-phone" className="mb-1.5 block text-sm font-medium text-[#1A1A1A]">
-                Mobile (BD)
+                Phone Number (BD)
               </label>
               <input
                 id="co-phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="01XXXXXXXXX"
+                placeholder="Enter your phone number"
                 inputMode="numeric"
                 autoComplete="tel"
                 className={inputClass}
