@@ -2,193 +2,254 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ArrowDownRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const slides = [
   {
-    image:
-      "https://images.unsplash.com/photo-1692619223445-63d5d2c1ec18?auto=format&fit=crop&w=1800&q=90",
-    eyebrow: "ধীরে তৈরি, গভীরভাবে বসবাস",
-    heading: "ঘরকে চলতে দিন আপনার ছন্দে।",
-    subtext:
-      "হাতে তৈরি দোলনা, যা থামা, খেলা আর প্রিয়জনের জন্য জায়গা করে দেয়।",
-    cta: "আপনার দোলনা খুঁজুন",
+    image: "/Hero.png",
+    title: "Your Perfect Place to Unwind",
+    subtitle:
+      "Handcrafted swings designed for comfort, beauty, and everyday relaxation.",
+    cta: "Shop Swings",
+    href: "/products",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1765135685377-b6175d4c2788?auto=format&fit=crop&w=1800&q=90",
-    eyebrow: "প্রাকৃতিক উপকরণ",
-    heading: "আরামের এক নতুন সংজ্ঞা।",
-    subtext: "টেকসই কাঠ আর নরম বুননে তৈরি, দীর্ঘস্থায়ী সৌন্দর্যে ভরা।",
-    cta: "সংগ্রহ দেখুন",
+      "https://images.unsplash.com/photo-1765135685377-b6175d4c2788?auto=format&fit=crop&w=2400&q=90",
+    title: "Crafted for Comfort",
+    subtitle:
+      "Beautifully woven and carefully crafted swings made for peaceful moments.",
+    cta: "Explore Collection",
+    href: "/products",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1552253678-e8b5514c43cd?auto=format&fit=crop&w=1800&q=90",
-    eyebrow: "কারিগরের হাতে গড়া",
-    heading: "প্রতিটি দোলনা একটি গল্প বলে।",
-    subtext: "স্থানীয় কারিগরদের যত্নে, একটি একটি করে তৈরি হয় প্রতিটি টুকরো।",
-    cta: "আমাদের গল্প জানুন",
+      "https://images.unsplash.com/photo-1647996091785-c1ec68da320c?q=80&w=2400&auto=format&fit=crop",
+    title: "Bring Nature Home",
+    subtitle:
+      "Natural materials, timeless craftsmanship, and effortless elegance.",
+    cta: "Discover More",
+    href: "/products",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1552851506-ff5594ca5e66?auto=format&fit=crop&w=1800&q=90",
-    eyebrow: "সবুজের মাঝে শান্তি",
-    heading: "যেখানে গল্প শুরু হয়।",
-    subtext: "পরিবারের সাথে কাটানো মুহূর্তগুলোকে করে তুলুন আরও বিশেষ।",
-    cta: "এখনই দেখুন",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1767627651189-0a40aee60686?auto=format&fit=crop&w=1800&q=90",
-    eyebrow: "আপনার ঘর, আপনার ছন্দ",
-    heading: "প্রশান্তি আনুন প্রতিটি কোণে।",
-    subtext: "আমাদের হাতে তৈরি দোলনা দিয়ে সাজান আপনার প্রিয় জায়গাটি।",
-    cta: "কালেকশন ব্রাউজ করুন",
+      "https://images.unsplash.com/photo-1664524168285-f9df501efa0c?auto=format&fit=crop&w=2400&q=90",
+    title: "Made for Moments That Matter",
+    subtitle: "Create a cozy space to relax, read, talk, and simply slow down.",
+    cta: "Shop Now",
+    href: "/products",
   },
 ];
 
-const pad = (n) => String(n).padStart(2, "0");
-
-export default function Hero() {
+/**
+ * Full-screen hero carousel for the swing collection.
+ *
+ * @param {number} autoplayMs   Time each slide holds before advancing. Default 5500.
+ * @param {number} transitionMs Crossfade duration between slides. Default 1200.
+ */
+export default function Hero({ autoplayMs = 5500, transitionMs = 1200 }) {
   const [active, setActive] = useState(0);
-  const timerRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const touchStartX = useRef(null);
+  const count = slides.length;
 
-  const goTo = useCallback((index) => {
-    setActive((index + slides.length) % slides.length);
-  }, []);
-
+  const goTo = useCallback((i) => setActive((i + count) % count), [count]);
   const next = useCallback(() => goTo(active + 1), [active, goTo]);
   const prev = useCallback(() => goTo(active - 1), [active, goTo]);
 
   useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setActive((a) => (a + 1) % slides.length);
-    }, 5000);
-
-    return () => clearInterval(timerRef.current);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setReduceMotion(mq.matches);
+    const onChange = (e) => setReduceMotion(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  const restartAutoplay = () => {
-    clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setActive((a) => (a + 1) % slides.length);
-    }, 5000);
+  // Autoplay
+  useEffect(() => {
+    if (paused) return;
+    const t = setTimeout(() => {
+      setActive((a) => (a + 1) % count);
+    }, autoplayMs);
+    return () => clearTimeout(t);
+  }, [active, paused, autoplayMs, count]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [next, prev]);
+
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) > 40) goTo(active + (dx < 0 ? 1 : -1));
   };
 
-  const slide = slides[active];
+  const kenBurnsMs = Math.max(autoplayMs + transitionMs, 6000);
+  const effectiveTransitionMs = reduceMotion ? 0 : transitionMs;
 
   return (
-    <section className="w-full bg-white px-4 py-6 md:px-8 md:py-10">
-      <div className="mx-auto max-w-[1200px] overflow-hidden rounded-xs shadow-xl shadow-black/10">
-        <div className="flex flex-col md:h-[640px] md:flex-row">
-          {/* Left content panel */}
-          <div className="relative order-2 flex w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-mid via-brand to-brand-dark px-6 py-10 sm:px-10 md:order-1 md:w-[38%] md:px-14 md:py-16">
-            {/* Depth accents */}
-            <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-brand-rose/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-32 -left-16 h-64 w-64 rounded-full bg-black/20 blur-3xl" />
-
-            <div className="relative">
-              <p className="mb-4 text-xs font-semibold uppercase  text-brand-blush">
-                {slide.eyebrow}
-              </p>
-
-              <h1 className="font-serif text-4xl leading-tight text-white md:text-6xl">
-                {slide.heading}
-              </h1>
-
-              <p className="mt-5 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
-                {slide.subtext}
-              </p>
+    <section
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Featured swings"
+      className="relative h-dvh min-h-140 w-full overflow-hidden bg-brand-dark"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Slides */}
+      {slides.map((s, i) => {
+        const isActive = i === active;
+        return (
+          <div
+            key={i}
+            aria-hidden={!isActive}
+            className="absolute inset-0 overflow-hidden transition-opacity ease-in-out"
+            style={{
+              transitionDuration: `${effectiveTransitionMs}ms`,
+              opacity: isActive ? 1 : 0,
+            }}
+          >
+            <div
+              key={isActive ? `kb-${i}-${active}` : `still-${i}`}
+              className={`absolute inset-0 ${isActive && !reduceMotion ? "hero-kenburns" : ""}`}
+              style={
+                isActive && !reduceMotion
+                  ? { animationDuration: `${kenBurnsMs}ms` }
+                  : undefined
+              }
+            >
+              <Image
+                src={s.image}
+                alt=""
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
             </div>
 
-            <div className="relative mt-10 flex items-center justify-between gap-4 md:mt-0">
-              <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-white py-3 pl-6 pr-3 text-xs font-semibold uppercase text-brand-dark shadow-lg shadow-black/20 transition-all hover:shadow-xl hover:shadow-black/25">
-                {slide.cta}
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-white transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5">
-                  <ArrowDownRight size={13} />
-                </span>
-              </button>
-
-              <span className="whitespace-nowrap text-xs font-medium tracking-wider text-white/60">
-                {pad(active + 1)} / {pad(slides.length)}
-              </span>
-            </div>
+            <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/10 to-black/65" />
+            <div className="absolute inset-0 bg-[radial-gradient(50%_40%_at_50%_50%,rgba(0,0,0,0.55),transparent_75%)]" />
           </div>
+        );
+      })}
 
-          {/* Right image panel */}
-          <div className="relative order-1 h-[45vh] min-h-72 w-full md:order-2 md:h-auto md:w-[62%]">
-            {slides.map((s, i) => (
-              <div
-                key={i}
-                className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+      {/* Centered content */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        {slides.map((s, i) => {
+          if (i !== active) return null;
+          const riseClass = reduceMotion
+            ? "opacity-100"
+            : "opacity-0 hero-rise";
+          return (
+            <div key={active} className="flex flex-col items-center">
+              <h1
+                className={`max-w-3xl font-serif text-[2.5rem] leading-[1.08] text-white sm:text-6xl md:text-7xl ${riseClass}`}
                 style={{
-                  opacity: i === active ? 1 : 0,
-                  zIndex: i === active ? 1 : 0,
+                  ...(reduceMotion ? {} : { animationDelay: "60ms" }),
+                  textShadow:
+                    "0 2px 24px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.35)",
                 }}
-                aria-hidden={i !== active}
               >
-                <Image
-                  src={s.image}
-                  alt={s.heading}
-                  fill
-                  priority={i === 0}
-                  sizes="(min-width: 768px) 62vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-
-            {/* Bottom scrim for control legibility */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-black/35 to-transparent" />
-
-            {/* Pagination dots */}
-            <div className="absolute bottom-7 left-6 z-10 flex items-center gap-2 rounded-full bg-black/20 px-4 py-2.5 backdrop-blur-md">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    goTo(i);
-                    restartAutoplay();
-                  }}
-                  aria-label={`go to slide ${i + 1}`}
-                  className="h-1.5 cursor-pointer rounded-full transition-all duration-300"
-                  style={{
-                    width: i === active ? "24px" : "6px",
-                    backgroundColor:
-                      i === active ? "#FFFFFF" : "rgba(255,255,255,0.45)",
-                  }}
-                />
-              ))}
+                {s.title}
+              </h1>
+              <p
+                className={`mt-5 max-w-md text-base leading-relaxed text-white/80 sm:max-w-xl md:text-lg ${riseClass}`}
+                style={reduceMotion ? undefined : { animationDelay: "220ms" }}
+              >
+                {s.subtitle}
+              </p>
+              <Link
+                href={s.href}
+                className="group mt-9 inline-flex items-center gap-2 rounded-full bg-[#f3f4f6b2] py-3.5 pl-7 pr-3 text-sm font-medium text-black shadow-lg"
+              >
+                {s.cta}
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white transition-transform group-hover:translate-x-0.5">
+                  <ArrowRight size={14} />
+                </span>
+              </Link>
             </div>
-
-            {/* Prev / Next */}
-            <div className="absolute bottom-7 right-6 z-10 flex gap-2">
-              <button
-                onClick={() => {
-                  prev();
-                  restartAutoplay();
-                }}
-                aria-label="previous slide"
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/90 text-[#1A1A1A] shadow-md backdrop-blur-md transition-all hover:scale-105 hover:bg-white"
-              >
-                <ChevronLeft size={19} />
-              </button>
-
-              <button
-                onClick={() => {
-                  next();
-                  restartAutoplay();
-                }}
-                aria-label="next slide"
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/90 text-[#1A1A1A] shadow-md backdrop-blur-md transition-all hover:scale-105 hover:bg-white"
-              >
-                <ChevronRight size={19} />
-              </button>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
+
+      {/* Arrows */}
+      <button
+        onClick={prev}
+        aria-label="Previous slide"
+        className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:left-6 md:h-12 md:w-12"
+      >
+        <ChevronLeft size={20} />
+      </button>
+      <button
+        onClick={next}
+        aria-label="Next slide"
+        className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-6 md:h-12 md:w-12"
+      >
+        <ChevronRight size={20} />
+      </button>
+
+      {/* Pagination */}
+      <div className="absolute inset-x-0 bottom-7 z-10 flex items-center justify-center gap-2 md:bottom-10">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            aria-current={i === active}
+            className="h-1.5 cursor-pointer rounded-full bg-white/40 transition-all duration-300 hover:bg-white/70"
+            style={{
+              width: i === active ? "28px" : "7px",
+              backgroundColor: i === active ? "#ffffff" : undefined,
+            }}
+          />
+        ))}
+      </div>
+
+      <style jsx>{`
+        @keyframes heroKenBurns {
+          0% {
+            transform: scale(1) translate3d(0, 0, 0);
+          }
+          100% {
+            transform: scale(1.09) translate3d(-1.5%, -1%, 0);
+          }
+        }
+        .hero-kenburns {
+          animation-name: heroKenBurns;
+          animation-timing-function: ease-out;
+          animation-fill-mode: forwards;
+        }
+        @keyframes heroRise {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .hero-rise {
+          animation: heroRise 750ms ease-out forwards;
+        }
+      `}</style>
     </section>
   );
 }

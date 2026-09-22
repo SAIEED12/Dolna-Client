@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Bell, ChevronRight, Menu, Search } from "lucide-react";
+import { Bell, ChevronRight, Menu } from "lucide-react";
 import { authClient, useSession } from "@/lib/auth-client";
 import { getPageTitle } from "@/lib/dashboard-nav";
 
@@ -71,18 +71,6 @@ export default function Topbar({ onMenuClick, basePath = "/dashboard" }) {
         <h1 className="truncate font-serif text-xl text-[#1A1A1A] md:hidden">
           {title}
         </h1>
-      </div>
-
-      {/* Search */}
-      <div className="hidden items-center md:flex">
-        <label className="flex items-center gap-2 rounded-full border border-[#E5E5E5] bg-white px-4 py-2 text-sm text-[#8A8A8A] focus-within:border-brand">
-          <Search size={15} />
-          <input
-            type="search"
-            placeholder="Search orders, products…"
-            className="w-44 bg-transparent text-[#1A1A1A] outline-none placeholder:text-[#8A8A8A] lg:w-56"
-          />
-        </label>
       </div>
 
       {/* Notifications */}
