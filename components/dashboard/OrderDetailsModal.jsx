@@ -89,22 +89,24 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                   {order.orderStatus}
                 </span>
               </div>
-              <p className="mt-2 text-sm leading-5 text-[#525252]">
-                Placed {formatDate(order.createdAt)} · {order.paymentMethod === "cod" ? "Cash on Delivery" : order.paymentMethod}
+              <p className="mt-2 text-sm leading-5 text-smoke font-semibold">
+                Placed on {formatDate(order.createdAt)} {new Date(order.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
               </p>
             </Modal.Header>
 
             <Modal.Body className="space-y-5 bg-white px-6 py-5">
               <section aria-label="Customer">
                 <h4 className="text-xs font-semibold tracking-[0.12em] text-[#8A8A8A] uppercase">
-                  Customer
+                  Customer 
                 </h4>
-                <p className="mt-2 text-sm font-semibold text-[#1A1A1A]">
-                  {order.customer?.name ?? "—"}
+                <p className="mt-2 text-sm font-semibold text-ink">
+                  Name: {order.customer?.name ?? "—"}
                 </p>
-                <p className="mt-0.5 text-sm text-[#525252]">{order.customer?.phone ?? "—"}</p>
-                <p className="mt-0.5 text-sm break-words text-[#525252]">
-                  {order.customer?.address ?? "—"}
+                <p className="mt-0.5 text-sm text-ink font-semibold">
+                  Phone: {order.customer?.phone ?? "—"}
+                </p>
+                <p className="mt-0.5 text-sm text-ink font-semibold">
+                  Address: {order.customer?.address ?? "—"}
                 </p>
               </section>
 

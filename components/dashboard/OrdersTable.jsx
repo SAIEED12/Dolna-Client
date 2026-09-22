@@ -8,7 +8,7 @@ import { OrderCancelModal } from "./OrderCancelModal";
 import { OrderDetailsModal } from "./OrderDetailsModal";
 
 const iconButtonClassName =
-  "inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#525252] transition-colors outline-none hover:bg-brand-soft hover:text-brand focus-visible:ring-2 focus-visible:ring-brand/40 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-[#525252]";
+  "inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-smoke transition-colors outline-none hover:bg-brand-soft hover:text-brand focus-visible:ring-2 focus-visible:ring-brand/40 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-[#525252]";
 
 const statusStyles = {
   pending: "bg-stone-200 text-stone-700",
@@ -65,7 +65,7 @@ export function OrdersTable({ orders }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by order ID, name, or phone…"
-          className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:max-w-sm"
+          className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:max-w-sm"
         />
         <label htmlFor="orders-status" className="sr-only">
           Filter by status
@@ -74,17 +74,17 @@ export function OrdersTable({ orders }) {
           id="orders-status"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:w-48"
+          className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:w-48"
         >
-          <option value="all">All statuses ({Array.isArray(orders) ? orders.length : 0})</option>
+          <option value="all">All ({Array.isArray(orders) ? orders.length : 0})</option>
           {ORDER_STATUSES.map((status) => (
             <option key={status} value={status}>
-              {status}
+              {status} 
             </option>
           ))}
         </select>
         {query.trim() || statusFilter !== "all" ? (
-          <p className="text-sm text-[#525252] sm:ml-auto">
+          <p className="text-sm text-smoke sm:ml-auto">
             {rows.length} of {Array.isArray(orders) ? orders.length : 0} orders
           </p>
         ) : null}
@@ -113,10 +113,10 @@ export function OrdersTable({ orders }) {
                       #{id.slice(-6).toUpperCase()}
                     </Table.Cell>
                     <Table.Cell>
-                      <span className="block font-semibold text-[#1A1A1A]">
+                      <span className="block font-semibold text-ink">
                         {order.customer?.name ?? "—"}
                       </span>
-                      <span className="block text-xs text-[#525252]">
+                      <span className="block text-xs text-smoke">
                         {order.customer?.phone ?? ""}
                       </span>
                     </Table.Cell>
@@ -126,8 +126,8 @@ export function OrdersTable({ orders }) {
                     <Table.Cell className="font-semibold">
                       ৳{Number(order.totalAmount ?? 0).toLocaleString()}
                     </Table.Cell>
-                    <Table.Cell className="text-[#525252]">
-                      {formatDate(order.createdAt)}
+                    <Table.Cell className="text-smoke">
+                      {formatDate(order.createdAt) } {new Date(order.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) }
                     </Table.Cell>
                     <Table.Cell>
                       <span
@@ -172,7 +172,7 @@ export function OrdersTable({ orders }) {
       </Table>
 
       {rows.length === 0 ? (
-        <p className="mt-4 rounded-2xl border border-dashed border-[#E5E5E5] bg-white px-6 py-10 text-center text-sm text-[#525252]">
+        <p className="mt-4 rounded-2xl border border-dashed border-line bg-white px-6 py-10 text-center text-sm text-smoke">
           No orders found. Try a different search or status filter.
         </p>
       ) : null}

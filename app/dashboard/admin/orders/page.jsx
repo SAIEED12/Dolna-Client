@@ -18,20 +18,20 @@ const AdminOrdersPage = async () => {
 
   const list = Array.isArray(orders) ? orders : [];
   const openCount = list.filter((order) =>
-    ["pending", "confirmed"].includes(order.orderStatus)
+    ["pending"].includes(order.orderStatus)
   ).length;
   const revenue = list
-    .filter((order) => order.orderStatus !== "cancelled")
+    .filter((order) => order.orderStatus === "delivered")
     .reduce((sum, order) => sum + Number(order.totalAmount ?? 0), 0);
 
   return (
     <div>
       <div className="my-5 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="truncate font-serif text-xl text-[#1A1A1A] md:text-3xl">
+        <h1 className="truncate font-serif text-xl text-ink md:text-3xl">
           Orders
         </h1>
         <div className="flex flex-wrap gap-2 text-xs font-semibold">
-          <span className="rounded-full border border-[#E5E5E5] bg-white px-3 py-1.5 text-[#525252]">
+          <span className="rounded-full border border-line bg-white px-3 py-1.5 text-smoke">
             {list.length} total
           </span>
           <span className="rounded-full bg-amber-100 px-3 py-1.5 text-amber-800">
