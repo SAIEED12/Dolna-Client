@@ -36,7 +36,6 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
   if (!order) return null;
 
   const orderId = String(order._id);
-  const isFinal = order.orderStatus === "delivered" || order.orderStatus === "cancelled";
   const statusChanged = status !== order.orderStatus;
 
   const handleOpenChange = (open) => {
@@ -90,7 +89,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                 </span>
               </div>
               <p className="mt-2 text-sm leading-5 text-smoke font-semibold">
-                Placed on {formatDate(order.createdAt)} {new Date(order.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
+                Placed on {formatDate(order.createdAt)} at {new Date(order.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
               </p>
             </Modal.Header>
 
@@ -191,20 +190,6 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                     </option>
                   ))}
                 </select>
-                {isFinal ? (
-                  <p className="mt-1.5 text-xs text-fog">
-                    This order is {order.orderStatus}; cancelling a delivered order is not allowed and delivered/cancelled orders cannot be edited.
-                  </p>
-                ) : status === "cancelled" ? (
-                  <p className="mt-1.5 text-xs text-amber-700">
-                    Cancelling restores the ordered stock.
-                  </p>
-                ) : null}
-                {error ? (
-                  <p role="alert" className="mt-1.5 text-xs text-red-700">
-                    {error}
-                  </p>
-                ) : null}
               </div>
             </Modal.Body>
 

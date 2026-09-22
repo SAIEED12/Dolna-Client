@@ -19,7 +19,11 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
   const increase = () => setQty((q) => Math.min(maxQty, q + 1));
 
   const handleAddToCart = () => {
-    // TODO: connect to your cart state/context, e.g. addToCart({ productId, quantity: qty })
+    if (!inStock) return;
+    const safeQty = Math.min(Math.max(1, qty), maxQty);
+    router.push(
+      `/checkout?mode=add-to-cart&productId=${encodeURIComponent(productId)}&qty=${safeQty}`
+    );
   };
 
   const handleBuyNow = () => {
@@ -32,7 +36,6 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
         `/checkout?mode=buy-now&productId=${encodeURIComponent(productId)}&qty=${safeQty}`
       );
     } finally {
-      // router.push navigates away; reset only if navigation is blocked
       setTimeout(() => setIsBuying((v) => (v ? false : v)), 2000);
     }
   };

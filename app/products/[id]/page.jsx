@@ -60,9 +60,9 @@ const ProductsDetailsPage = async ({ params }) => {
           }
         : { label: "In stock", className: "bg-green-100 text-green-800" };
 
-  const categoryLabel = product.category
-    ? product.category.replace("-", " ")
-    : null;
+  // const categoryLabel = product.category
+  //   ? product.category.replace("-", " ")
+  //   : null;
 
 const materials = Array.isArray(product.materials)
   ? product.materials.filter(Boolean)

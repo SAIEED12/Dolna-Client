@@ -18,16 +18,6 @@ const statusStyles = {
   cancelled: "bg-red-100 text-red-800",
 };
 
-const formatDate = (value) => {
-  if (!value) return "—";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "—";
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-  });
-};
-
 const matchesQuery = (order, query) => {
   const q = query.trim().toLowerCase();
   if (!q) return true;

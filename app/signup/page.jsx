@@ -31,9 +31,11 @@ const Signup = () => {
       const { data, error } = await authClient.signUp.email({
         name: userData.username,
         email: userData.email,
+        phone: userData.phone,
         password: userData.password,
         callbackURL: "/dashboard",
       });
+      console.log("Signup response:", { data, error });
 
       if (error) {
         setError("Something went wrong. Please try again.");
@@ -84,7 +86,7 @@ const Signup = () => {
             Create your account
           </h1>
           <p className="mt-2 text-sm font-semibold text-[#525252]">
-            Join Dolna and start creating a home that moves to your rhythm.
+            Join BelaView and start creating a home that moves to your rhythm.
           </p>
 
           <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-5">
@@ -119,7 +121,18 @@ const Signup = () => {
                 Email
               </Label>
               <Input
-                placeholder="john@example.com"
+                placeholder="Enter your email"
+                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+              />
+              <FieldError className="text-xs text-brand" />
+            </TextField>
+
+            <TextField isRequired name="phone" type="tel" className="flex flex-col gap-1.5">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
+                Phone Number
+              </Label>
+              <Input
+                placeholder="Enter your phone number"
                 className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               <FieldError className="text-xs text-brand" />
@@ -144,14 +157,15 @@ const Signup = () => {
                 return null;
               }}
             >
-              <Label className="text-sm font-medium text-[#1A1A1A]">
+              <Label className="text-sm font-medium text-ink">
                 Password
               </Label>
               <Input
                 placeholder="Enter your password"
-                className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-[#8A8A8A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+                autoComplete="new-password"
+                className="w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
-              <Description className="text-xs text-[#8A8A8A]">
+              <Description className="text-xs text-fog">
                 Must be at least 8 characters with 1 uppercase and 1 number
               </Description>
               <FieldError className="text-xs text-brand" />

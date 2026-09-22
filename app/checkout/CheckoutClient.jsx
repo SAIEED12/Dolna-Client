@@ -161,8 +161,8 @@ export default function CheckoutClient() {
   if (!paramProductId) {
     return (
       <main className="mx-auto flex max-w-2xl flex-col items-center gap-4 px-4 py-10 text-center sm:px-6 sm:py-16">
-        <h1 className="text-2xl font-semibold text-[#1A1A1A] sm:text-3xl">Checkout</h1>
-        <p className="text-sm text-[#525252]">
+        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Checkout</h1>
+        <p className="text-sm text-smoke">
           No product selected. Start with Buy Now from a product page.
         </p>
         <Link
