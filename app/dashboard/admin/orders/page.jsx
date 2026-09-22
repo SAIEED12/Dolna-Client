@@ -28,13 +28,13 @@ const AdminOrdersPage = async () => {
     <div>
       <div className="my-5 flex flex-wrap items-center justify-between gap-3">
         <h1 className="truncate font-serif text-xl text-ink md:text-3xl">
-          Orders
+          All Orders
         </h1>
         <div className="flex flex-wrap gap-2 text-xs font-semibold">
           <span className="rounded-full border border-line bg-white px-3 py-1.5 text-smoke">
             {list.length} total
           </span>
-          <span className="rounded-full bg-amber-100 px-3 py-1.5 text-amber-800">
+          <span className="rounded-full bg-stone-200 px-3 py-1.5 text-stone-700">
             {openCount} needs action
           </span>
           <span className="rounded-full bg-emerald-100 px-3 py-1.5 text-emerald-800">

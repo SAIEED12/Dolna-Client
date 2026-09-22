@@ -69,10 +69,10 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
         className="bg-black/40 backdrop-blur-sm"
       >
         <Modal.Container placement="auto">
-          <Modal.Dialog className="max-h-[90vh] overflow-y-auto rounded-2xl border border-[#E5E5E5] bg-white shadow-xl shadow-black/10 sm:max-w-lg">
-            <Modal.CloseTrigger className="rounded-full text-[#8A8A8A] transition-colors hover:bg-[#F5F5F5] hover:text-[#1A1A1A]" />
+          <Modal.Dialog className="max-h-[90vh] overflow-y-auto rounded-2xl border border-line bg-white shadow-xl shadow-black/10 sm:max-w-lg">
+            <Modal.CloseTrigger className="rounded-full text-fog transition-colors hover:bg-mist hover:text-ink" />
 
-            <Modal.Header className="border-b border-[#E5E5E5] px-6 py-5">
+            <Modal.Header className="border-b border-line px-6 py-5">
               <p className="text-[11px] font-semibold tracking-[0.15em] text-brand uppercase">
                 Order #{orderId.slice(-6).toUpperCase()}
               </p>
@@ -80,7 +80,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                 <Modal.Icon className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white">
                   <Package className="size-5" strokeWidth={1.75} />
                 </Modal.Icon>
-                <Modal.Heading className="font-serif text-2xl text-[#1A1A1A]">
+                <Modal.Heading className="font-serif text-2xl text-ink">
                   Order details
                 </Modal.Heading>
                 <span
@@ -96,7 +96,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
 
             <Modal.Body className="space-y-5 bg-white px-6 py-5">
               <section aria-label="Customer">
-                <h4 className="text-xs font-semibold tracking-[0.12em] text-[#8A8A8A] uppercase">
+                <h4 className="text-xs font-semibold tracking-[0.12em] text-fog uppercase">
                   Customer 
                 </h4>
                 <p className="mt-2 text-sm font-semibold text-ink">
@@ -111,7 +111,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
               </section>
 
               <section aria-label="Items">
-                <h4 className="text-xs font-semibold tracking-[0.12em] text-[#8A8A8A] uppercase">
+                <h4 className="text-xs font-semibold tracking-[0.12em] text-fog uppercase">
                   Items ({order.itemCount ?? order.items?.length ?? 0})
                 </h4>
                 <ul className="mt-2 space-y-3">
@@ -127,19 +127,19 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                           className="h-11 w-11 shrink-0 rounded-lg object-cover"
                         />
                       ) : (
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#F5F5F5] text-[#8A8A8A]">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-mist text-fog">
                           <Package size={18} strokeWidth={1.75} />
                         </span>
                       )}
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-[#1A1A1A]">
+                        <p className="truncate text-sm font-semibold text-ink">
                           {item.title || "Untitled product"}
                         </p>
-                        <p className="text-xs text-[#525252]">
+                        <p className="text-xs text-smoke">
                           {item.quantity} × ৳{Number(item.unitPrice ?? 0).toLocaleString()}
                         </p>
                       </div>
-                      <p className="shrink-0 text-sm font-semibold text-[#1A1A1A]">
+                      <p className="shrink-0 text-sm font-semibold text-ink">
                         ৳{Number(item.subtotal ?? 0).toLocaleString()}
                       </p>
                     </li>
@@ -149,14 +149,14 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
 
               <dl className="space-y-2 rounded-xl bg-[#FAFAFA] p-4 text-sm">
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="text-[#525252]">Subtotal</dt>
+                  <dt className="text-smoke">Subtotal</dt>
                   <dd className="font-semibold">৳{Number(order.subtotal ?? 0).toLocaleString()}</dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="text-[#525252]">Delivery</dt>
+                  <dt className="text-smoke">Delivery</dt>
                   <dd className="font-semibold">৳{Number(order.deliveryCharge ?? 0).toLocaleString()}</dd>
                 </div>
-                <div className="flex items-baseline justify-between gap-4 border-t border-[#E5E5E5] pt-2 text-base">
+                <div className="flex items-baseline justify-between gap-4 border-t border-line pt-2 text-base">
                   <dt className="font-semibold">Total</dt>
                   <dd className="font-semibold text-brand">
                     ৳{Number(order.totalAmount ?? 0).toLocaleString()}
@@ -165,8 +165,8 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
               </dl>
 
               {order.note ? (
-                <p className="rounded-xl border border-[#E5E5E5] px-4 py-3 text-sm break-words text-[#525252]">
-                  <span className="font-semibold text-[#1A1A1A]">Note: </span>
+                <p className="rounded-xl border border-line px-4 py-3 text-sm wrap-break-word text-smoke">
+                  <span className="font-semibold text-ink">Note: </span>
                   {order.note}
                 </p>
               ) : null}
@@ -174,7 +174,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
               <div>
                 <label
                   htmlFor={`order-status-${orderId}`}
-                  className="mb-1.5 block text-sm font-medium text-[#1A1A1A]"
+                  className="mb-1.5 block text-sm font-medium text-ink"
                 >
                   Order status
                 </label>
@@ -183,7 +183,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                   disabled={isPending}
-                  className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#1A1A1A] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-60"
+                  className="w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-60"
                 >
                   {ORDER_STATUSES.map((value) => (
                     <option key={value} value={value}>
@@ -192,7 +192,7 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
                   ))}
                 </select>
                 {isFinal ? (
-                  <p className="mt-1.5 text-xs text-[#8A8A8A]">
+                  <p className="mt-1.5 text-xs text-fog">
                     This order is {order.orderStatus}; cancelling a delivered order is not allowed and delivered/cancelled orders cannot be edited.
                   </p>
                 ) : status === "cancelled" ? (
@@ -208,11 +208,11 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange }) {
               </div>
             </Modal.Body>
 
-            <Modal.Footer className="border-t border-[#E5E5E5] bg-[#FAFAFA] px-6 py-4">
+            <Modal.Footer className="border-t border-line bg-[#FAFAFA] px-6 py-4">
               <Button
                 onPress={() => handleOpenChange(false)}
                 isDisabled={isPending}
-                className="cursor-pointer rounded-full border border-[#E5E5E5] bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] transition-colors hover:border-brand hover:bg-brand-soft hover:text-brand disabled:cursor-not-allowed disabled:opacity-60"
+                className="cursor-pointer rounded-full border border-line bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] transition-colors hover:border-brand hover:bg-brand-soft hover:text-brand disabled:cursor-not-allowed disabled:opacity-60"
               >
                 CLOSE
               </Button>

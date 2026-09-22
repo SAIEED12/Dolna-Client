@@ -49,7 +49,8 @@ export function OrdersTable({ orders }) {
   const rows = useMemo(() => {
     const list = Array.isArray(orders) ? orders : [];
     return list.filter((order) => {
-      const statusOk = statusFilter === "all" || order.orderStatus === statusFilter;
+      const statusOk =
+        statusFilter === "all" || order.orderStatus === statusFilter;
       return statusOk && matchesQuery(order, query);
     });
   }, [orders, query, statusFilter]);
@@ -76,10 +77,12 @@ export function OrdersTable({ orders }) {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:w-48"
         >
-          <option value="all">All ({Array.isArray(orders) ? orders.length : 0})</option>
+          <option value="all">
+            All ({Array.isArray(orders) ? orders.length : 0})
+          </option>
           {ORDER_STATUSES.map((status) => (
             <option key={status} value={status}>
-              {status} 
+              {status}
             </option>
           ))}
         </select>
@@ -106,7 +109,8 @@ export function OrdersTable({ orders }) {
               {rows.map((order) => {
                 const id = String(order._id);
                 const cancellable =
-                  order.orderStatus !== "delivered" && order.orderStatus !== "cancelled";
+                  order.orderStatus !== "delivered" &&
+                  order.orderStatus !== "cancelled";
                 return (
                   <Table.Row key={id}>
                     <Table.Cell className="font-bold">
@@ -127,7 +131,17 @@ export function OrdersTable({ orders }) {
                       ৳{Number(order.totalAmount ?? 0).toLocaleString()}
                     </Table.Cell>
                     <Table.Cell className="text-smoke">
-                      {formatDate(order.createdAt) } {new Date(order.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) }
+                      {new Date(order.createdAt).toLocaleTimeString("en-GB", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      {<br></br>}
+                      {new Date(order.createdAt).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                      
                     </Table.Cell>
                     <Table.Cell>
                       <span
