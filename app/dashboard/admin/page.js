@@ -7,6 +7,8 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
+import { useSession } from "@/lib/auth-client";
+
 
 const stats = [
   {
@@ -67,14 +69,14 @@ export default function AdminDashboardHome() {
           <p className="text-xs font-semibold tracking-[0.15em] text-brand uppercase">
             Welcome back
           </p>
-          <h2 className="mt-1 font-serif text-2xl text-[#1A1A1A] md:text-3xl">
+          <h2 className="mt-1 font-serif text-2xl text-ink md:text-3xl">
             Here&apos;s what&apos;s happening today.
           </h2>
         </div>
         <div className="flex gap-2 md:hidden">
           <Link
             href="/dashboard/admin/products"
-            className="rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] no-underline transition-colors hover:bg-[#1A1A1A] hover:text-white"
+            className="rounded-full border border-ink px-4 py-2 text-xs font-semibold tracking-[0.12em] text-ink no-underline transition-colors hover:bg-ink hover:text-white"
           >
             ADD PRODUCT
           </Link>
@@ -97,7 +99,7 @@ export default function AdminDashboardHome() {
           return (
             <div
               key={stat.label}
-              className="rounded-2xl border border-[#E5E5E5] bg-white p-5 shadow-sm shadow-black/5"
+              className="rounded-2xl border border-line bg-white p-5 shadow-sm shadow-black/5"
             >
               <div className="flex items-center justify-between">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white">
@@ -107,7 +109,7 @@ export default function AdminDashboardHome() {
                   className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
                     stat.up
                       ? "bg-emerald-100 text-emerald-800"
-                      : "bg-[#F5F5F5] text-[#8A8A8A]"
+                      : "bg-mist text-fog"
                   }`}
                 >
                   {stat.up ? (
@@ -118,10 +120,10 @@ export default function AdminDashboardHome() {
                   {stat.delta}
                 </span>
               </div>
-              <p className="mt-4 font-serif text-3xl text-[#1A1A1A]">
+              <p className="mt-4 font-serif text-3xl text-ink">
                 {stat.value}
               </p>
-              <p className="mt-1 text-sm text-[#525252]">
+              <p className="mt-1 text-sm text-fog">
                 {stat.label} · {stat.note}
               </p>
             </div>
@@ -132,10 +134,10 @@ export default function AdminDashboardHome() {
       {/* Recent orders — full width */}
       <section
         aria-label="Recent orders"
-        className="w-full overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white shadow-sm shadow-black/5"
+        className="w-full overflow-hidden rounded-2xl border border-line bg-white shadow-sm shadow-black/5"
       >
-          <div className="flex items-center justify-between border-b border-[#E5E5E5] px-5 py-4">
-            <h3 className="font-serif text-lg text-[#1A1A1A]">Recent orders</h3>
+          <div className="flex items-center justify-between border-b border-line px-5 py-4">
+            <h3 className="font-serif text-lg text-ink">Recent orders</h3>
             <Link
               href="/dashboard/admin/orders"
               className="text-xs font-semibold tracking-[0.12em] text-brand no-underline hover:underline"
@@ -144,9 +146,9 @@ export default function AdminDashboardHome() {
             </Link>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[560px] text-left text-sm">
+            <table className="w-full min-w-140 text-left text-sm">
               <thead>
-                <tr className="text-xs tracking-[0.1em] text-[#8A8A8A] uppercase">
+                <tr className="text-xs tracking-widest text-fog uppercase">
                   <th className="px-5 py-3 font-semibold">Order</th>
                   <th className="px-5 py-3 font-semibold">Customer</th>
                   <th className="px-5 py-3 font-semibold">Date</th>
@@ -158,16 +160,16 @@ export default function AdminDashboardHome() {
                 {recentOrders.map((order) => (
                   <tr
                     key={order.id}
-                    className="border-t border-[#E5E5E5] transition-colors hover:bg-[#FAFAFA]"
+                    className="border-t border-line transition-colors hover:bg-mist"
                   >
-                    <td className="px-5 py-3 font-semibold text-[#1A1A1A]">
+                    <td className="px-5 py-3 font-semibold text-ink">
                       {order.id}
                     </td>
-                    <td className="px-5 py-3 text-[#1A1A1A]">
+                    <td className="px-5 py-3 text-ink">
                       {order.customer}
                     </td>
-                    <td className="px-5 py-3 text-[#525252]">{order.date}</td>
-                    <td className="px-5 py-3 font-medium text-[#1A1A1A]">
+                    <td className="px-5 py-3 text-fog">{order.date}</td>
+                    <td className="px-5 py-3 font-medium text-ink">
                       {order.total}
                     </td>
                     <td className="px-5 py-3">
