@@ -39,7 +39,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-[#E5E5E5] bg-white/85 backdrop-blur-md shadow-sm shadow-black/5">
+    <nav className="sticky top-0 z-40 w-full border-b border-line bg-white/85 backdrop-blur-md shadow-sm shadow-black/5">
       <header className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <button
@@ -49,7 +49,7 @@ export default function Navbar() {
             aria-expanded={isMenuOpen}
           >
             <span className="sr-only">Menu</span>
-            <svg className="h-6 w-6 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-6 w-6 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -58,30 +58,30 @@ export default function Navbar() {
             </svg>
           </button>
 
-          <Link href="/" className="text-lg font-bold tracking-[0.15em] text-[#1A1A1A] no-underline">
+          <Link href="/" className="text-lg font-bold tracking-[0.15em] text-ink no-underline">
             <Image src="/logo.png" alt="BelaView Logo" width={70} height={70} className="rounded-full bg-white object-contain"></Image>
           </Link>
         </div>
 
         <ul className="hidden items-center gap-10 md:flex">
           <li>
-            <Link href="/" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
+            <Link href="/" className="text-xs font-semibold tracking-[0.15em] text-ink no-underline hover:text-brand">
               HOME
             </Link>
           </li>
           <li>
-            <Link href="/products" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
+            <Link href="/products" className="text-xs font-semibold tracking-[0.15em] text-ink no-underline hover:text-brand">
               ALL PRODUCTS
             </Link>
           </li>
           <li>
-            <Link href="/categories" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
+            <Link href="/categories" className="text-xs font-semibold tracking-[0.15em] text-ink no-underline hover:text-brand">
               CATEGORIES
             </Link>
           </li>
           {user && (
             <li>
-              <Link href={dashboardHref} className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
+              <Link href={dashboardHref} className="text-xs font-semibold tracking-[0.15em] text-ink no-underline hover:text-brand">
                 DASHBOARD
               </Link>
             </li>
@@ -94,14 +94,14 @@ export default function Navbar() {
           {user ? (
             <Link
               href={dashboardHref}
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand"
+              className="text-xs font-semibold tracking-[0.15em] text-ink no-underline hover:text-brand"
             >
               WELCOME, {user.name}!
             </Link>
           ) : (
             <Link
               href="/login"
-              className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand"
+              className="text-xs font-semibold tracking-[0.15em] text-ink no-underline hover:text-brand"
             >
               LOGIN
             </Link>
@@ -114,14 +114,14 @@ export default function Navbar() {
               type="button"
               onClick={handleSignOut}
               disabled={isSigningOut}
-              className="cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-white no-underline hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
+              className="cursor-pointer rounded-full bg-ink px-4 py-2 text-xs font-semibold tracking-[0.15em] text-white no-underline hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSigningOut ? "SIGNING OUT..." : "SIGN OUT"}
             </button>
           ) : (
             <Link
               href="/signup"
-              className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.15em] text-white no-underline hover:bg-brand"
+              className="rounded-full bg-ink px-4 py-2 text-xs font-semibold tracking-[0.15em] text-white no-underline hover:bg-brand"
             >
               SIGN UP
             </Link>
@@ -138,39 +138,39 @@ export default function Navbar() {
       </header>
 
       {isMenuOpen && (
-        <div className="border-t border-[#E5E5E5] md:hidden">
+        <div className="border-t border-line md:hidden">
           <ul className="flex flex-col gap-2 p-4">
             <li>
-              <Link href="/" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+              <Link href="/" className="block py-2 text-sm tracking-widest text-ink no-underline">
                 HOME
               </Link>
             </li>
             <li>
-              <Link href="/products" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+              <Link href="/products" className="block py-2 text-sm tracking-widest text-ink no-underline">
                 ALL PRODUCTS
               </Link>
             </li>
             <li>
-              <Link href="/categories" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+              <Link href="/categories" className="block py-2 text-sm tracking-widest text-ink no-underline">
                 CATEGORIES
               </Link>
             </li>
             {user && (
               <li>
-                <Link href={dashboardHref} className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+                <Link href={dashboardHref} className="block py-2 text-sm tracking-widest text-ink no-underline">
                   DASHBOARD
                 </Link>
               </li>
             )}
 
-            <li className="mt-2 border-t border-[#E5E5E5] pt-3">
+            <li className="mt-2 border-t border-line pt-3">
               {user ? (
                 <Link href={dashboardHref}
-                 className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A]">
+                 className="block py-2 text-sm tracking-widest text-ink no-underline">
                   WELCOME, {user.name}!
                 </Link>
               ) : (
-                <Link href="/login" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+                <Link href="/login" className="block py-2 text-sm tracking-widest text-ink no-underline">
                   LOGIN
                 </Link>
               )}
@@ -181,14 +181,14 @@ export default function Navbar() {
                   type="button"
                   onClick={handleSignOut}
                   disabled={isSigningOut}
-                  className="block w-full cursor-pointer rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-white hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
+                  className="block w-full cursor-pointer rounded-full bg-ink px-4 py-2 text-center text-sm font-semibold tracking-widest text-white hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSigningOut ? "SIGNING OUT..." : "SIGN OUT"}
                 </button>
               ) : (
                 <Link
                   href="/signup"
-                  className="block rounded-full bg-[#1A1A1A] px-4 py-2 text-center text-sm font-semibold tracking-[0.1em] text-white no-underline hover:bg-brand"
+                  className="block rounded-full bg-ink px-4 py-2 text-center text-sm font-semibold tracking-widest text-white no-underline hover:bg-brand"
                 >
                   SIGN UP
                 </Link>

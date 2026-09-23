@@ -5,8 +5,8 @@ const RelatedProducts = ({ products = [] }) => {
   if (products.length === 0) return null;
 
   return (
-    <section className="mt-16 border-t border-[#E5E5E5] pt-10">
-      <h2 className="mb-8 font-serif text-2xl text-[#1A1A1A] sm:text-3xl">
+    <section className="mt-16 border-t border-line pt-10">
+      <h2 className="mb-8 font-serif text-2xl text-ink sm:text-3xl">
         You may also like
       </h2>
 
@@ -14,9 +14,9 @@ const RelatedProducts = ({ products = [] }) => {
         {products.map((product) => (
           <article
             key={String(product._id)}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white transition-shadow hover:shadow-lg"
+            className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-shadow hover:shadow-lg"
           >
-            <div className="relative aspect-square w-full overflow-hidden bg-[#F5F5F5]">
+            <div className="relative aspect-square w-full overflow-hidden bg-mist">
               {product.image && (
                 <Image
                   src={product.image}
@@ -30,10 +30,10 @@ const RelatedProducts = ({ products = [] }) => {
             </div>
 
             <div className="flex flex-1 flex-col gap-2 p-4">
-              <h3 className="text-lg font-semibold text-[#1A1A1A]">
+              <h3 className="text-lg font-semibold text-ink">
                 {product.name}
               </h3>
-              <p className="line-clamp-2 text-xs font-semibold text-[#525252]">
+              <p className="line-clamp-2 text-xs font-semibold text-smoke">
                 CATEGORY:{" "}
                 {product.category && (
                   <span className="mr-1.5 text-xs font-semibold uppercase ">
@@ -49,7 +49,7 @@ const RelatedProducts = ({ products = [] }) => {
               </div>
                 <Link
                   href={`/products/${product._id}`}
-                  className="block w-full rounded-full bg-[#1A1A1A] px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-brand sm:w-auto sm:py-2"
+                  className="block w-full rounded-full bg-brand px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-brand-dark sm:w-auto sm:py-2"
                 >
                   View Details
                 </Link>

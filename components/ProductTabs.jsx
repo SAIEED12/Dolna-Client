@@ -12,7 +12,7 @@ const ProductTabs = ({ tabs = [] }) => {
 
   return (
     <section className="mt-14">
-      <div className="border-b border-[#E5E5E5]">
+      <div className="border-b border-line">
         <div
           role="tablist"
           aria-label="Product information"
@@ -31,8 +31,8 @@ const ProductTabs = ({ tabs = [] }) => {
             onClick={() => setActive(i)}
             className={`cursor-pointer whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand ${
               i === active
-                ? "border-brand text-[#1A1A1A]"
-                : "border-transparent text-[#525252] hover:text-[#1A1A1A]"
+                ? "border-brand text-ink"
+                : "border-transparent text-smoke hover:text-ink"
             }`}
           >
             {title}
@@ -46,7 +46,7 @@ const ProductTabs = ({ tabs = [] }) => {
         id={`product-panel-${active}`}
         aria-labelledby={`product-tab-${active}`}
         tabIndex={0}
-        className="min-h-24 font-semibold max-w-2xl pt-6 leading-relaxed text-[#525252] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+        className="min-h-24 font-semibold max-w-2xl pt-6 leading-relaxed text-smoke focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
       >
         {tabs[active].content}
       </div>

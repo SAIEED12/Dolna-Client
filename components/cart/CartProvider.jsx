@@ -96,7 +96,13 @@ export function CartProvider({ children }) {
         for (const s of serverItems) {
           const existing = byId.get(s.productId);
           if (existing) {
-            existing.qty = Math.min(MAX_QTY, existing.qty + s.quantity);
+            // Idempotent: local and server usually hold the SAME cart after
+            // a save, so take the max instead of summing (summing doubles
+            // quantities on every refresh).
+            existing.qty = Math.min(
+              MAX_QTY,
+              Math.max(existing.qty, s.quantity)
+            );
           } else {
             byId.set(s.productId, {
               productId: s.productId,

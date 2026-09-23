@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
 const SERVER_URL = process.env.SERVER_URL;
 
@@ -9,18 +10,18 @@ const AllProductsPage = async () => {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="mb-8 font-serif text-3xl text-[#1A1A1A]">All Products</h1>
+      <h1 className="mb-8 font-serif text-3xl text-ink">All Products</h1>
 
       {products.length === 0 ? (
-        <p className="text-[#525252]">No products found.</p>
+        <p className="text-smoke">No products found.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
             <article
               key={String(product._id)}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white transition-shadow hover:shadow-lg"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-shadow hover:shadow-lg"
             >
-              <div className="relative aspect-square w-full overflow-hidden bg-[#F5F5F5]">
+              <div className="relative aspect-square w-full overflow-hidden bg-mist">
                 {product.image && (
                   <Image
                     src={product.image}
@@ -35,10 +36,10 @@ const AllProductsPage = async () => {
               </div>
 
               <div className="flex flex-1 flex-col gap-2 p-8">
-                <h2 className="text-lg font-semibold text-[#1A1A1A]">
+                <h2 className="text-lg font-semibold text-ink">
                   {product.name}
                 </h2>
-                <p className="text-sm text-[#525252]">
+                <p className="text-sm text-smoke">
                   {product.category && (
                     <span className="mr-1.5 text-xs font-semibold uppercase ">
                       CATEGORY: {product.category.replace("-", " ")}
@@ -57,6 +58,13 @@ const AllProductsPage = async () => {
                   >
                     View Details
                   </Link>
+                  <AddToCartButton
+                    productId={String(product._id)}
+                    name={product.name}
+                    price={product.price}
+                    image={product.image || ""}
+                    stock={Number(product.stock ?? 1)}
+                  />
               </div>
             </article>
           ))}
