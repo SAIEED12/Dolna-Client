@@ -178,6 +178,7 @@ const tabs = [
             productId={String(product._id)}
             name={product.name}
             price={price}
+            image={images[0] ?? ""}
             stock={stock}
           />
 

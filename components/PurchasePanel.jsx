@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Heart, Minus, Plus, Share2 } from "lucide-react";
 import { saveBuyNow } from "@/lib/buy-now";
+import { useCart } from "@/components/cart/CartProvider";
 
-const PurchasePanel = ({ productId, name, price, stock }) => {
+const PurchasePanel = ({ productId, name, price, image = "", stock }) => {
   const router = useRouter();
+  const { addItem } = useCart();
   const inStock = stock > 0;
   const maxQty = Math.max(stock, 1);
 
@@ -14,6 +16,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
   const [wished, setWished] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isBuying, setIsBuying] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
 
   const decrease = () => setQty((q) => Math.max(1, q - 1));
   const increase = () => setQty((q) => Math.min(maxQty, q + 1));
@@ -21,9 +24,15 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
   const handleAddToCart = () => {
     if (!inStock) return;
     const safeQty = Math.min(Math.max(1, qty), maxQty);
-    router.push(
-      `/checkout?mode=add-to-cart&productId=${encodeURIComponent(productId)}&qty=${safeQty}`
-    );
+    addItem({
+      productId,
+      name,
+      price: Number(price),
+      image,
+      qty: safeQty,
+    });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 2000);
   };
 
   const handleBuyNow = () => {
@@ -109,7 +118,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
           disabled={!inStock}
           className="block w-full cursor-pointer flex-1 rounded-full border border-[#1A1A1A] px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-[#1A1A1A]"
         >
-          Add to Cart
+          Add to Cart{justAdded ? " ✓" : ""}
         </button>
         <button
           type="button"
@@ -147,7 +156,7 @@ const PurchasePanel = ({ productId, name, price, stock }) => {
         </button>
 
         <span className="text-xs text-green-700" aria-live="polite">
-          {copied ? "Link copied" : ""}
+          {copied ? "Link copied" : justAdded ? "Added to cart" : ""}
         </span>
       </div>
     </div>

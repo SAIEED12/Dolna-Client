@@ -11,8 +11,6 @@ export default function Navbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const cartCount = 0;
-  const cartItems = [];
   const {data: session} = useSession();
   const user = session?.user;
   const dashboardHref = getDashboardPathByRole(user?.role);
@@ -130,12 +128,12 @@ export default function Navbar() {
           )}
 
         {/* Cart Drawer */}
-        <CartDrawer cartCount={cartCount} items={cartItems} />
+        <CartDrawer />
         
         </div>
 
         <div className="md:hidden">
-          <CartDrawer cartCount={cartCount} items={cartItems} compact />
+          <CartDrawer compact />
         </div>
       </header>
 
