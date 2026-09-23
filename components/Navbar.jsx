@@ -77,7 +77,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="#" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
+            <Link href="/categories" className="text-xs font-semibold tracking-[0.15em] text-[#1A1A1A] no-underline hover:text-brand">
               CATEGORIES
             </Link>
           </li>
@@ -148,12 +148,12 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="#" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+              <Link href="/products" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
                 ALL PRODUCTS
               </Link>
             </li>
             <li>
-              <Link href="#" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
+              <Link href="/categories" className="block py-2 text-sm tracking-[0.1em] text-[#1A1A1A] no-underline">
                 CATEGORIES
               </Link>
             </li>
