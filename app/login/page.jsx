@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
-export default function LoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get("redirect") || "";
+  // Only allow same-origin paths — no open redirects
+  const callbackURL =
+    redirectParam.startsWith("/") && !redirectParam.startsWith("//")
+      ? redirectParam
+      : "/dashboard";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +34,7 @@ const handleSubmit = async (e) => {
       email,
       password,
       rememberMe: true,
-      callbackURL: "/dashboard",
+      callbackURL,
     });
 
     if (error) {
@@ -185,5 +193,19 @@ const handleSubmit = async (e) => {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto flex min-h-screen w-full items-center justify-center px-4">
+          <p className="text-sm text-[#525252]">Loading login…</p>
+        </main>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

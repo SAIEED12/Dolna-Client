@@ -5,15 +5,18 @@ import { useRouter } from "next/navigation";
 import { Heart, Minus, Plus, Share2 } from "lucide-react";
 import { saveBuyNow } from "@/lib/buy-now";
 import { useCart } from "@/components/cart/CartProvider";
+import { useWishlist } from "@/components/wishlist/WishlistProvider";
 
 const PurchasePanel = ({ productId, name, price, image = "", stock }) => {
   const router = useRouter();
   const { addItem } = useCart();
+  const { has, toggle, togglingId } = useWishlist();
   const inStock = stock > 0;
   const maxQty = Math.max(stock, 1);
 
   const [qty, setQty] = useState(1);
-  const [wished, setWished] = useState(false);
+  const wished = has(productId);
+  const wishlistBusy = togglingId === String(productId);
   const [copied, setCopied] = useState(false);
   const [isBuying, setIsBuying] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
@@ -134,9 +137,10 @@ const PurchasePanel = ({ productId, name, price, image = "", stock }) => {
       <div className="flex items-center gap-5 text-sm text-[#525252]">
         <button
           type="button"
-          onClick={() => setWished((w) => !w)}
+          onClick={() => toggle(productId)}
+          disabled={wishlistBusy}
           aria-pressed={wished}
-          className="inline-flex cursor-pointer items-center gap-2 transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+          className="inline-flex cursor-pointer items-center gap-2 transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand disabled:cursor-wait disabled:opacity-60"
         >
           <Heart
             className={`h-5 w-5${

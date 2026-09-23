@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Package, ShoppingBag, Users, Wallet } from "lucide-react";
@@ -6,6 +7,8 @@ import { auth } from "@/lib/auth";
 import { getOrders } from "@/lib/actions/orders";
 import { getProducts } from "@/lib/actions/products";
 import { getCustomers } from "@/lib/actions/users";
+import { ORDER_STATUSES } from "@/lib/order-statuses";
+import { OrdersStatusChart } from "@/components/dashboard/OrdersStatusChart";
 
 export const metadata = {
   title: "Overview | Admin Dashboard",
@@ -104,6 +107,55 @@ export default async function AdminDashboardHome() {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 5);
 
+  const ordersByStatus = ORDER_STATUSES.map((status) => ({
+    status,
+    count: orders.filter((order) => order.orderStatus === status).length,
+  }));
+
+  const LOW_STOCK = 3;
+
+  // Top products by revenue across non-cancelled orders
+  const productById = new Map(
+    products.map((p) => [String(p._id), p])
+  );
+  const salesByProduct = new Map();
+  for (const order of orders) {
+    if (order.orderStatus === "cancelled") continue;
+    for (const item of order.items ?? []) {
+      const pid = String(item.productId ?? "");
+      if (!pid) continue;
+      const entry = salesByProduct.get(pid) ?? {
+        productId: pid,
+        title: item.title || "",
+        image: item.image || "",
+        units: 0,
+        revenue: 0,
+      };
+      entry.units += Number(item.quantity) || 0;
+      entry.revenue += Number(item.subtotal) || 0;
+      if (!entry.title) entry.title = item.title || "";
+      if (!entry.image) entry.image = item.image || "";
+      salesByProduct.set(pid, entry);
+    }
+  }
+  const topProducts = [...salesByProduct.values()]
+    .map((entry) => {
+      const catalog = productById.get(entry.productId);
+      return {
+        ...entry,
+        title: entry.title || catalog?.name || "Unknown product",
+        image: entry.image || catalog?.image || "",
+        stock: catalog ? Number(catalog.stock) : null,
+      };
+    })
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5);
+
+  const lowStockProducts = [...products]
+    .filter((p) => Number(p.stock) <= LOW_STOCK)
+    .sort((a, b) => Number(a.stock) - Number(b.stock))
+    .slice(0, 5);
+
   return (
     <div className="space-y-6">
       {/* Page heading */}
@@ -167,6 +219,114 @@ export default async function AdminDashboardHome() {
           );
         })}
       </section>
+
+      {/* Orders by status chart */}
+      <OrdersStatusChart data={ordersByStatus} />
+
+      {/* Top products + low stock */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <section
+          aria-label="Top products"
+          className="w-full overflow-hidden rounded-2xl border border-line bg-white shadow-sm shadow-black/5"
+        >
+          <div className="flex items-center justify-between border-b border-line px-5 py-4">
+            <h3 className="font-serif text-lg text-ink">Top products</h3>
+            <Link
+              href="/dashboard/admin/products"
+              className="text-xs font-semibold tracking-[0.12em] text-brand no-underline hover:underline"
+            >
+              VIEW ALL
+            </Link>
+          </div>
+          {topProducts.length === 0 ? (
+            <p className="px-5 py-8 text-center text-sm text-smoke">
+              No sales yet.
+            </p>
+          ) : (
+            <ul className="divide-y divide-line">
+              {topProducts.map((item, index) => (
+                <li
+                  key={item.productId}
+                  className="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-mist"
+                >
+                  <span className="w-5 shrink-0 font-serif text-lg text-fog">
+                    {index + 1}
+                  </span>
+                  {item.image ? (
+                    <span className="relative block h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-mist">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        unoptimized
+                        sizes="40px"
+                        className="object-cover"
+                      />
+                    </span>
+                  ) : null}
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-semibold text-ink">
+                      {item.title}
+                    </span>
+                    <span className="block text-xs text-fog">
+                      {item.units} sold
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-sm font-semibold tabular-nums text-ink">
+                    ৳{Number(item.revenue).toLocaleString()}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section
+          aria-label="Low stock alerts"
+          className="w-full overflow-hidden rounded-2xl border border-line bg-white shadow-sm shadow-black/5"
+        >
+          <div className="flex items-center justify-between border-b border-line px-5 py-4">
+            <h3 className="font-serif text-lg text-ink">Low stock</h3>
+            <Link
+              href="/dashboard/admin/products"
+              className="text-xs font-semibold tracking-[0.12em] text-brand no-underline hover:underline"
+            >
+              MANAGE
+            </Link>
+          </div>
+          {lowStockProducts.length === 0 ? (
+            <p className="px-5 py-8 text-center text-sm text-smoke">
+              All products sufficiently stocked.
+            </p>
+          ) : (
+            <ul className="divide-y divide-line">
+              {lowStockProducts.map((product) => {
+                const stock = Number(product.stock);
+                const id = String(product._id);
+                return (
+                  <li
+                    key={id}
+                    className="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-mist"
+                  >
+                    <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink">
+                      {product.name}
+                    </span>
+                    <span
+                      className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                        stock <= 0
+                          ? "bg-red-100 text-red-800"
+                          : "bg-amber-100 text-amber-800"
+                      }`}
+                    >
+                      {stock <= 0 ? "Out of stock" : `Only ${stock} left`}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+      </div>
 
       {/* Recent orders */}
       <section
