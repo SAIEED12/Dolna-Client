@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
+import { WishlistHeartButton } from "@/components/wishlist/WishlistHeartButton";
 
 const SERVER_URL = process.env.SERVER_URL;
 
@@ -47,10 +48,14 @@ const AllProductsPage = async () => {
                   )}
                 </p>
 
-                <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-auto flex flex-row items-center justify-between gap-3 pt-3">
                   <span className="text-2xl font-semibold text-brand">
                     ৳{Number(product.price).toLocaleString()}
                   </span>
+                  <WishlistHeartButton
+                    productId={String(product._id)}
+                    name={product.name}
+                  />
                 </div>
                   <Link
                     href={`/products/${product._id}`}
