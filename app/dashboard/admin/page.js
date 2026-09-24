@@ -120,7 +120,7 @@ export default async function AdminDashboardHome() {
   );
   const salesByProduct = new Map();
   for (const order of orders) {
-    if (order.orderStatus === "cancelled") continue;
+    if (order.orderStatus !== "delivered") continue;
     for (const item of order.items ?? []) {
       const pid = String(item.productId ?? "");
       if (!pid) continue;

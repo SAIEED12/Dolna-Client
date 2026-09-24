@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Store, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { authClient, useSession } from "@/lib/auth-client";
 import Image from "next/image";

@@ -57,9 +57,7 @@ function WhatsAppIcon({ size = 24, ...props }) {
 const shopLinks = [
   { label: "Home", href: "/" },
   { label: "All products", href: "/products" },
-  { label: "Swings", href: "/products/swings" },
-  { label: "Accessories", href: "/products/accessories" },
-  { label: "Gift cards", href: "/gift-cards" },
+  { label: "Categories", href: "/categories" },
 ];
 
 const companyLinks = [

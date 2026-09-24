@@ -182,6 +182,7 @@ export default function CheckoutClient() {
         })),
         deliveryCharge: DELIVERY_CHARGE,
         note: notes,
+        userId: session?.user?.id ?? null,
       });
       clearBuyNow();
       await clearCartStore();
@@ -224,6 +225,7 @@ export default function CheckoutClient() {
         items: [{ productId: paramProductId, quantity: clampedQty }],
         deliveryCharge: DELIVERY_CHARGE,
         note: notes,
+        userId: session?.user?.id ?? null,
       });
       clearBuyNow();
       setOrder(placed);
