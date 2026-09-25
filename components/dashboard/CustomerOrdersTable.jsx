@@ -71,9 +71,7 @@ export function CustomerOrdersTable({ orders }) {
             <Table.Body>
               {rows.map((order) => {
                 const id = String(order._id);
-                const cancellable =
-                  order.orderStatus !== "delivered" &&
-                  order.orderStatus !== "cancelled";
+                const cancellable = order.orderStatus === "pending";
                 return (
                   <Table.Row key={id}>
                     <Table.Cell className="font-bold">
