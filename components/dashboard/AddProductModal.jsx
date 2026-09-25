@@ -63,7 +63,7 @@ export function AddProductModal() {
         await addProduct({ ...data, image: urls[0], images: urls });
       } catch (err) {
         console.error("Add product failed:", err);
-        setError("Couldn't save the product. Please try again.");
+        setError(err?.message || "Couldn't save the product. Please try again.");
         return;
       }
 

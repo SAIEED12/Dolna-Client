@@ -1,14 +1,18 @@
 import { AddProductModal } from "@/components/dashboard/AddProductModal";
 import { ProductTable } from "@/components/dashboard/ProductTable";
-const SERVER_URL = process.env.SERVER_URL;
+import { getAdminProducts } from "@/lib/actions/products";
 
 const AdminProductsPage = async () => {
-  const res = await fetch(`${SERVER_URL}/products`);
-  const products = await res.json();
+  let products = [];
+  try {
+    products = await getAdminProducts();
+  } catch {
+    products = [];
+  }
   return (
     <div>
       <div className="flex justify-between items-center my-5">
-        <h1 className="truncate font-serif text-xl text-[#1A1A1A] md:text-3xl">Products</h1>
+        <h1 className="truncate font-serif text-xl text-ink md:text-3xl">Products</h1>
         <AddProductModal />
       </div>
       <ProductTable products={products} />

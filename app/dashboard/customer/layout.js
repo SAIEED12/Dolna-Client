@@ -1,4 +1,7 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import DashboardShell from "@/components/dashboard/DashboardShell";
+import { auth } from "@/lib/auth";
 import { customerBasePath } from "@/lib/dashboard-nav";
 
 export const metadata = {
@@ -7,6 +10,12 @@ export const metadata = {
 };
 
 export default async function CustomerDashboardLayout({ children }) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) {
+    redirect("/login?redirect=/dashboard/customer");
+  }
   return (
     <DashboardShell
       variant="customer"

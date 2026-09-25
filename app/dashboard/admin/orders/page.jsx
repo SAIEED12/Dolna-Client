@@ -1,4 +1,7 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { OrdersTable } from "@/components/dashboard/OrdersTable";
+import { auth } from "@/lib/auth";
 import { getOrders } from "@/lib/actions/orders";
 
 export const metadata = {
@@ -7,6 +10,16 @@ export const metadata = {
 };
 
 const AdminOrdersPage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) {
+    redirect("/login");
+  }
+  if (session.user.role !== "admin") {
+    redirect("/dashboard/customer");
+  }
+
   let orders = [];
   let loadError = "";
 
