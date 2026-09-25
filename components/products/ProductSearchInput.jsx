@@ -44,6 +44,8 @@ export function ProductSearchInput({
     } else {
       params.delete("search");
     }
+    // New queries always start at page 1
+    params.delete("page");
     lastCommittedRef.current = trimmed;
     const query = params.toString();
     router.replace(query ? `${pathname}?${query}` : pathname, {

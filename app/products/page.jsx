@@ -4,8 +4,10 @@ import { Suspense } from "react";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { WishlistHeartButton } from "@/components/wishlist/WishlistHeartButton";
 import { ProductSearchInput } from "@/components/products/ProductSearchInput";
+import { PaginationControls } from "@/components/PaginationControls";
 
 const SERVER_URL = process.env.SERVER_URL;
+const PAGE_SIZE = 20;
 
 const AllProductsPage = async ({ searchParams }) => {
   const searchQuery = await searchParams;
@@ -15,14 +17,40 @@ const AllProductsPage = async ({ searchParams }) => {
       : Array.isArray(searchQuery?.search)
         ? (searchQuery.search[0] ?? "")
         : "";
+  const rawPage = Array.isArray(searchQuery?.page) ? searchQuery.page[0] : searchQuery?.page;
+  const parsedPage = Number.parseInt(rawPage, 10);
+  const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
   const searchText = rawSearch.trim();
-  const url = searchText
-    ? `${SERVER_URL}/products?search=${encodeURIComponent(searchText)}`
-    : `${SERVER_URL}/products`;
-  const res = await fetch(url, {
+  const params = new URLSearchParams();
+  if (searchText) params.set("search", searchText);
+  params.set("page", String(page));
+  params.set("limit", String(PAGE_SIZE));
+  const res = await fetch(`${SERVER_URL}/products?${params.toString()}`, {
     cache: "no-store",
   });
-  const products = res.ok ? await res.json() : [];
+  let products = [];
+  let total = 0;
+  let totalPages = 1;
+  let currentPage = page;
+  if (res.ok) {
+    try {
+      const data = await res.json();
+      if (data && typeof data === "object" && !Array.isArray(data)) {
+        products = Array.isArray(data.products) ? data.products : [];
+        total = Number(data.total ?? products.length);
+        totalPages = Math.max(1, Number(data.totalPages ?? 1));
+        currentPage = Number(data.page ?? page);
+      } else {
+        // Fallback for legacy bare-array responses
+        products = Array.isArray(data) ? data : [];
+        total = products.length;
+      }
+    } catch {
+      products = [];
+    }
+  }
+  const start = total === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const end = Math.min(total, currentPage * PAGE_SIZE);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -31,6 +59,12 @@ const AllProductsPage = async ({ searchParams }) => {
       <Suspense>
         <ProductSearchInput initialValue={searchText} />
       </Suspense>
+
+      {total > 0 ? (
+        <p className="mb-4 text-sm text-smoke">
+          Showing {start}–{end} of {total} products
+        </p>
+      ) : null}
 
       {products.length === 0 ? (
         <p className="text-smoke">
@@ -102,6 +136,9 @@ const AllProductsPage = async ({ searchParams }) => {
           ))}
         </div>
       )}
+      <Suspense>
+        <PaginationControls page={currentPage} totalPages={totalPages} label="Products pagination" />
+      </Suspense>
     </main>
   );
 };

@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Table } from "@heroui/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Pagination, Table } from "@heroui/react";
 import { Ban, Eye } from "lucide-react";
 import { ORDER_STATUSES } from "@/lib/order-statuses";
 import { OrderCancelModal } from "./OrderCancelModal";
@@ -18,32 +19,127 @@ const statusStyles = {
   cancelled: "bg-red-100 text-red-800",
 };
 
-const matchesQuery = (order, query) => {
-  const q = query.trim().toLowerCase();
-  if (!q) return true;
-  const haystacks = [
-    String(order._id ?? ""),
-    order.customer?.name ?? "",
-    order.customer?.phone ?? "",
-    order.customer?.address ?? "",
-  ].map((v) => v.toLowerCase());
-  return haystacks.some((h) => h.includes(q));
+const SEARCH_DEBOUNCE_MS = 300;
+
+const getPageItems = (page, totalPages) => {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  const window = new Set([1, 2, page - 1, page, page + 1, totalPages - 1, totalPages]);
+  const sorted = [...window].filter((p) => p >= 1 && p <= totalPages).sort((a, b) => a - b);
+  const items = [];
+  let prev = 0;
+  for (const p of sorted) {
+    if (p - prev > 1) items.push("…");
+    items.push(p);
+    prev = p;
+  }
+  return items;
 };
 
-export function OrdersTable({ orders }) {
-  const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+export function OrdersTable({
+  orders,
+  total = 0,
+  page = 1,
+  limit = 10,
+  totalPages = 1,
+  initialStatus = "all",
+  initialQuery = "",
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(initialQuery);
+  const timerRef = useRef(null);
+  const lastCommittedQueryRef = useRef(initialQuery);
+  const searchParamsRef = useRef(searchParams?.toString() ?? "");
+
+  useEffect(() => {
+    searchParamsRef.current = searchParams?.toString() ?? "";
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (initialQuery !== lastCommittedQueryRef.current) {
+      lastCommittedQueryRef.current = initialQuery;
+      setQuery(initialQuery);
+    }
+  }, [initialQuery]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  const navigate = (updates) => {
+    const params = new URLSearchParams(searchParamsRef.current);
+    for (const [key, value] of Object.entries(updates)) {
+      if (value === null || value === undefined || value === "") {
+        params.delete(key);
+      } else {
+        params.set(key, String(value));
+      }
+    }
+    const next = params.toString();
+    router.replace(next ? `${pathname}?${next}` : pathname, { scroll: false });
+  };
+
+  const handleQueryChange = (e) => {
+    const next = e.target.value;
+    setQuery(next);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      lastCommittedQueryRef.current = next.trim();
+      const params = new URLSearchParams(searchParamsRef.current);
+      if (next.trim()) {
+        params.set("q", next.trim());
+      } else {
+        params.delete("q");
+      }
+      params.delete("page");
+      const nextQuery = params.toString();
+      router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+    }, SEARCH_DEBOUNCE_MS);
+  };
+
+  const handleStatusChange = (e) => {
+    const next = e.target.value;
+    if (timerRef.current) clearTimeout(timerRef.current);
+    lastCommittedQueryRef.current = query.trim();
+    const params = new URLSearchParams(searchParamsRef.current);
+    if (next && next !== "all") {
+      params.set("status", next);
+    } else {
+      params.delete("status");
+    }
+    params.delete("page");
+    const nextQuery = params.toString();
+    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+  };
+
+  const goToPage = (nextPage) => {
+    if (nextPage <= 1) {
+      const params = new URLSearchParams(searchParamsRef.current);
+      params.delete("page");
+      const next = params.toString();
+      router.replace(next ? `${pathname}?${next}` : pathname, { scroll: false });
+      return;
+    }
+    navigate({ page: nextPage });
+  };
+
   const [viewingOrder, setViewingOrder] = useState(null);
   const [cancellingOrder, setCancellingOrder] = useState(null);
 
-  const rows = useMemo(() => {
-    const list = Array.isArray(orders) ? orders : [];
-    return list.filter((order) => {
-      const statusOk =
-        statusFilter === "all" || order.orderStatus === statusFilter;
-      return statusOk && matchesQuery(order, query);
-    });
-  }, [orders, query, statusFilter]);
+  const rows = useMemo(() => (Array.isArray(orders) ? orders : []), [orders]);
+  const safeTotal = Number(total ?? rows.length);
+  const safePage = Number(page ?? 1);
+  const safeLimit = Number(limit ?? 10);
+  const safeTotalPages = Math.max(1, Number(totalPages ?? 1));
+  const start = safeTotal === 0 ? 0 : (safePage - 1) * safeLimit + 1;
+  const end = Math.min(safeTotal, safePage * safeLimit);
+  const pageItems = useMemo(() => getPageItems(safePage, safeTotalPages), [safePage, safeTotalPages]);
+  const statusValue = ORDER_STATUSES.includes(initialStatus) ? initialStatus : "all";
 
   return (
     <>
@@ -54,8 +150,9 @@ export function OrdersTable({ orders }) {
         <input
           id="orders-search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleQueryChange}
           placeholder="Search by order ID, name, or phone…"
+          autoComplete="off"
           className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:max-w-sm"
         />
         <label htmlFor="orders-status" className="sr-only">
@@ -63,24 +160,20 @@ export function OrdersTable({ orders }) {
         </label>
         <select
           id="orders-status"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+          value={statusValue}
+          onChange={handleStatusChange}
           className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:w-48"
         >
-          <option value="all">
-            All ({Array.isArray(orders) ? orders.length : 0})
-          </option>
+          <option value="all">All ({safeTotal})</option>
           {ORDER_STATUSES.map((status) => (
             <option key={status} value={status}>
               {status}
             </option>
           ))}
         </select>
-        {query.trim() || statusFilter !== "all" ? (
-          <p className="text-sm text-smoke sm:ml-auto">
-            {rows.length} of {Array.isArray(orders) ? orders.length : 0} orders
-          </p>
-        ) : null}
+        <p className="text-sm text-brand font-semibold sm:ml-auto">
+          Showing {start}–{end} of {safeTotal} orders
+        </p>
       </div>
 
       <Table>
@@ -131,7 +224,6 @@ export function OrdersTable({ orders }) {
                         month: "short",
                         year: "numeric",
                       })}
-                      
                     </Table.Cell>
                     <Table.Cell>
                       <span
@@ -179,6 +271,51 @@ export function OrdersTable({ orders }) {
         <p className="mt-4 rounded-2xl border border-dashed border-line bg-white px-6 py-10 text-center text-sm text-smoke">
           No orders found. Try a different search or status filter.
         </p>
+      ) : null}
+
+      {safeTotalPages > 1 ? (
+        <Pagination
+          aria-label="Orders pagination"
+          className="mt-4 [&_.pagination__content]:flex-wrap [&_.pagination__content]:justify-center [&_.pagination__content]:self-center"
+        >
+          <Pagination.Content>
+            <Pagination.Item>
+              <Pagination.Previous
+                isDisabled={safePage <= 1}
+                onPress={() => goToPage(safePage - 1)}
+                aria-label="Previous page"
+              >
+                <Pagination.PreviousIcon />
+              </Pagination.Previous>
+            </Pagination.Item>
+            {pageItems.map((item, index) =>
+              item === "…" ? (
+                <Pagination.Item key={`gap-${index}`}>
+                  <Pagination.Ellipsis>…</Pagination.Ellipsis>
+                </Pagination.Item>
+              ) : (
+                <Pagination.Item key={item}>
+                  <Pagination.Link
+                    isActive={item === safePage}
+                    onPress={() => goToPage(item)}
+                    aria-label={`Go to page ${item}`}
+                  >
+                    {item}
+                  </Pagination.Link>
+                </Pagination.Item>
+              ),
+            )}
+            <Pagination.Item>
+              <Pagination.Next
+                isDisabled={safePage >= safeTotalPages}
+                onPress={() => goToPage(safePage + 1)}
+                aria-label="Next page"
+              >
+                <Pagination.NextIcon />
+              </Pagination.Next>
+            </Pagination.Item>
+          </Pagination.Content>
+        </Pagination>
       ) : null}
 
       <OrderDetailsModal

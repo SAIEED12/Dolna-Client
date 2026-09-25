@@ -3,13 +3,16 @@ import { redirect } from "next/navigation";
 import { OrdersTable } from "@/components/dashboard/OrdersTable";
 import { auth } from "@/lib/auth";
 import { getOrders } from "@/lib/actions/orders";
+import { ORDER_STATUSES } from "@/lib/order-statuses";
 
 export const metadata = {
   title: "Orders | Admin Dashboard",
   description: "View, filter, and manage customer orders.",
 };
 
-const AdminOrdersPage = async () => {
+const PAGE_SIZE = 10;
+
+const AdminOrdersPage = async ({ searchParams }) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -20,22 +23,40 @@ const AdminOrdersPage = async () => {
     redirect("/dashboard/customer");
   }
 
-  let orders = [];
+  const query = await searchParams;
+  const rawPage = Array.isArray(query?.page) ? query.page[0] : query?.page;
+  const rawStatus = Array.isArray(query?.status) ? query.status[0] : query?.status;
+  const rawQ = Array.isArray(query?.q) ? query.q[0] : query?.q;
+  const parsedPage = Number.parseInt(rawPage, 10);
+  const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const statusText = typeof rawStatus === "string" ? rawStatus.trim().toLowerCase() : "";
+  const status = statusText === "" || statusText === "all" ? "all" : statusText;
+  const q = typeof rawQ === "string" ? rawQ.trim() : "";
+
+  let result = {
+    orders: [],
+    total: 0,
+    page,
+    limit: PAGE_SIZE,
+    totalPages: 1,
+    pendingCount: 0,
+    deliveredRevenue: 0,
+  };
   let loadError = "";
 
   try {
-    orders = await getOrders();
+    const data = await getOrders({ page, limit: PAGE_SIZE, status, q });
+    if (data && typeof data === "object" && !Array.isArray(data)) {
+      result = data;
+    } else {
+      result.orders = Array.isArray(data) ? data : [];
+      result.total = result.orders.length;
+    }
   } catch (err) {
     loadError = err?.message || "Failed to fetch orders";
   }
 
-  const list = Array.isArray(orders) ? orders : [];
-  const openCount = list.filter((order) =>
-    ["pending"].includes(order.orderStatus)
-  ).length;
-  const revenue = list
-    .filter((order) => order.orderStatus === "delivered")
-    .reduce((sum, order) => sum + Number(order.totalAmount ?? 0), 0);
+  const list = Array.isArray(result.orders) ? result.orders : [];
 
   return (
     <div>
@@ -45,13 +66,13 @@ const AdminOrdersPage = async () => {
         </h1>
         <div className="flex flex-wrap gap-2 text-xs font-semibold">
           <span className="rounded-full border border-line bg-white px-3 py-1.5 text-smoke">
-            {list.length} total
+            {result.total} total
           </span>
           <span className="rounded-full bg-stone-200 px-3 py-1.5 text-stone-700">
-            {openCount} needs action
+            {result.pendingCount} needs action
           </span>
           <span className="rounded-full bg-emerald-100 px-3 py-1.5 text-emerald-800">
-            ৳{revenue.toLocaleString()} revenue
+            ৳{Number(result.deliveredRevenue ?? 0).toLocaleString()} revenue
           </span>
         </div>
       </div>
@@ -62,7 +83,15 @@ const AdminOrdersPage = async () => {
         </p>
       ) : null}
 
-      <OrdersTable orders={list} />
+      <OrdersTable
+        orders={list}
+        total={result.total}
+        page={result.page}
+        limit={result.limit}
+        totalPages={result.totalPages}
+        initialStatus={ORDER_STATUSES.includes(status) ? status : "all"}
+        initialQuery={q}
+      />
     </div>
   );
 };

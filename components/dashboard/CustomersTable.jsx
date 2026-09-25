@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Table } from "@heroui/react";
+import { Pagination, Table } from "@heroui/react";
+
+const PAGE_SIZE = 10;
 
 const matchesQuery = (customer, query) => {
   const q = query.trim().toLowerCase();
@@ -25,15 +27,46 @@ const formatDate = (value) => {
   });
 };
 
+const getPageItems = (page, totalPages) => {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  const window = new Set([1, 2, page - 1, page, page + 1, totalPages - 1, totalPages]);
+  const sorted = [...window].filter((p) => p >= 1 && p <= totalPages).sort((a, b) => a - b);
+  const items = [];
+  let prev = 0;
+  for (const p of sorted) {
+    if (p - prev > 1) items.push("…");
+    items.push(p);
+    prev = p;
+  }
+  return items;
+};
+
 export function CustomersTable({ customers }) {
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   const rows = useMemo(() => {
     const list = Array.isArray(customers) ? customers : [];
     return list.filter((customer) => matchesQuery(customer, query));
   }, [customers, query]);
 
-  const total = Array.isArray(customers) ? customers.length : 0;
+  const filteredTotal = rows.length;
+  const totalPages = Math.max(1, Math.ceil(filteredTotal / PAGE_SIZE));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  const start = filteredTotal === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1;
+  const end = Math.min(filteredTotal, safePage * PAGE_SIZE);
+  const pageRows = useMemo(
+    () => rows.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+    [rows, safePage],
+  );
+  const pageItems = useMemo(() => getPageItems(safePage, totalPages), [safePage, totalPages]);
+
+  const handleQueryChange = (e) => {
+    setQuery(e.target.value);
+    setPage(1);
+  };
 
   return (
     <>
@@ -44,15 +77,13 @@ export function CustomersTable({ customers }) {
         <input
           id="customers-search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleQueryChange}
           placeholder="Search by name, email, or phone…"
           className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:max-w-sm"
         />
-        {query.trim() ? (
-          <p className="text-sm text-smoke sm:ml-auto">
-            {rows.length} of {total} customers
-          </p>
-        ) : null}
+        <p className="text-sm text-smoke sm:ml-auto">
+          Showing {start}–{end} of {filteredTotal} customers
+        </p>
       </div>
 
       <Table>
@@ -65,7 +96,7 @@ export function CustomersTable({ customers }) {
               <Table.Column>Joined</Table.Column>
             </Table.Header>
             <Table.Body>
-              {rows.map((customer) => {
+              {pageRows.map((customer) => {
                 const id = String(customer._id);
                 return (
                   <Table.Row key={id}>
@@ -97,6 +128,51 @@ export function CustomersTable({ customers }) {
         <p className="mt-4 rounded-2xl border border-dashed border-line bg-white px-6 py-10 text-center text-sm text-smoke">
           No customers found. Try a different search.
         </p>
+      ) : null}
+
+      {totalPages > 1 ? (
+        <Pagination
+          aria-label="Customers pagination"
+          className="mt-4 [&_.pagination__content]:flex-wrap [&_.pagination__content]:justify-center [&_.pagination__content]:self-center"
+        >
+          <Pagination.Content>
+            <Pagination.Item>
+              <Pagination.Previous
+                isDisabled={safePage <= 1}
+                onPress={() => setPage(safePage - 1)}
+                aria-label="Previous page"
+              >
+                <Pagination.PreviousIcon />
+              </Pagination.Previous>
+            </Pagination.Item>
+            {pageItems.map((item, index) =>
+              item === "…" ? (
+                <Pagination.Item key={`gap-${index}`}>
+                  <Pagination.Ellipsis>…</Pagination.Ellipsis>
+                </Pagination.Item>
+              ) : (
+                <Pagination.Item key={item}>
+                  <Pagination.Link
+                    isActive={item === safePage}
+                    onPress={() => setPage(item)}
+                    aria-label={`Go to page ${item}`}
+                  >
+                    {item}
+                  </Pagination.Link>
+                </Pagination.Item>
+              ),
+            )}
+            <Pagination.Item>
+              <Pagination.Next
+                isDisabled={safePage >= totalPages}
+                onPress={() => setPage(safePage + 1)}
+                aria-label="Next page"
+              >
+                <Pagination.NextIcon />
+              </Pagination.Next>
+            </Pagination.Item>
+          </Pagination.Content>
+        </Pagination>
       ) : null}
     </>
   );
