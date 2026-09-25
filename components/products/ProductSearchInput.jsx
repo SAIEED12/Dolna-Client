@@ -6,7 +6,10 @@ import { Search, X } from "lucide-react";
 
 const DEBOUNCE_MS = 150;
 
-export function ProductSearchInput({ initialValue = "" }) {
+export function ProductSearchInput({
+  initialValue = "",
+  placeholder = "Search products by name or category...",
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -75,7 +78,7 @@ export function ProductSearchInput({ initialValue = "" }) {
           aria-label="Search products"
           value={value}
           onChange={handleChange}
-          placeholder="Search products by name or category..."
+          placeholder={placeholder}
           autoComplete="off"
           inputMode="search"
           enterKeyHint="search"
