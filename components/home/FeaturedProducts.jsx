@@ -1,31 +1,17 @@
-"use client";
-
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { WishlistHeartButton } from "@/components/wishlist/WishlistHeartButton";
 
-const TABS = [
-  { id: "new", label: "New Arrivals" },
-  { id: "popular", label: "Most Loved" },
-];
-
 export default function FeaturedProducts({ products = [] }) {
-  const [tab, setTab] = useState("new");
-
   const items = useMemo(() => {
     const list = Array.isArray(products) ? [...products] : [];
-    if (tab === "popular") {
-      // No sales-count field yet — approximate with highest price as premium picks.
-      list.sort((a, b) => Number(b?.price ?? 0) - Number(a?.price ?? 0));
-    } else {
-      // Newest first — ObjectId strings are roughly time-ordered.
-      list.sort((a, b) => String(b?._id ?? "").localeCompare(String(a?._id ?? "")));
-    }
+    // Newest first — ObjectId strings are roughly time-ordered.
+    list.sort((a, b) => String(b?._id ?? "").localeCompare(String(a?._id ?? "")));
     return list.slice(0, 8);
-  }, [products, tab]);
+  }, [products]);
 
   if (!products.length) return null;
 
@@ -38,10 +24,10 @@ export default function FeaturedProducts({ products = [] }) {
               Handpicked
             </p>
             <h2 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">
-              Featured Swings
+              New Arrivals
             </h2>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-smoke">
-              Our most loved pieces — woven for comfort, built to last.
+              Fresh off the loom — our latest pieces, woven for comfort.
             </p>
           </div>
           <Link
@@ -51,22 +37,6 @@ export default function FeaturedProducts({ products = [] }) {
             Shop all
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
-        </div>
-
-        <div className="mt-6 inline-flex rounded-full border border-line bg-white p-1">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
-              className={`cursor-pointer rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors ${
-                tab === t.id ? "bg-ink text-white" : "text-smoke hover:text-ink"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
