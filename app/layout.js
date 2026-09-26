@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { WishlistProvider } from "@/components/wishlist/WishlistProvider";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +33,12 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <CartProvider>
           <WishlistProvider>
-            <Navbar/>
+            <Navbar />
             {children}
           </WishlistProvider>
         </CartProvider>
-        <Footer/>
+        <Footer />
+        <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );

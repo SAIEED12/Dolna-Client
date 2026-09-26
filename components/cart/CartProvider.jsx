@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { useSession } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 import { getCart, saveCart, clearCart as clearServerCart } from "@/lib/actions/cart";
 
 const LOCAL_KEY = "belaview:cart-v1";
@@ -155,6 +156,7 @@ export function CartProvider({ children }) {
   const addItem = useCallback(({ productId, name = "", price = 0, image = "", qty = 1 }) => {
     const id = String(productId ?? "").trim();
     if (!id) return;
+    toast.success("Added to cart!", { duration: 5000 });
     const safeQty = Math.min(MAX_QTY, Math.max(1, Number(qty) || 1));
     setItems((prev) => {
       const next = prev.map((it) => ({ ...it }));

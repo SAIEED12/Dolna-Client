@@ -204,12 +204,9 @@ export function ProductFilters({
                       type="checkbox"
                       checked={checked}
                       onChange={() => toggleCategory(name)}
-                      className="h-4 w-4 shrink-0 cursor-pointer accent-[#1A1A1A]"
+                      className="h-4 w-4 shrink-0 cursor-pointer accent-ink"
                     />
                     <span className="flex-1 truncate">{name.replace(/-/g, " ")}</span>
-                    {/* <span className="rounded-full bg-mist px-2 py-0.5 text-xs font-semibold text-smoke">
-                      {Number(category.count ?? 0)}
-                    </span> */}
                   </label>
                 </li>
               );
@@ -284,7 +281,7 @@ export function ProductFilters({
           type="checkbox"
           checked={Boolean(inStock)}
           onChange={handleStockChange}
-          className="h-4 w-4 shrink-0 cursor-pointer accent-[#1A1A1A]"
+          className="h-4 w-4 shrink-0 cursor-pointer accent-ink"
         />
         In stock only
       </label>

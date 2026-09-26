@@ -112,7 +112,7 @@ const AllProductsPage = async ({ searchParams }) => {
 
         <div className="min-w-0">
           {total > 0 ? (
-            <p className="mb-4 text-sm text-smoke">
+            <p className="mb-4 text-sm text-brand font-semibold">
               Showing {start}–{end} of {total} products
             </p>
           ) : null}

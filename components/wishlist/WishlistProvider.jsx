@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { useSession } from "@/lib/auth-client";
 import { getWishlist, removeWishlistItem, toggleWishlist } from "@/lib/actions/wishlist";
 
@@ -75,6 +76,9 @@ export function WishlistProvider({ children }) {
       try {
         const result = await toggleWishlist(id);
         setIds(result.productIds);
+        if (!wasIn) {
+          toast.success("Added to wishlist!", { duration: 5000 });
+        }
       } catch {
         setIds((prev) =>
           wasIn ? [...prev, id] : prev.filter((x) => x !== id)

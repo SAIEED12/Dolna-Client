@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { imageUpload } from "@/lib/imageUpload";
 import { MAX_IMAGES, ProductForm } from "./ProductForm";
+import toast from "react-hot-toast";
 
 export function AddProductModal() {
   const router = useRouter();
@@ -66,6 +67,8 @@ export function AddProductModal() {
         setError(err?.message || "Couldn't save the product. Please try again.");
         return;
       }
+
+       toast.success("Product added successfully!", { duration: 5000 });
 
               form.reset();
               setIsOpen(false);

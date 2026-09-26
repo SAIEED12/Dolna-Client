@@ -57,7 +57,7 @@ export function ProductTable({ products, total = 0, page = 1, limit = 20, totalP
   return (
     <>
       {safeTotal > 0 ? (
-        <p className="mb-3 text-sm text-smoke">
+        <p className="mb-3 text-sm text-brand font-semibold">
           Showing {start}–{end} of {safeTotal} products
         </p>
       ) : null}

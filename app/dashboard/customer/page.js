@@ -96,7 +96,7 @@ export default async function CustomerDashboardHome() {
           <p className="text-xs font-semibold tracking-[0.15em] text-brand uppercase">
             My account
           </p>
-          <h2 className="mt-1 font-serif text-2xl text-[#1A1A1A] md:text-3xl">
+          <h2 className="mt-1 font-serif text-2xl text-ink md:text-3xl">
             Welcome back{session.user.name ? `, ${session.user.name}` : ""}.
           </h2>
         </div>
@@ -109,7 +109,7 @@ export default async function CustomerDashboardHome() {
           </Link>
           <Link
             href="/dashboard/customer/orders"
-            className="rounded-full border border-[#1A1A1A] px-4 py-2 text-xs font-semibold tracking-[0.12em] text-[#1A1A1A] no-underline transition-colors hover:bg-[#1A1A1A] hover:text-white"
+            className="rounded-full border border-ink px-4 py-2 text-xs font-semibold tracking-[0.12em] text-ink no-underline transition-colors hover:bg-[#1A1A1A] hover:text-white"
           >
             TRACK ORDER
           </Link>
@@ -143,7 +143,6 @@ export default async function CustomerDashboardHome() {
               </p>
               <p className="mt-1 text-sm text-[#525252]">
                 {stat.label}
-                {stat.note ? ` · ${stat.note}` : ""}
               </p>
             </div>
           );

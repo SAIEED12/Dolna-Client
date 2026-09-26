@@ -81,7 +81,7 @@ export function CustomersTable({ customers }) {
           placeholder="Search by name, email, or phone…"
           className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-fog outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 sm:max-w-sm"
         />
-        <p className="text-sm text-smoke sm:ml-auto">
+        <p className="text-sm text-brand font-semibold sm:ml-auto">
           Showing {start}–{end} of {filteredTotal} customers
         </p>
       </div>

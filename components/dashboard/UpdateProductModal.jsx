@@ -4,6 +4,7 @@ import { Button, Modal } from "@heroui/react";
 import { updateProduct } from "@/lib/actions/products";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { imageUpload } from "@/lib/imageUpload";
 import { MAX_IMAGES, ProductForm } from "./ProductForm";
 
@@ -86,6 +87,8 @@ export function UpdateProductModal({ product, isOpen, onOpenChange }) {
         setError("Couldn't update the product. Please try again.");
         return;
       }
+
+      toast.success("Product updated successfully!", { duration: 5000 });
 
       onOpenChange(false);
       router.refresh();

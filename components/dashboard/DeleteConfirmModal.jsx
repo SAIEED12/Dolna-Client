@@ -4,6 +4,7 @@ import { Button, Modal } from "@heroui/react";
 import { deleteProduct } from "@/lib/actions/products";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export function DeleteConfirmModal({ product, isOpen, onOpenChange }) {
   const router = useRouter();
@@ -24,6 +25,7 @@ export function DeleteConfirmModal({ product, isOpen, onOpenChange }) {
     setIsPending(true);
     try {
       await deleteProduct(String(product._id));
+      toast.success("Product deleted successfully!", { duration: 5000 });
       onOpenChange(false);
       router.refresh();
     } catch (err) {
